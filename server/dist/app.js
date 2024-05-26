@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors = require('cors');
-const { dbConnection } = require('./connection');
+const dbConnection = require('./connection');
 const app = (0, express_1.default)();
 app.get('/', (req, res) => {
     res.status(200).send("Hello World!");
@@ -15,13 +15,13 @@ app.use(cors({
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PATCH', 'OPTIONS']
 }));
 app.get('/hello-world', (req, res) => {
-    dbConnection.query("SELECT * FROM User", function (err, result) {
+    dbConnection.default.query("SELECT * FROM Users", function (err, result) {
         if (err) {
             console.error(err);
             res.status(500).send("An error occurred.");
             return;
         }
-        console.log("Result: " + result);
+        console.log("Result: " + JSON.stringify(result));
         res.status(200).send(result);
     });
 });
