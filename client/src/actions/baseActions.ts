@@ -5,7 +5,7 @@ const fullEndpoint = (endpoint: string): string => {
   if (endpoint.startsWith("http")) {
     return `/${endpoint}`;
   } else {
-    return `/${baseApiUrl}/${endpoint}`;
+    return `${baseApiUrl}/${endpoint}`;
   }
 }
 
