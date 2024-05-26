@@ -11,6 +11,7 @@ const getHelloWorld = (): HelloWorldData => {
 
 const useGetHelloWorld = () => {
     const { data, error, isLoading } = useSWR([endpoints.helloWorld], () => getHelloWorld());
+    console.log(data, error, isLoading);
     return { data, error, isLoading };
 }
 

@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+const cors = require('cors');
 
 const { dbConnection } = require('./connection');
 const app = express();
@@ -6,6 +7,11 @@ const app = express();
 app.get('/', (req: Request, res: Response) => {
     res.status(200).send("Hello World!");
 });
+
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    methods: ['GET','POST','DELETE','UPDATE','PATCH','OPTIONS']
+}));
 
 app.get('/hello-world', (req: Request, res: Response) => {
     dbConnection.query("SELECT * FROM User", function(err: Error, result: any) {
