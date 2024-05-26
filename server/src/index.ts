@@ -1,11 +1,14 @@
-const http = require('http')
-const app = require('./app')
+const http = require('http');
+const app = require('./app');
+const cors = require('cors');
 
-const PORT = process.env.PORT || 3000
-const server = http.createServer(app)
+const PORT = process.env.PORT || 3001;
+const server = http.createServer(app);
+
+app.use(cors());
 
 server.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server is running on port ${PORT}`)
-})
+    console.log(`Server is running on port ${PORT}`);
+});
 
-module.exports = server
+module.exports = server;
