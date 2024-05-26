@@ -13,3 +13,7 @@ This readme highlights the process of creating and loading a sample database usi
 
 ## 🚀 Note
 - This is not the exact data we are looking to use for the project.
+
+This is what it looks like so far:
+
+![Screenshot 2024-05-25 at 11 05 33 PM](https://github.com/nihalmenon/db-project/assets/74116955/e06bc483-dbf4-4ac6-859d-7c4c0ea91c3a)
