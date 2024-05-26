@@ -1,6 +1,6 @@
 # db-project
 
-# ✈️ Travel User and Trip Dataset Project
+# ✈️ Travel Project
 
 ## 📖 Overview
 This readme highlights the process of creating and loading a sample database using a travel user and trip dataset sourced from Kaggle.
