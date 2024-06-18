@@ -4,7 +4,7 @@ create table User (
     last_name nvarchar(30) not null,
     dob date not null,
     gender char(1) default 'x',
-    email nvarchar(255) not null,
+    email nvarchar(255) not null unique,
     phone nvarchar(15),
     socials nvarchar(255),
     pwd nvarchar(255) not null,
