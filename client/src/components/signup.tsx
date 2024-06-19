@@ -15,13 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock, FaCalendarAlt, FaEnvelope } from "react-icons/fa";
 import {Link as RouterLink }from "react-router-dom";
+import { registerUser } from "../actions/user";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 const CFaCalendarAlt = chakra(FaCalendarAlt);
 const CFaEnvelope = chakra(FaEnvelope);
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_BASE_API_URL;
 
 export const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -32,7 +33,6 @@ export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowClick = () => setShowPassword(!showPassword);
-
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -45,18 +45,12 @@ export const SignUp = () => {
     };
 
     try {
-      const response = await fetch("${apiUrl}/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const response = await registerUser(userData);
 
-      if (response.ok) {
-        console.log("User registered successfully");
-      } else {
-        console.error("Failed to register user");
+      if (response.status === 201) {
+        console.log("User created successfully");
+        const authToken = response.data.token;
+        localStorage.setItem('authToken', authToken);
       }
     } catch (error) {
       console.error("Error:", error);
