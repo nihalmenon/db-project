@@ -1,4 +1,3 @@
-import bodyParser  from 'body-parser';
 const http = require('http');
 const app = require('./app');
 
