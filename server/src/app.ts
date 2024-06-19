@@ -1,7 +1,8 @@
 import express, { Request, Response } from 'express';
 const cors = require('cors');
-
-const dbConnection = require('./connection');
+const userRouter = require('./routers/user');
+const tripRouter = require('./routers/trip');
+const connection = require('./connection');
 const app = express();
 
 app.get('/', (req: Request, res: Response) => {
@@ -15,7 +16,7 @@ app.use(cors({
 
 
 app.get('/hello-world', (req: Request, res: Response) => {
-    dbConnection.default.query("SELECT * FROM Users", function(err: Error, result: any) {
+    connection.default.query("SELECT * FROM User", function(err: Error, result: any) {
         if (err) {
             console.error(err);
             res.status(500).send("An error occurred.");
@@ -27,5 +28,8 @@ app.get('/hello-world', (req: Request, res: Response) => {
 });
 
 app.use(express.json());
+
+app.use(userRouter);
+app.use(tripRouter);
 
 module.exports = app;

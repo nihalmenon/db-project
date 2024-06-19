@@ -1,8 +1,8 @@
 create table Location (
 	lid int not null auto_increment,
-	country_code char(2) not null,
+	c_code char(2),
 	city nvarchar(255),
 
-	foreign key (country_code) references Country(country_code),  
+	foreign key (c_code) references Country(c_code),  
 	primary key (lid)
 );
