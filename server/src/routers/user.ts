@@ -22,7 +22,7 @@ router.post('/register', validateUser, hashPassword, (req, res) => {
             console.error(err);
             return res.status(500).send('An error occurred while creating the account');
         }
-        res.status(201).send('User registered successfully');
+        res.status(201).send('User registered successfully'); // send back auth header token
     });
 });
 
@@ -48,9 +48,9 @@ router.post('/login', (req, res) => {
             return res.status(401).send('Invalid email or password');
         }
 
-        const token = jwt.sign({ uid: user.uid }, process.env.SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ uid: user.uid }, process.env.SECRET_KEY ? process.env.SECRET_KEY : "", { expiresIn: '12h' });
         res.status(200).json({ token });
     });
 });
 
-export default router;
+module.exports = router;
