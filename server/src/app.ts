@@ -15,6 +15,7 @@ app.use(cors({
     methods: ['GET','POST','DELETE','UPDATE','PATCH','OPTIONS']
 }));
 
+
 app.get('/hello-world', (req: Request, res: Response) => {
     connection.default.query("SELECT * FROM User", function(err: Error, result: any) {
         if (err) {

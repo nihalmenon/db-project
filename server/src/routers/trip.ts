@@ -24,7 +24,7 @@ router.get('/trip', (req, res) => {
             console.error(err);
             return res.status(500).send('An error occurred while getting trip');
         }
-        res.status(200).json(results);
+        res.status(200).send(results);
     });
 });
 
