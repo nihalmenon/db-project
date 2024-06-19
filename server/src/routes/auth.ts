@@ -9,7 +9,7 @@ const router = express.Router();
 
 // User Registration Route
 router.post('/register', validateUser, hashPassword, (req, res) => {
-    const { first_name, last_name, dob, gender, email, phone, socials, pwd } = req.body;
+    const { first_name, last_name, dob, email, pwd } = req.body;
 
     // to prevent SQL injection 
     const query = `
@@ -17,7 +17,7 @@ router.post('/register', validateUser, hashPassword, (req, res) => {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-    connection.query(query, [first_name, last_name, dob, gender, email, phone, socials, pwd], (err: Error, results: any[]) => {
+    connection.query(query, [first_name, last_name, dob,  email, pwd], (err: Error, results: any[]) => {
         if (err) {
             console.error(err);
             return res.status(500).send('An error occurred while creating the account');

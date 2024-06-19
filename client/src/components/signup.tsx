@@ -21,15 +21,46 @@ const CFaLock = chakra(FaLock);
 const CFaCalendarAlt = chakra(FaCalendarAlt);
 const CFaEnvelope = chakra(FaEnvelope);
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 export const SignUp = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [dob, setDob] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowClick = () => setShowPassword(!showPassword);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Implement your sign-up logic here
-    console.log("Signing up...");
+    const userData = {
+      first_name: firstName,
+      last_name: lastName,
+      dob: dob,
+      email: email,
+      pwd: password,
+    };
+
+    try {
+      const response = await fetch("${apiUrl}/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        console.log("User registered successfully");
+      } else {
+        console.error("Failed to register user");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -62,7 +93,7 @@ export const SignUp = () => {
                     pointerEvents="none"
                     children={<CFaUserAlt color="gray.300" />}
                   />
-                  <Input type="text" placeholder="First Name" required />
+                  <Input type="text" placeholder="First Name" value= {firstName} onChange={(e)=>setFirstName(e.target.value)} required />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -71,7 +102,7 @@ export const SignUp = () => {
                     pointerEvents="none"
                     children={<CFaUserAlt color="gray.300" />}
                   />
-                  <Input type="text" placeholder="Last Name" required />
+                  <Input type="text" placeholder="Last Name" value={lastName} onChange={(e)=>setLastName(e.target.value)} required />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -80,7 +111,7 @@ export const SignUp = () => {
                     pointerEvents="none"
                     children={<CFaCalendarAlt color="gray.300" />}
                   />
-                  <Input type="date" placeholder="Date of Birth" required />
+                  <Input type="date" placeholder="Date of Birth" value = {dob} onChange={(e)=>setDob(e.target.value)} required />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -89,7 +120,7 @@ export const SignUp = () => {
                     pointerEvents="none"
                     children={<CFaEnvelope color="gray.300" />}
                   />
-                  <Input type="email" placeholder="Email address" required />
+                  <Input type="email" placeholder="Email address" value = {email} onChange={(e)=> setEmail(e.target.value)}required />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -102,6 +133,8 @@ export const SignUp = () => {
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
+                    value = {password}
+                    onChange={(e)=>setPassword(e.target.value)}
                     required
                   />
                   <InputRightElement width="4.5rem">
