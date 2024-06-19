@@ -17,4 +17,4 @@ router.get('/', auth, (req, res) => {
     });
 });
 
-export default router;
+module.exports = router;
