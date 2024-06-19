@@ -1,0 +1,31 @@
+.DS_Store
+
+# CLIENT
+
+# dependencies
+client/node_modules
+client/.pnp
+client/pnp.js
+
+# testing
+client/coverage
+
+# production
+client/build
+
+# misc
+client/.DS_Store
+client/.env.local
+client/.env.development.local
+client/env.test.local
+client/env.production.local
+client/pm-debug.log*
+client/arn-debug.log*
+client/arn-error.log*
+client/.env
+
+# SERVER
+server/node_modules/
+server/.env
+server/dist/
+server/.DS_Store

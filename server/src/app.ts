@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 const cors = require('cors');
 const userRouter = require('./routers/user');
 const tripRouter = require('./routers/trip');
+const memberRouter = require('./routers/member');
 const connection = require('./connection');
 const app = express();
 
@@ -31,5 +32,5 @@ app.use(express.json());
 
 app.use(userRouter);
 app.use(tripRouter);
-
+app.use(memberRouter);
 module.exports = app;
