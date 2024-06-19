@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-const connection = require('../connection');
+import connection from '../connection';
 
 
 const auth = (req: Request, res: Response, next: NextFunction) => {
@@ -8,19 +8,20 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
 	const token = authHeader && authHeader.split(' ')[1];
 	if (token == null) return res.sendStatus(401);
 
-	jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err: any, uid: any) => {
-		if (err) return res.sendStatus(403);
+	jwt.verify(token, process.env.JWT_SECRET as string, (err: any, decoded: any) => {
+		if (err) return res.status(403).send("Invalid token.");
 
 		// search for user in database
-		const query = 'SELECT * FROM User WHERE uid = ?';
-		connection.query(query, [uid], (err: Error, results: any[]) => {
+		const query = 'CALL search_user_uid(?)';
+
+		connection.query(query, [decoded.uid], (err: Error, results: any[]) => {
 			if (err) {
 				console.error(err);
-				return res.status(500).send('An error occurred while fetching user');
+				return res.status(500).send('An error occurred while fetching user.');
 			}
 
 			if (results.length === 0) {
-				return res.status(403).send('User not found');
+				return res.status(403).send('User not found.');
 			}
 
 			// if user is found, attach user to req object
