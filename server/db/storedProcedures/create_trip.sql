@@ -5,4 +5,3 @@ begin
     insert into Member (uid, tid) values (_uid, (select max(t.tid) from Trip t));
 end $$
 delimiter ;
-
