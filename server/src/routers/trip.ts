@@ -17,4 +17,16 @@ router.get('/', auth, (req, res) => {
     });
 });
 
+router.post('/trip', (req, res) => {
+    const { uid, lid, bio } = req.body;
+    const query = 'CALL create_trip (?, ?, ?)';
+    connection.query(query, [uid, lid, bio], (err: Error, results: any[]) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('An error occurred while creating trip');
+        }
+        res.status(200).json(results);
+    });
+});
+
 module.exports = router;
