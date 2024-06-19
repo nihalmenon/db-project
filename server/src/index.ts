@@ -1,5 +1,4 @@
 import bodyParser  from 'body-parser';
-import authRoutes from './routes/auth'; 
 const http = require('http');
 const app = require('./app');
 
