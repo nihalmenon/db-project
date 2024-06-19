@@ -11,7 +11,6 @@ import {
   Box,
   Link,
   FormControl,
-  FormHelperText,
   InputRightElement,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock, FaCalendarAlt, FaEnvelope } from "react-icons/fa";
