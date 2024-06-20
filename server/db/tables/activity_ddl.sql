@@ -4,6 +4,6 @@ create table Activity (
     a_description nvarchar(1024),
     dte date,
 
-    primary key (tid, a_no),
-    foreign key (tid) references Trip(tid) 
+    foreign key (tid) references Trip(tid) on delete cascade,
+    primary key (tid, a_no)
 );
