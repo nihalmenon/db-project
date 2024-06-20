@@ -1,4 +1,3 @@
-delimiter $$
 create procedure search_match_trips(in _tid int)
 begin
     SELECT t2.tid, t2.start_date, a.a_description, a.dte, t2.end_date, t2.lid, l.city, c.c_name, u.uid, u.first_name, u.last_name, u.socials
@@ -10,5 +9,4 @@ begin
     INNER JOIN Country c ON l.c_code = c.c_code
     LEFT JOIN Activity a ON t2.tid = a.tid
     WHERE t1.tid = 2 AND t1.start_date <= t2.end_date AND t1.end_date >= t2.start_date;
-end $$
-delimiter ;
+end

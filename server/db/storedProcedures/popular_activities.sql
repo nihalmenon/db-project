@@ -1,4 +1,3 @@
-delimiter $$
 create procedure popular_activities(in _tid int)
 begin
     select a.a_description, a.dte
@@ -9,6 +8,4 @@ begin
     where a.dte >= trip_details.start_date 
     and a.dte <= trip_details.end_date
     limit 20;
-end $$
-
-delimiter ; 
+end

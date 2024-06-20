@@ -1,4 +1,3 @@
-delimiter $$
 create procedure suggested_members(in _uid int)
 begin
     with UserTrips as (
@@ -24,5 +23,4 @@ begin
     select u.uid, u.first_name, u.last_name, u.socials 
     from User u
     where u.uid in (select uid from FriendsOfFriends) or u.uid in (select uid from Friends);
-end $$
-delimiter ;
+end
