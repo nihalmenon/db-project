@@ -59,11 +59,13 @@ INSERT INTO Country (
     c_code, c_name
 ) VALUES (%s, %s)
 """
+insert_activities_query = """
+INSERT INTO Activity (
+    tid, a_no, a_description, dte
+) VALUES (%s, %s, %s, %s)
+"""
 
 registerUrl = "http://localhost:3001/register"
-
-start_dates = ["2024-01-01", "2024-01-02", "2024-01-03"]
-end_dates = ["2024-01-10", "2024-01-11", "2024-01-12"]
 
 try:
     cnx = mysql.connector.connect(**config)
@@ -96,7 +98,7 @@ try:
                 # ))
             elif table == 'trips':
                 cursor.execute(insert_trips_query, (
-                    int(row['tid']), int(row['lid']), row['bio'], random.choice(start_dates), random.choice(end_dates)
+                    int(row['tid']), int(row['lid']), row['bio'], row["start_date"], row["end_date"]
                 ))
             elif table == 'members':
                 cursor.execute(insert_members_query, (
@@ -110,7 +112,10 @@ try:
                 cursor.execute(insert_countries_query, (
                     row['c_code'], row['c_name']
                 ))
-
+            elif table == 'activities':
+                cursor.execute(insert_activities_query, (
+                    row['tid'], row['a_no'], row['a_description'], row['dte']
+                ))
         print(f"Data inserted into {table} successfully")
 
     cnx.commit()
