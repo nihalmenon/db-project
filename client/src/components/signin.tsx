@@ -14,16 +14,44 @@ import {
   FormHelperText,
   InputRightElement,
 } from "@chakra-ui/react";
+
+import { loginUser } from "../actions/user";
+
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
 export const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleShowClick = () => setShowPassword(!showPassword);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const userData = {
+      email: email,
+      pwd: password,
+    };
+
+    try {
+      const response = await loginUser(userData);
+      if (response.status === 201) {
+        console.log("User Login successfull");
+        const authToken = response.data.token;
+        localStorage.setItem("authToken", authToken);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <Flex
@@ -42,7 +70,7 @@ export const SignIn = () => {
       >
         <Heading color="teal.400">Sign In</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
-          <form>
+          <form onSubmit={handleSubmit}>
             <Stack
               spacing={4}
               p="1rem"
@@ -55,7 +83,13 @@ export const SignIn = () => {
                     pointerEvents="none"
                     children={<CFaUserAlt color="gray.300" />}
                   />
-                  <Input type="email" placeholder="email address" />
+                  <Input
+                    type="email"
+                    placeholder="email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -68,6 +102,8 @@ export const SignIn = () => {
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                   <InputRightElement width="4.5rem">
                     <Button h="1.75rem" size="sm" onClick={handleShowClick}>
