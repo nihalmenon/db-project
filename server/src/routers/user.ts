@@ -10,7 +10,7 @@ const router = express.Router();
 // User Registration Route
 router.post('/register', validateUser, hashPassword, (req, res) => {
     const { first_name, last_name, dob, gender, email, phone, socials, pwd } = req.body;
- 
+    
     const query = `CALL add_user(?, ?, ?, ?, ?, ?, ?, ?)`
 
     connection.query(query, [first_name, last_name, dob, gender, email, phone, socials, pwd], (err: Error, results: any) => {

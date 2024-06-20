@@ -1,18 +1,23 @@
+from time import sleep
 import pandas as pd
 import mysql.connector
 from mysql.connector import errorcode
 import numpy as np
 import getpass
+import requests
+import random
+import datetime
 
 
 pwd = getpass.getpass("Enter your password: ")
+pwd = "password"
 
 # Define your database connection configuration
 config = {
     'user': 'root',
     'password': pwd,
     'host': '127.0.0.1',
-    'database': 'snackndaqs'  # Replace with your database name
+    'database': 'snacksndaqs'  # Replace with your database name
 }
 
 # Paths to your CSV files
@@ -33,8 +38,8 @@ INSERT INTO User (
 
 insert_trips_query = """
 INSERT INTO Trip (
-    tid, lid, bio
-) VALUES (%s, %s, %s)
+    tid, lid, bio, start_date, end_date
+) VALUES (%s, %s, %s, %s, %s)
 """
 
 insert_members_query = """
@@ -55,6 +60,11 @@ INSERT INTO Country (
 ) VALUES (%s, %s)
 """
 
+registerUrl = "http://localhost:3001/register"
+
+start_dates = ["2024-01-01", "2024-01-02", "2024-01-03"]
+end_dates = ["2024-01-10", "2024-01-11", "2024-01-12"]
+
 try:
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
@@ -63,19 +73,30 @@ try:
     for table, csv_file_path in csv_files.items():
         df = pd.read_csv(csv_file_path)
 
-        if table == 'users':
-            df['uid'] = df.index + 1
-            df['uid'] = df['uid'].apply(lambda x: f'{x:05d}')
 
         for index, row in df.iterrows():
             if table == 'users':
-                cursor.execute(insert_users_query, (
-                    row['uid'], row['first_name'], row['last_name'], row['dob'], row['gender'],
-                    row['email'], row['phone'], row['socials'], row['pwd']
-                ))
+                data = {
+                    "first_name": row['first_name'],
+                    "last_name": row['last_name'],
+                    "dob": row['dob'],
+                    "gender": row['gender'],
+                    "email": row['email'],
+                    "phone": row['phone'],
+                    "socials": row['socials'],
+                    "pwd": row['pwd']
+                }
+
+                response = requests.post(registerUrl, json=data)
+
+                # RAW SQL INSERTION
+                # cursor.execute(insert_users_query, (
+                #     row['uid'], row['first_name'], row['last_name'], row['dob'], row['gender'],
+                #     row['email'], row['phone'], row['socials'], row['pwd']
+                # ))
             elif table == 'trips':
                 cursor.execute(insert_trips_query, (
-                    int(row['tid']), int(row['lid']), row['bio'] 
+                    int(row['tid']), int(row['lid']), row['bio'], random.choice(start_dates), random.choice(end_dates)
                 ))
             elif table == 'members':
                 cursor.execute(insert_members_query, (
