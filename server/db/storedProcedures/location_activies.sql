@@ -11,4 +11,4 @@ begin
     limit 20;
 end $$
 
-delimiter ;
+delimiter ; 
