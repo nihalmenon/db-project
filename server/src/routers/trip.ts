@@ -17,6 +17,19 @@ router.post('/trip', auth, (req, res) => {
     });
 });
 
+// return all trips for a given user
+router.get('/trips', auth, (req, res) => {
+    const query = 'CALL get_user_trips (?)';
+    connection.query(query, [req.body.user.uid], (err: Error, results: any[]) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('An error occurred while fetching trips.');
+        }
+        res.status(200).send(results);
+    });
+});
+
+// return trip from tid
 router.get('/trip', auth, (req, res) => {
     // given a trip id, return trip details
     const query = 'CALL get_trip (?)';
