@@ -4,13 +4,14 @@ import jwt from 'jsonwebtoken';
 import connection from '../connection';
 import validateUser from '../middleware/validateUser';
 import hashPassword from '../middleware/hashPassword';
+import auth from '../middleware/authMiddleware';
 
 const router = express.Router();
 
 // User Registration Route
 router.post('/register', validateUser, hashPassword, (req, res) => {
     const { first_name, last_name, dob, gender, email, phone, socials, pwd } = req.body;
- 
+    
     const query = `CALL add_user(?, ?, ?, ?, ?, ?, ?, ?)`
 
     connection.query(query, [first_name, last_name, dob, gender, email, phone, socials, pwd], (err: Error, results: any) => {
@@ -53,6 +54,10 @@ router.post('/login', (req, res) => {
         const token = jwt.sign({ uid: user.uid }, process.env.JWT_SECRET ? process.env.JWT_SECRET : "", { expiresIn: '12h' });
         res.status(200).json({ token });
     });
+});
+
+router.get('/me', auth, (req, res) => {
+    return res.status(200).send({"user": req.body.user, "token": req.body.token});
 });
 
 module.exports = router;

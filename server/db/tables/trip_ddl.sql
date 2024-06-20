@@ -5,6 +5,7 @@ create table Trip (
     start_date date not null,
     end_date date not null,
 
+    constraint check_dates check (start_date <= end_date),
     foreign key (lid) references Location(lid),
     primary key (tid)
 );

@@ -22,7 +22,6 @@ const CFaLock = chakra(FaLock);
 const CFaCalendarAlt = chakra(FaCalendarAlt);
 const CFaEnvelope = chakra(FaEnvelope);
 
-const apiUrl = process.env.REACT_APP_BASE_API_URL;
 
 export const SignUp = () => {
   const [firstName, setFirstName] = useState("");
