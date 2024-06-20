@@ -1,3 +1,5 @@
+-- Trigger: trigger_num_activities
+-- Purpose: trips can have at most 20 activities
 delimiter $$
 create trigger trigger_num_activities
 before insert on Activity

@@ -1,3 +1,5 @@
+-- Trigger: trigger_activity_date
+-- Purpose: ensures a trip's activities fall between it's start/end dates
 delimiter $$
 create trigger trigger_activity_date
 before insert on Activity

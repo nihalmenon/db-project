@@ -1,3 +1,5 @@
+-- Trigger: trigger_empty_trip
+-- Purpose: if the only member of a trip leaves, the trip is deleted
 delimiter $$
 create trigger trigger_empty_trip
 after delete on Member

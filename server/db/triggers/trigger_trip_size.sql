@@ -1,3 +1,5 @@
+-- Trigger: trigger_trip_size
+-- Purpose: trips can have at most 25 members
 delimiter $$
 create trigger trigger_trip_size 
 before insert on Member
