@@ -9,7 +9,7 @@ create table User (
     socials nvarchar(255),
     pwd nvarchar(255) not null,
 
-    constraint check_email_regex check (email regexp '^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$');
+    constraint check_email_regex check (email regexp '^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
     constraint check_gender check (gender = 'm' or gender = 'f' or gender = 'x'),
     primary key (uid)
 );

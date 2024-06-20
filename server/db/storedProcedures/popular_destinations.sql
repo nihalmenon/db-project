@@ -1,5 +1,4 @@
-delimiter $$
-create procedure popular_destinations(in _minAge int default null, in _maxAge int default null, in _gender char(1) default null)
+create procedure popular_destinations(in _minAge int, in _maxAge int, in _gender char(1))
 begin
     select l.lid, l.city, c.c_name, count(*) from Trip t
     inner join Location l on t.lid = l.lid
@@ -10,5 +9,4 @@ begin
     group by l.lid, l.city, c.c_name
     order by count(*) desc
     limit 10;
-end $$
-delimiter ;
+end;

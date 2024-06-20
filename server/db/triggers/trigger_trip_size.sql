@@ -1,6 +1,5 @@
 -- Trigger: trigger_trip_size
 -- Purpose: trips can have at most 25 members
-delimiter $$
 create trigger trigger_trip_size 
 before insert on Member
 for each row
@@ -9,5 +8,4 @@ begin
 		signal SQLSTATE '45000'
 		set MESSAGE_TEXT = 'A trip cannot have more than 25 members';
     end if;
-end $$
-delimiter ;
+end

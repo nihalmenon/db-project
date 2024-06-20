@@ -9,8 +9,8 @@ import random
 import datetime
 
 
+user = getpass.getpass("Enter your user: ")
 pwd = getpass.getpass("Enter your password: ")
-user = 'kierantest'
 
 # Define your database connection configuration
 config = {

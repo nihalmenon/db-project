@@ -1,6 +1,5 @@
 -- Trigger: trigger_activity_date
 -- Purpose: ensures a trip's activities fall between it's start/end dates
-delimiter $$
 create trigger trigger_activity_date
 before insert on Activity
 for each row
@@ -12,5 +11,4 @@ begin
 		signal SQLSTATE '45000'
 		set MESSAGE_TEXT = 'Date must fall between the trip start/end dates';
     end if;
-end $$
-delimiter ;
+end
