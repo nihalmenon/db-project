@@ -17,4 +17,29 @@ router.post('/trip', auth, (req, res) => {
     });
 });
 
+router.get('/trip', auth, (req, res) => {
+    // given a trip id, return trip details
+    const query = 'CALL get_trip (?)';
+    connection.query(query, [req.body.tid], (err: Error, results: any[]) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('An error occurred while fetching trip.');
+        }
+        res.status(200).send(results);
+    });
+});
+
+router.get('/match', auth, (req, res) => {
+    // given a trip id, return all matching trips
+    const query = 'CALL search_match_trips (?)';
+    connection.query(query, [req.body.tid], (err: Error, results: any[]) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('An error occurred while fetching matches.');
+        }
+        res.status(200).send(results);
+    })
+
+});
+
 module.exports = router;
