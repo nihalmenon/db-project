@@ -9,4 +9,12 @@ const loginUser = (user: any) => {
   return base.post(endpoints.login, user);
 };
 
-export { registerUser, loginUser };
+const getUserDetails = (token: string) => {
+  return base.get(endpoints.me, { headers: { authorization: `Bearer ${token}` }});
+}
+
+const getUserTrips = (token: string) => {
+  return base.get(endpoints.myTrips, { headers: { authorization: `Bearer ${token}` }});
+}
+
+export { registerUser, loginUser, getUserDetails, getUserTrips };

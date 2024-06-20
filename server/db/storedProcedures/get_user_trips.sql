@@ -1,8 +1,8 @@
 delimiter $$
-create procedure get_user_trip(in _uid int)
+create procedure get_user_trips(in _uid int)
 begin
-    SELECT * FROM Trips
-    INNER JOIN Members ON Trips.tid = Members.tid
-    WHERE Members.uid = _uid;
+    SELECT * FROM Trip
+    INNER JOIN Member ON Trips.tid = Member.tid
+    WHERE Member.uid = _uid;
 end $$
 delimiter ;

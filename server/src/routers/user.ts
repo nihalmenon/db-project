@@ -56,7 +56,7 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.post('/me', auth, (req, res) => {
+router.get('/me', auth, (req, res) => {
     return res.status(200).send({"user": req.body.user, "token": req.body.token});
 });
 
