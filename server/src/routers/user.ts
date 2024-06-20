@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import connection from '../connection';
 import validateUser from '../middleware/validateUser';
 import hashPassword from '../middleware/hashPassword';
+import auth from '../middleware/authMiddleware';
 
 const router = express.Router();
 
@@ -53,6 +54,10 @@ router.post('/login', (req, res) => {
         const token = jwt.sign({ uid: user.uid }, process.env.JWT_SECRET ? process.env.JWT_SECRET : "", { expiresIn: '12h' });
         res.status(200).json({ token });
     });
+});
+
+router.get('/me', auth, (req, res) => {
+    return res.status(200).send({"user": req.body.user, "token": req.body.token});
 });
 
 module.exports = router;

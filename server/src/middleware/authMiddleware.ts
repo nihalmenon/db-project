@@ -25,7 +25,7 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
 			}
 
 			// if user is found, attach user to req object
-			req.body.user = results[0];
+			req.body.user = results[0][0];
 			req.body.token = token;
 			next();
 		});
