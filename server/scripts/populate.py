@@ -10,11 +10,11 @@ import datetime
 
 
 pwd = getpass.getpass("Enter your password: ")
-pwd = "password"
+user = 'kierantest'
 
 # Define your database connection configuration
 config = {
-    'user': 'root',
+    'user': user,
     'password': pwd,
     'host': '127.0.0.1',
     'database': 'snacksndaqs'  # Replace with your database name

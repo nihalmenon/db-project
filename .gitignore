@@ -31,3 +31,4 @@ server/dist/
 server/.DS_Store
 
 server/scripts/.venv/
+server/scripts/env/
