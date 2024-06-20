@@ -27,6 +27,7 @@ csv_files = {
     'locations': './locations.csv',
     'trips': './trips.csv',
     'members': './members.csv',
+    'activities': './activities.csv'
 }
 
 # Define insert queries for each table
