@@ -52,7 +52,6 @@ router.get('/match', auth, (req, res) => {
         }
         res.status(200).send(results);
     })
-
 });
 
 module.exports = router;
