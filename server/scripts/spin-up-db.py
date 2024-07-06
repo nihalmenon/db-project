@@ -1,7 +1,9 @@
 import os
 import mysql.connector
 from mysql.connector import errorcode
-import getpass
+from dotenv import load_dotenv 
+
+load_dotenv() 
 
 tables = [
     '../db/tables/{}_ddl.sql'.format(table) for table in 
@@ -18,24 +20,25 @@ stored_procs = [
     filter(lambda file : file.endswith(".sql"), os.listdir('../db/storedProcedures'))
 ]
 
-user = getpass.getpass("Enter your user: ")
-pwd = getpass.getpass("Enter your password: ")
-
 config = {
-    'user': user,
-    'password': pwd,
-    'host': '127.0.0.1',
-    'database': 'snacksndaqs'  # Replace with your database name
+    'user': os.getenv("DB_USER"),
+    'password': os.getenv("DB_PASSWORD"),
+    'host': os.getenv("DB_HOST"),
+    'database': os.getenv("DB_NAME")
 }
 
 cnx = mysql.connector.connect(**config)
 
 try:
     for sql_file in (tables + triggers + stored_procs):
-        with open(sql_file, 'r') as f:
-            with cnx.cursor() as cursor:
-                cursor.execute(f.read(), multi=True)
-            cnx.commit()
+        try:
+            with open(sql_file, 'r') as f:
+                with cnx.cursor() as cursor:
+                    cursor.execute(f.read(), multi=True)
+                cnx.commit()
+        except mysql.connector.Error as err:
+            # print('{} {}'.format(os.path.basename(sql_file), err))
+            pass
 except mysql.connector.Error as err:
     print(err)
 finally:

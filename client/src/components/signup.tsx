@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Flex,
   Heading,
@@ -14,7 +16,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock, FaCalendarAlt, FaEnvelope } from "react-icons/fa";
-import {Link as RouterLink }from "react-router-dom";
+import {Navigate, Link as RouterLink }from "react-router-dom";
 import { registerUser } from "../actions/user";
 
 const CFaUserAlt = chakra(FaUserAlt);
@@ -30,6 +32,8 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleShowClick = () => setShowPassword(!showPassword);
 
@@ -50,6 +54,7 @@ export const SignUp = () => {
         console.log("User created successfully");
         const authToken = response.data.token;
         localStorage.setItem('authToken', authToken);
+        navigate('/dashboard');
       }
     } catch (error) {
       console.error("Error:", error);
