@@ -1,4 +1,3 @@
-// dashboard component
 import React, { useEffect, useState } from 'react';
 import { getUserDetails, getUserTrips } from '../actions/user';
 import { useNavigate } from 'react-router-dom';
@@ -15,21 +14,26 @@ export const Dashboard = () => {
       if (response.status === 200) {
         console.log("User details fetched successfully");
         console.log(response.data);
+        setUser(response.data.user);
       }else{
         navigate('/signin');
       }
     } catch {
       console.error("Error fetching user details");
+      navigate('/signin');
     }
   }
 
   const fetchTrips = async () => {
     const token = localStorage.getItem('authToken');
-    const response = await getUserTrips(token ? token : "");
-    if (response.status === 200) {
-      console.log("Trips fetched successfully", response.data);
-      setTrips(response.data);
-    } else {
+
+    try {
+      const response = await getUserTrips(token ? token : "");
+      if (response.status === 200) {
+        console.log("Trips fetched successfully", response.data);
+        setTrips(response.data);
+      }
+    } catch {
       console.error("Error fetching trips");
     }
   }
@@ -42,11 +46,10 @@ export const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-
       {
         trips.length > 0 ? (
           <div>
-            <h2>My Trips</h2>
+            <h2>{user.first_name}'s Trips</h2>
             <ul>
               {trips.map((trip, index) => (
                 <li key={trip.tid}>
