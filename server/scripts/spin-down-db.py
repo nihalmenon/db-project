@@ -1,7 +1,9 @@
 import os
 import mysql.connector
 from mysql.connector import errorcode
-import getpass
+from dotenv import load_dotenv 
+
+load_dotenv() 
 
 tables = list(reversed(['country', 'location', 'trip', 'activity', 'user', 'member']))
 
@@ -10,27 +12,31 @@ stored_procs = [
     filter(lambda file : file.endswith(".sql"), os.listdir('../db/storedProcedures'))
 ]
 
-user = getpass.getpass("Enter your user: ")
-pwd = getpass.getpass("Enter your password: ")
 
 config = {
-    'user': user,
-    'password': pwd,
-    'host': '127.0.0.1',
-    'database': 'snacksndaqs'  # Replace with your database name
+    'user': os.getenv("DB_USER"),
+    'password': os.getenv("DB_PASSWORD"),
+    'host': os.getenv("DB_HOST"),
+    'database': os.getenv("DB_NAME")
 }
-
-
 
 cnx = mysql.connector.connect(**config)
 
 try:
     for table in tables:
-        with cnx.cursor() as cursor:
-            cursor.execute("drop table {}".format(table))
+        try:
+            with cnx.cursor() as cursor:
+                cursor.execute("drop table {}".format(table))
+        except mysql.connector.Error as err:
+            # print('TABLE {} {}'.format(table, err))
+            pass
     for sp in stored_procs:
-        with cnx.cursor() as cursor:
-            cursor.execute("drop procedure {}".format(sp))
+        try:
+            with cnx.cursor() as cursor:
+                cursor.execute("drop procedure {}".format(sp))
+        except mysql.connector.Error as err:
+            # print('STORED PROC {} {}'.format(sp, err))
+            pass 
 except mysql.connector.Error as err:
     print(err)
 finally:

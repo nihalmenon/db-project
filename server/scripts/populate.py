@@ -3,21 +3,20 @@ import pandas as pd
 import mysql.connector
 from mysql.connector import errorcode
 import numpy as np
-import getpass
 import requests
 import random
 import datetime
+import os
+from dotenv import load_dotenv 
 
-
-user = getpass.getpass("Enter your user: ")
-pwd = getpass.getpass("Enter your password: ")
+load_dotenv() 
 
 # Define your database connection configuration
 config = {
-    'user': user,
-    'password': pwd,
-    'host': '127.0.0.1',
-    'database': 'snacksndaqs'  # Replace with your database name
+    'user': os.getenv("DB_USER"),
+    'password': os.getenv("DB_PASSWORD"),
+    'host': os.getenv("DB_HOST"),
+    'database': os.getenv("DB_NAME")
 }
 
 # Paths to your CSV files
