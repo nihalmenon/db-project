@@ -1,0 +1,11 @@
+uid,first_name,last_name,dob,gender,email,phone,socials,pwd
+1,John,Doe,1990-05-15,m,johndoe@example.com,1234567890,https://twitter.com/johndoe,password1
+2,Jane,Smith,1988-09-20,f,janesmith@example.com,0987654321,https://facebook.com/janesmith,password2
+3,Michael,Johnson,1985-04-10,m,michaeljohnson@example.com,9876543210,https://linkedin.com/michaelj,password3
+4,Emily,Brown,1992-11-25,f,emilybrown@example.com,5678901234,https://instagram.com/emilyb,password4
+5,David,Williams,1982-07-30,m,davidwilliams@example.com,2345678901,https://twitter.com/davidw,password5
+6,Sarah,Jones,1987-12-18,f,sarahjones@example.com,3456789012,https://facebook.com/sarahj,password6
+7,Chris,Miller,1995-03-05,m,chrismiller@example.com,6543210987,https://linkedin.com/chrism,password7
+8,Olivia,Davis,1989-08-08,f,oliviadavis@example.com,4321098765,https://instagram.com/oliviad,password8
+9,Alex,Moore,1983-06-22,x,alexmoore@example.com,7890123456,https://twitter.com/alexm,password9
+10,Megan,Wilson,1991-09-14,x,meganwilson@example.com,8901234567,https://facebook.com/meganw,password10
