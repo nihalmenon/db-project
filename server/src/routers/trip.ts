@@ -20,6 +20,7 @@ router.post('/trip', auth, (req, res) => {
 // return all trips for a given user
 router.get('/trips', auth, (req, res) => {
     const query = 'CALL get_user_trips (?)';
+
     connection.query(query, [req.body.user.uid], (err: Error, results: any[]) => {
         if (err) {
             console.error(err);
