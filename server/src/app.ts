@@ -33,4 +33,5 @@ app.use(express.json());
 app.use(userRouter);
 app.use(tripRouter);
 app.use(memberRouter);
+
 module.exports = app;
