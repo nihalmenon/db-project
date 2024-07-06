@@ -114,7 +114,7 @@ def random_dates():
 
 def generate_trip_data(num_records):
     data = []
-    locations = [lid for lid in range(1,1000)]
+    locations = [lid for lid in range(1,1000)] # only using the first 1000 locations
     
     for _ in range(num_records):
         lid = random.choice(locations)
