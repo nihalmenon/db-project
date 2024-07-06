@@ -2,6 +2,9 @@ import csv
 import random
 from datetime import datetime, timedelta
 
+MAX_ACTIVITES = 10
+NUM_TRIPS = 10000
+
 adjectives = [
     'Adventurous', 'Serene', 'Picturesque', 'Tranquil', 'Majestic',
     'Vibrant', 'Lush', 'Enchanting', 'Quaint', 'Idyllic',
@@ -44,7 +47,7 @@ nouns = [
     'Rainforest', 'Ecosystem', 'Environment', 'Biosphere', 'Habitat'
 ]
 
-trip_activities = [
+activities = [
     'Exploring the {noun}',
     'Relaxing on the {noun}',
     'Hiking through the {noun}',
@@ -100,7 +103,7 @@ trip_activities = [
 def generate_trip_name_bio():
     random_adjective = random.choice(adjectives)
     random_noun = random.choice(nouns)
-    random_activity = random.choice(trip_activities).format(noun=random_noun)
+    random_activity = random.choice(activities).format(noun=random_noun)
     return (f"{random_adjective} {random_noun} Trip", f"{random_activity}")
 
 def random_dates():
@@ -112,25 +115,39 @@ def random_dates():
     end_date = start_date + timedelta(days=random.randint(1,30))
     return (start_date, end_date)
 
-def generate_trip_data(num_records):
-    data = []
+def generate_data():
+    trip_data = []
+    activity_data = []
     locations = [lid for lid in range(1,1000)] # only using the first 1000 locations
     
-    for _ in range(num_records):
+    for tid in range(1,NUM_TRIPS+1):
         lid = random.choice(locations)
         trip_name, trip_bio = generate_trip_name_bio()
         start_date, end_date = random_dates()
-        data.append((lid, trip_name, trip_bio, start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d')))
-    
-    return data
+        trip_data.append((tid, lid, trip_name, trip_bio, start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d')))
 
-def write_to_csv(filename, data):
+        # generate activities
+        for a_no in range(1, random.randint(1,MAX_ACTIVITES+1)+1):
+            random_noun = random.choice(nouns)
+            a_description = random.choice(activities).format(noun=random_noun)
+
+            delta = end_date - start_date
+            day_offset = random.randint(0, delta.days)
+            dte = start_date + timedelta(days=day_offset)
+            activity_data.append((tid, a_no, a_description, dte.strftime('%Y-%m-%d')))
+
+    
+    return (trip_data, activity_data)
+
+def write_to_csv(filename, header, data):
     with open(filename, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['lid', 'trip_name', 'trip_bio', 'start_date', 'end_date'])
+        writer.writerow(header)
         writer.writerows(data)
 
-trip_data = generate_trip_data(1000)
+trip_data, activity_data = generate_data()
 
 csv_filename = '../data/prod/trips.csv'
-write_to_csv(csv_filename, trip_data)
+
+write_to_csv('../data/prod/trips.csv', ['tid', 'lid', 'trip_name', 'trip_bio', 'start_date', 'end_date'], trip_data)
+write_to_csv('../data/prod/activities.csv', ['tid', 'a_no', 'a_description', 'dte'], activity_data)
