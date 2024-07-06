@@ -5,7 +5,6 @@ import string
 
 fake = Faker()
 
-# Function to generate a random gender
 def random_gender():
     return random.choice(['m', 'f', 'x'])
 
@@ -22,27 +21,21 @@ def random_email_domain():
 
 def generate_password():
     length = random.randint(10,20)
-    # Define the characters to use in the string
     characters = string.ascii_letters + string.digits
-    # Generate a random string of the specified length
     result = ''.join(random.choice(characters) for _ in range(length))
     return result
 
-# Function to generate social username
 def generate_socials(first_name, last_name):
     return f"@{first_name.lower()}.{last_name.lower()}{random.randint(10, 99)}"
 
 def generate_phone_number():
-    # Generate three parts of the phone number
     part1 = random.randint(100, 999)
     part2 = random.randint(100, 999)
     part3 = random.randint(1000, 9999)
 
-    # Format the parts into the desired pattern
     phone_number = f"{part1}-{part2}-{part3}"
     return phone_number
 
-# Generate data
 data = []
 for i in range(1, 10001):
     gender = random_gender()
@@ -58,10 +51,8 @@ for i in range(1, 10001):
     pwd = generate_password()
     data.append([i, first_name, last_name, dob, gender, email, phone, socials, pwd])
 
-# Create DataFrame
 df = pd.DataFrame(data, columns=['uid', 'first_name', 'last_name', 'dob', 'gender', 'email', 'phone', 'socials', 'pwd'])
 
-# Save to CSV
 csv_path = "../data/prod/user.csv"
 df.to_csv(csv_path, index=False)
 
