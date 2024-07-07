@@ -11,7 +11,6 @@ from dotenv import load_dotenv
 
 load_dotenv() 
 
-# yo
 # Define your database connection configuration
 config = {
     'user': os.getenv("DB_USER"),
@@ -21,15 +20,19 @@ config = {
 }
 
 # Paths to your CSV files
+PROD_DATA_DIR = "prod"
+SAMPLE_DATA_DIR = "test"
+
+dirpath = f"../data/{PROD_DATA_DIR if os.getenv("DEV_ENV") == "prod" else SAMPLE_DATA_DIR}"
 csv_files = {
-    'users': '../data/test/users.csv',
-    'countries': '../data/test/countries.csv',
-    'locations': '../data/test/locations.csv',
-    'trips': '../data/test/trips.csv',
-    'members': '../data/test/members.csv',
-    'activities': '../data/test/activities.csv'
+    'users': f"{dirpath}/users.csv",
+    'countries': f"{dirpath}/countries.csv",
+    'locations': f"{dirpath}/locations.csv",
+    'trips': f"{dirpath}/trips.csv",
+    'members': f"{dirpath}/members.csv",
+    'activities': f"{dirpath}/activities.csv",
 }
-# test
+
 # Define insert queries for each table
 insert_users_query = """
 INSERT INTO User (
@@ -76,7 +79,6 @@ try:
     for table, csv_file_path in csv_files.items():
         df = pd.read_csv(csv_file_path)
 
-
         for index, row in df.iterrows():
             if table == 'users':
                 data = {
@@ -117,9 +119,9 @@ try:
                 cursor.execute(insert_activities_query, (
                     row['tid'], row['a_no'], row['a_description'], row['dte']
                 ))
+        cnx.commit()
         print(f"Data inserted into {table} successfully")
 
-    cnx.commit()
 
 except mysql.connector.Error as err:
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
