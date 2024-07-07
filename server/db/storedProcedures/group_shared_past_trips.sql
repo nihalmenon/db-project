@@ -1,5 +1,5 @@
 CREATE PROCEDURE group_shared_past_trips(
-	IN _tid INT,
+	IN _tid INT
 )
 begin
     with GroupMembers as (select m.uid from Member m where m.tid = _tid)

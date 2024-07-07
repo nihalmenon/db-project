@@ -1,0 +1,32 @@
+trip_id,location_id,city_name,country_name,activity_description,activity_date,query
+,,,,,,call group_shared_past_trips(666)
+976,98,Qujing,China,,
+281,57,Jining,China,Participating in Estuary workshops,2024-03-01
+281,57,Jining,China,Fishing in the Tundra,2024-03-24
+281,57,Jining,China,Exploring the Marsh,2024-02-29
+281,57,Jining,China,Relaxing on the Beach,2024-03-06
+281,57,Jining,China,Surfing in the Plain,2024-03-06
+281,57,Jining,China,Watching wildlife in the Quarry,2024-03-15
+281,57,Jining,China,Scuba diving in the Cove,2024-03-04
+397,48,Luanda,Angola,Stargazing in the Garden,2024-05-05
+397,48,Luanda,Angola,Learning about Cave traditions,2024-05-07
+397,48,Luanda,Angola,Visiting artisan Ranch,2024-05-07
+397,48,Luanda,Angola,Relaxing at a Mountain spa,2024-05-07
+397,48,Luanda,Angola,Watching wildlife in the Harbor,2024-05-10
+397,48,Luanda,Angola,Photography of Waterfall,2024-05-08
+397,48,Luanda,Angola,Trekking through the Environment,2024-05-08
+397,48,Luanda,Angola,Rafting in the Lagoon,2024-05-06
+397,48,Luanda,Angola,Birdwatching in the Oasis,2024-05-10
+337,91,Liaocheng,China,Hot air ballooning over Jungle,2024-06-20
+337,91,Liaocheng,China,Zip-lining through the Glade,2024-07-04
+337,91,Liaocheng,China,Camping in the Coast,2024-07-08
+623,74,Surabaya,Indonesia,Kayaking in the Safari,2024-08-11
+623,74,Surabaya,Indonesia,Rafting in the Barrens,2024-08-07
+870,12,Dhaka,Bangladesh,Horseback riding in the Estuary,2024-10-23
+870,12,Dhaka,Bangladesh,Camping in the Waterfall,2024-10-25
+870,12,Dhaka,Bangladesh,Watching wildlife in the Garden,2024-10-24
+870,12,Dhaka,Bangladesh,Exploring ancient Lake,2024-10-23
+870,12,Dhaka,Bangladesh,Wine tasting in Environment,2024-10-29
+870,12,Dhaka,Bangladesh,Yoga retreat in the Lake,2024-10-22
+870,12,Dhaka,Bangladesh,Visiting sacred Volcano,2024-10-26
+870,12,Dhaka,Bangladesh,Visiting sacred Bazaar,2024-10-29

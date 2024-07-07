@@ -1,0 +1,8 @@
+tid,start_date,a_description,dte,end_date,lid,city,c_name,uid,first_name,last_name,socials,query
+,,,,,,,,,,,,call search_match_trips(4)
+1,2024-01-01,Cruise on the Seine River,2024-01-04,2024-02-01,1,Paris,France,1,John,Doe,https://twitter.com/johndoe
+1,2024-01-01,Tour the Louvre Museum,2024-01-03,2024-02-01,1,Paris,France,1,John,Doe,https://twitter.com/johndoe
+1,2024-01-01,Visit the Eiffel Tower,2024-01-02,2024-02-01,1,Paris,France,1,John,Doe,https://twitter.com/johndoe
+1,2024-01-01,Cruise on the Seine River,2024-01-04,2024-02-01,1,Paris,France,4,Emily,Brown,https://instagram.com/emilyb
+1,2024-01-01,Tour the Louvre Museum,2024-01-03,2024-02-01,1,Paris,France,4,Emily,Brown,https://instagram.com/emilyb
+1,2024-01-01,Visit the Eiffel Tower,2024-01-02,2024-02-01,1,Paris,France,4,Emily,Brown,https://instagram.com/emilyb
