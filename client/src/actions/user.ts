@@ -17,4 +17,8 @@ const getUserTrips = (token: string) => {
   return base.get(endpoints.myTrips, { headers: { authorization: `Bearer ${token}` }});
 }
 
-export { registerUser, loginUser, getUserDetails, getUserTrips };
+const getSuggestedInvitees = (token: string) => {
+  return base.get(endpoints.suggestedInvitees, { headers: { authorization: `Bearer ${token}` }});
+};
+
+export { registerUser, loginUser, getUserDetails, getUserTrips, getSuggestedInvitees };

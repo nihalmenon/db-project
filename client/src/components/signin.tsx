@@ -13,6 +13,7 @@ import {
   FormControl,
   FormHelperText,
   InputRightElement,
+  FormErrorMessage
 } from "@chakra-ui/react";
 
 import { loginUser } from "../actions/user";
@@ -27,6 +28,7 @@ export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -47,9 +49,12 @@ export const SignIn = () => {
         const authToken = response.data.token;
         localStorage.setItem("authToken", authToken);
         navigate("/dashboard");
+      }else {
+        setError("Invalid email or password.");
       }
     } catch (error) {
       console.error("Error:", error);
+      setError("Invalid email or password.");
     }
   };
 
@@ -92,7 +97,7 @@ export const SignIn = () => {
                   />
                 </InputGroup>
               </FormControl>
-              <FormControl>
+              <FormControl isInvalid={!!error}>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
@@ -114,6 +119,7 @@ export const SignIn = () => {
                 <FormHelperText textAlign="right">
                   {/* <Link>forgot password?</Link> */}
                 </FormHelperText>
+                {error && <FormErrorMessage>{error}</FormErrorMessage>}
               </FormControl>
               <Button
                 borderRadius={0}

@@ -20,7 +20,7 @@ begin
         and m2.uid != _uid
         and m2.uid not in (select uid from Friends)
     )
-    select u.uid, u.first_name, u.last_name, u.socials 
+    select u.uid, u.first_name, u.last_name, u.socials, u.email
     from User u
     where u.uid in (select uid from FriendsOfFriends) or u.uid in (select uid from Friends);
 end
