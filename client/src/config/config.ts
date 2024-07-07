@@ -7,7 +7,8 @@ const endpoints = {
     me: "me",
     myTrips: "trips",
     locations: "locations",
-    suggestedInvitees: "suggestedInvitees"
+    suggestedInvitees: "suggestedInvitees",
+    createTrip: "trip"
 }
 
 export { baseApiUrl, endpoints };

@@ -2,23 +2,25 @@ import React, { useState, useEffect, HtmlHTMLAttributes } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserDetails, getSuggestedInvitees } from "../actions/user";
 import Select from 'react-select';
-import { Box, Button, FormControl, FormLabel, Input, Tag, TagLabel, TagCloseButton, HStack, VStack, Heading } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input, Tag, TagLabel, TagCloseButton, HStack, VStack, Heading, Collapse } from '@chakra-ui/react';
 import { getLocations } from "../actions/location";
+import { createTrip } from "../actions/trip";
+import toast from 'react-hot-toast';
 
 
 export const AddTrip = () => {
   const [user, setUser] = useState<any>({});
   const [tripDetails, setTripDetails] = useState({
-    location: "",
     startDate: "",
     endDate: "",
-    description: ""
+    bio: ""
   });
   const [selectedLocation, setSelectedLocation] = useState<any>(null);
   const [locations, setLocations] = useState([] as any[]);
   const [invitees, setInvitees] = useState([] as any[]);
 	const [currentInvitee, setCurrentInvitee] = useState(""); 
   const [suggestedUsers, setSuggestedUsers] = useState([] as any[]);
+  const [showSuggested, setShowSuggested] = useState(false);
 
   const token = localStorage.getItem('authToken');
   const navigate = useNavigate();
@@ -74,11 +76,25 @@ export const AddTrip = () => {
     setSelectedLocation(selectedOption);
   };
 
-  const handleSubmit = (e: any) => {
-		e.preventDefault();
-		console.log('Trip Details:', tripDetails);
-		console.log('Selected Location:', selectedLocation);
-	};
+  const handleSubmit = async (e: any) => {
+	e.preventDefault();
+		
+	if(!selectedLocation || !tripDetails.startDate || !tripDetails.endDate || !tripDetails.bio) {
+		toast.error("Please fill all fields!");
+		return;
+	}
+    // Add trip to database
+    try {
+      const response = await createTrip(token ? token : "", {...tripDetails, lid: selectedLocation.value, invitees}); 
+	  if (response.status === 200) {
+		navigate('/dashboard');
+		toast.success("Trip added successfully");
+	  }
+    } catch {
+      console.error("Error adding trip");
+	  toast.error("Error adding trip");
+    }
+};
 
   const handleInviteeChange = (e: any) => {
 		setCurrentInvitee(e.target.value);
@@ -99,6 +115,10 @@ export const AddTrip = () => {
     if (!invitees.includes(email)) {
       setInvitees([...invitees, email]);
     }
+  };
+
+  const toggleSuggestedUsers = () => {
+	setShowSuggested(!showSuggested);
   };
 
   return (
@@ -134,11 +154,11 @@ export const AddTrip = () => {
 					/>
 				</FormControl>
 				<FormControl mb={4}>
-					<FormLabel>Description</FormLabel>
+					<FormLabel>Bio</FormLabel>
 					<Input
 						type="text"
-						name="description"
-						value={tripDetails.description}
+						name="bio"
+						value={tripDetails.bio}
 						onChange={handleChange}
 					/>
 				</FormControl>
@@ -169,22 +189,27 @@ export const AddTrip = () => {
 						</HStack>
 					</VStack>
 				</FormControl>
-        <FormControl mb={4}>
-					<FormLabel>Suggested Invitees</FormLabel>
-					<VStack align="stretch">
-						{suggestedUsers.map((user, index) => (
-							<Button
-								key={index}
-								onClick={() => addSuggestedInvitee(user.email)}
-								variant="outline"
-								colorScheme="blue"
-							>
-								{user.email}
-							</Button>
-						))}
-					</VStack>
+				<FormControl mb={4}>
+					<FormLabel>Suggested Users</FormLabel>
+					<Button onClick={toggleSuggestedUsers} mb={2}>
+						{showSuggested ? 'Hide Suggested Users' : 'Show Suggested Users'}
+					</Button>
+					<Collapse in={showSuggested}>
+						<VStack align="stretch">
+							{suggestedUsers.map((user, index) => (
+								<Button
+									key={index}
+									onClick={() => addSuggestedInvitee(user.email)}
+									variant="outline"
+									colorScheme="blue"
+								>
+									{user.email}
+								</Button>
+							))}
+						</VStack>
+					</Collapse>
 				</FormControl>
-				<Button type="submit" colorScheme="blue">Add Trip</Button>
+				<Button type="submit" colorScheme="blue" onClick={handleSubmit}>Add Trip</Button>
 			</form>
 		</Box>
 	);

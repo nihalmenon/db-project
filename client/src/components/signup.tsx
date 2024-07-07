@@ -18,6 +18,7 @@ import {
 import { FaUserAlt, FaLock, FaCalendarAlt, FaEnvelope } from "react-icons/fa";
 import {Navigate, Link as RouterLink }from "react-router-dom";
 import { registerUser } from "../actions/user";
+import toast from 'react-hot-toast';
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -53,11 +54,14 @@ export const SignUp = () => {
       if (response.status === 201) {
         console.log("User created successfully");
         const authToken = response.data.token;
+        console.log(authToken);
         localStorage.setItem('authToken', authToken);
+        toast.success("User created successfully");
         navigate('/dashboard');
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("An error occurred while creating the account.")
     }
   };
 
