@@ -77,7 +77,7 @@ try:
 
     # Insert data into each table from corresponding CSV file
     for table, csv_file_path in csv_files.items():
-        df = pd.read_csv(csv_file_path)
+        df = pd.read_csv(csv_file_path, keep_default_na=False)
 
         for index, row in df.iterrows():
             if table == 'users':
