@@ -6,7 +6,10 @@ import { Button, Box, Heading, Text, List, ListItem, Divider, Flex, Center, useC
 export const Dashboard = () => {
   const [user, setUser] = useState<any>({});
   const [trips, setTrips] = useState<any[]>([]);
+
+  const [selectedTripId, setSelectedTripId] = useState("");
   const navigate = useNavigate();
+
   const theme = useTheme(); // Access Chakra UI theme
   const bg = useColorModeValue("white", "#1A202C");
   const cardBg = useColorModeValue("#EDF2F7", "#2D3748");
@@ -51,11 +54,13 @@ export const Dashboard = () => {
   const upcomingTrips = trips.filter(trip => new Date(trip.start_date) > new Date());
   const previousTrips = trips.filter(trip => new Date(trip.start_date) < new Date());
 
-
+  const handleTripClick = (tripId: string) => {
+    setSelectedTripId(tripId);
+    navigate("/tripview", { state: { tripId } });
+  }
   const handleLogout = () => {
     // Implement your logout logic here
     console.log("Logging out...");
-    // Example: Clear local storage, navigate to login page
     localStorage.removeItem('authToken');
     navigate('/signin');
   };
@@ -132,7 +137,7 @@ export const Dashboard = () => {
             <Heading size="lg" mb={4} color={theme.colors.dark}>Previous Trips</Heading>
             <List spacing={4}>
               {previousTrips.map((trip, index) => (
-                <ListItem key={index} bg={theme.colors.light} p={4} borderRadius="md" shadow="md">
+                <ListItem key={index} bg={theme.colors.light} p={4} borderRadius="md" shadow="md" onClick={() => handleTripClick(trip.tid)}>
                   <Flex align="center" justify="space-between" mb={2}>
                     <Heading size="md" color={theme.colors.highlight}>Trip {index + 1}</Heading>
                     <Text fontSize="sm" color="black">{formatDate(trip.start_date)} - {formatDate(trip.end_date)}</Text>
