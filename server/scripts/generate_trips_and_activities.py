@@ -3,7 +3,7 @@ import random
 from datetime import datetime, timedelta
 
 MAX_ACTIVITES = 10
-NUM_TRIPS = 10000
+NUM_TRIPS = 1000
 
 adjectives = [
     'Adventurous', 'Serene', 'Picturesque', 'Tranquil', 'Majestic',
