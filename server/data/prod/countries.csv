@@ -25,8 +25,8 @@ BZ,Belize
 BJ,Benin
 BM,Bermuda
 BT,Bhutan
-BO,Bolivia, Plurinational State of
-BQ,Bonaire, Sint Eustatius and Saba
+BO,Bolivia
+BQ,Bonaire
 BA,Bosnia and Herzegovina
 BW,Botswana
 BV,Bouvet Island
@@ -151,7 +151,6 @@ MS,Montserrat
 MA,Morocco
 MZ,Mozambique
 MM,Myanmar
-NA,Namibia
 NR,Nauru
 NP,Nepal
 NL,Netherlands
@@ -184,7 +183,7 @@ RO,Romania
 RU,Russian Federation
 RW,Rwanda
 BL,Saint Barthélemy
-SH,Saint Helena, Ascension and Tristan da Cunha
+SH,Saint Helena
 KN,Saint Kitts and Nevis
 LC,Saint Lucia
 MF,Saint Martin
@@ -247,3 +246,9 @@ EH,Western Sahara
 YE,Yemen
 ZM,Zambia
 ZW,Zimbabwe
+CD,Democratic Republic of the Congo
+XG,Palestine
+NA,Namibia
+XK,Kosovo
+XW,World Wide
+XR,Western Asia
