@@ -1,6 +1,6 @@
 CREATE PROCEDURE average_duration(IN _lid INT)
 begin
-	select l.city, c.c_name, avg(datediff(e.end_date, e.start_date)) as avg_duration
+	select l.city, c.c_name, avg(datediff(t.end_date, t.start_date)) as avg_duration
 	from Trip t
 	inner join location l on t.lid = l.lid
 	inner join country c on l.c_code = c.c_code
