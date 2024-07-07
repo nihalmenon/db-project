@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv() 
 
+# yo
 # Define your database connection configuration
 config = {
     'user': os.getenv("DB_USER"),
@@ -21,14 +22,14 @@ config = {
 
 # Paths to your CSV files
 csv_files = {
-    'users': './users.csv',
-    'countries': './countries.csv',
-    'locations': './locations.csv',
-    'trips': './trips.csv',
-    'members': './members.csv',
-    'activities': './activities.csv'
+    'users': '../data/test/users.csv',
+    'countries': '../data/test/countries.csv',
+    'locations': '../data/test/locations.csv',
+    'trips': '../data/test/trips.csv',
+    'members': '../data/test/members.csv',
+    'activities': '../data/test/activities.csv'
 }
-
+# test
 # Define insert queries for each table
 insert_users_query = """
 INSERT INTO User (
