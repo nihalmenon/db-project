@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUserDetails, getUserTrips } from '../actions/user';
 import { useNavigate } from 'react-router-dom';
+import { Button, Box, Heading, Text, Stack, List, ListItem, Divider } from "@chakra-ui/react";
 
 export const Dashboard = () => {
   const [user, setUser] = useState<any>({});
@@ -12,58 +13,78 @@ export const Dashboard = () => {
     try {
       const response = await getUserDetails(token ? token : "");
       if (response.status === 200) {
+        setUser(response.data.user); // Assuming response.data contains 'user' object
         console.log("User details fetched successfully");
         console.log(response.data);
-        setUser(response.data.user);
-      }else{
+      } else {
         navigate('/signin');
       }
-    } catch {
-      console.error("Error fetching user details");
+    } catch (error) {
+      console.error("Error fetching user details", error);
       navigate('/signin');
     }
   }
 
   const fetchTrips = async () => {
     const token = localStorage.getItem('authToken');
-
     try {
       const response = await getUserTrips(token ? token : "");
       if (response.status === 200) {
-        console.log("Trips fetched successfully", response.data);
         setTrips(response.data);
+        console.log("Trips fetched successfully", response.data);
+      } else {
+        console.error("Error fetching trips");
       }
-    } catch {
-      console.error("Error fetching trips");
+    } catch (error) {
+      console.error("Error fetching trips", error);
     }
   }
+
+  // const formatDate = (dateString) => {
+  //   const date = new Date(dateString);
+  //   // Ensure time is set to midnight to avoid partial days
+  //   date.setHours(0, 0, 0, 0);
+  //   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  //   return date.toLocaleDateString(undefined, options);
+  // };
+  
 
   useEffect(() => {
     fetchUserDetails();
     fetchTrips();
-  }, [])
+  }, []);
 
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <Box p={5}>
+      <Heading mb={4}>Dashboard</Heading>
+      
+      <Stack spacing={4} direction="row" align="center" justify="space-between">
+        <Button colorScheme="teal" onClick={() => navigate('/update-user')}>Update User</Button>
+        <Button colorScheme="teal" onClick={() => navigate('/addtrip')}>Add New Trip</Button>
+      </Stack>
+
+      <Divider my={4} />
+
       {
         trips.length > 0 ? (
-          <div>
-            <h2>{user.first_name}'s Trips</h2>
-            <ul>
+          <Box mt={4}>
+            <Heading size="md">My Trips</Heading>
+            <List spacing={3} mt={2}>
               {trips.map((trip, index) => (
-                <li key={trip.tid}>
-                  <h3>{trip.lid}</h3>
-                  <p>{trip.start_date} - {trip.end_date}</p>
-                  <p>{trip.bio}</p>
-                </li>
+                <ListItem key={index} border="1px" borderRadius="md" p={3}>
+                  <Heading size="sm">{trip.lid}</Heading>
+                  <Text>{trip.start_date} - {trip.end_date}</Text>
+                  <Text>{trip.bio}</Text>
+                </ListItem>
               ))}
-            </ul>
-          </div>
+            </List>
+          </Box>
         ) : (
-          <p>No trips to show</p>
+          <Text mt={4}>No trips to show</Text>
         )
       }
-    </div>
-  )
+    </Box>
+  );
 };
+
+export default Dashboard;
