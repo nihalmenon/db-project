@@ -3,6 +3,8 @@ import random
 from faker import Faker
 import string
 
+NUM_USERS = 1000
+
 fake = Faker()
 
 def random_gender():
@@ -37,7 +39,11 @@ def generate_phone_number():
     return phone_number
 
 data = []
-for i in range(1, 10001):
+email_set = set()
+
+while len(data) < NUM_USERS:
+    uid = len(data) + 1
+
     gender = random_gender()
     first_name = fake.first_name()
     if gender == 'm': first_name = fake.first_name_male()
@@ -49,10 +55,13 @@ for i in range(1, 10001):
     phone = generate_phone_number()
     socials = generate_socials(first_name, last_name)
     pwd = generate_password()
-    data.append([i, first_name, last_name, dob, gender, email, phone, socials, pwd])
+    
+    if (email not in email_set):
+        data.append([uid, first_name, last_name, dob, gender, email, phone, socials, pwd])
+        email_set.add(email)
 
 df = pd.DataFrame(data, columns=['uid', 'first_name', 'last_name', 'dob', 'gender', 'email', 'phone', 'socials', 'pwd'])
 
-csv_path = "../data/prod/user.csv"
+csv_path = "../data/prod/users.csv"
 df.to_csv(csv_path, index=False)
 

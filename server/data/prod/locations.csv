@@ -1,5 +1,4 @@
 lid,c_code,city
-0,JP,Tokyo
 1,ID,Jakarta
 2,IN,Delhi
 3,CN,Guangzhou
@@ -1671,7 +1670,7 @@ lid,c_code,city
 1669,US,Kissimmee
 1670,IN,Calicut
 1671,MA,Kenitra
-1672,,Windhoek
+1672,NA,Windhoek
 1673,CN,Huili Chengguanzhen
 1674,TN,Sidi Bouzid
 1675,IN,Bārāmati
@@ -7076,7 +7075,7 @@ lid,c_code,city
 7074,GB,Derry
 7075,BR,Santa Inês
 7076,GB,Ealing
-7077,,Walvisbaai
+7077,NA,Walvisbaai
 7078,OM,Bahlā’
 7079,PK,Taxila
 7080,AZ,Hövsan
@@ -9170,7 +9169,7 @@ lid,c_code,city
 9168,SA,Khulayş
 9169,GR,Korydallós
 9170,UA,Pokrovsk
-9171,,Rundu
+9171,NA,Rundu
 9172,GT,Tajumulco
 9173,LK,Akurana
 9174,GB,Mitcham
@@ -13806,7 +13805,7 @@ lid,c_code,city
 13804,PH,Buldon
 13805,JP,Masaki
 13806,MX,Temascal
-13807,,Oshakati
+13807,NA,Oshakati
 13808,PH,Talacogon
 13809,BA,Srebrenik
 13810,IR,Ţabas
@@ -15696,7 +15695,7 @@ lid,c_code,city
 15694,BE,Wavre
 15695,AU,Bathurst
 15696,CZ,Tábor
-15697,,Swakopmund
+15697,NA,Swakopmund
 15698,UG,Isingiro
 15699,US,Merritt Island
 15700,US,Derry
@@ -18223,7 +18222,7 @@ lid,c_code,city
 18221,ZA,Thabazimbi
 18222,MA,Bou Arfa
 18223,BE,Izegem
-18224,,Rehoboth
+18224,NA,Rehoboth
 18225,IN,Kūdligi
 18226,IN,Vīrapāndi
 18227,FR,Villiers-le-Bel
@@ -18299,7 +18298,7 @@ lid,c_code,city
 18297,NZ,Paraparaumu
 18298,PH,Mabini
 18299,UG,Pakwach
-18300,,Katima Mulilo
+18300,NA,Katima Mulilo
 18301,FR,Yerres
 18302,AT,Leonding
 18303,IR,Ferdows
@@ -21474,7 +21473,7 @@ lid,c_code,city
 21472,US,Farragut
 21473,IT,Thiene
 21474,US,Highland
-21475,,Grootfontein
+21475,NA,Grootfontein
 21476,UA,Selydove
 21477,TN,El Maknassi
 21478,TD,Fada
@@ -22228,7 +22227,7 @@ lid,c_code,city
 22226,US,Katy
 22227,US,Millbrae
 22228,AR,Nogoyá
-22229,,Ondangwa
+22229,NA,Ondangwa
 22230,IN,Pawni
 22231,ES,Torre del Mar
 22232,CO,Ataco
@@ -22376,7 +22375,7 @@ lid,c_code,city
 22374,PH,Prieto Diaz
 22375,DE,Stadthagen
 22376,IN,Pullappalli
-22377,,Okahandja
+22377,NA,Okahandja
 22378,NO,Røyken
 22379,BE,Zedelgem
 22380,BR,Olindina
@@ -24716,7 +24715,7 @@ lid,c_code,city
 24714,MN,Arvayheer
 24715,MX,Cárdenas
 24716,MY,Kuala Lipis
-24717,,Opuwo
+24717,NA,Opuwo
 24718,PG,Bulolo
 24719,PK,Gahi Mammar
 24720,PT,Alfena
@@ -25095,7 +25094,7 @@ lid,c_code,city
 25093,BR,Ampère
 25094,US,Forest Park
 25095,KZ,Atasū
-25096,,Otjiwarongo
+25096,NA,Otjiwarongo
 25097,UA,Yahotyn
 25098,DE,Bad Aibling
 25099,US,Arvin
@@ -25418,7 +25417,7 @@ lid,c_code,city
 25416,RU,Kirovgrad
 25417,IT,Rovato
 25418,CA,Beaconsfield
-25419,,Tsumeb
+25419,NA,Tsumeb
 25420,BR,Pitimbu
 25421,BE,Sint-Gillis-Waas
 25422,MX,Mapastepec
@@ -25606,7 +25605,7 @@ lid,c_code,city
 25604,MX,Cacahoatán
 25605,US,Uwchlan
 25606,IT,Montemurlo
-25607,,Gobabis
+25607,NA,Gobabis
 25608,US,White Oak
 25609,PL,Bieruń Stary
 25610,UY,Bella Unión
@@ -28271,7 +28270,7 @@ lid,c_code,city
 28269,IN,Kodikulam
 28270,US,Wyckoff
 28271,IT,Cerea
-28272,,Keetmanshoop
+28272,NA,Keetmanshoop
 28273,NL,Rijen
 28274,UG,Busolwe
 28275,UZ,Druzhba
@@ -35052,7 +35051,7 @@ lid,c_code,city
 35050,BR,Conceição do Rio Verde
 35051,KE,Makuyu
 35052,US,Baraboo
-35053,,Lüderitz
+35053,NA,Lüderitz
 35054,AR,La Carlota
 35055,ES,Palos de la Frontera
 35056,JP,Kawamata
@@ -35175,7 +35174,7 @@ lid,c_code,city
 35173,IR,Nāysar
 35174,IN,Thair
 35175,US,Poquoson
-35176,,Mariental
+35176,NA,Mariental
 35177,UA,Kamin-Kashyrskyi
 35178,IN,Tiruppālai
 35179,IN,Chabāl Kalān
@@ -35294,7 +35293,7 @@ lid,c_code,city
 35292,IN,Bairia
 35293,DE,Velten
 35294,IN,Dhansura
-35295,,Oshikango
+35295,NA,Oshikango
 35296,CO,Guática
 35297,CO,Pueblo Rico
 35298,US,Palmer
@@ -36177,7 +36176,7 @@ lid,c_code,city
 36175,MG,Antaritarika
 36176,MG,Befody
 36177,MG,Maromby
-36178,,Omatjete
+36178,NA,Omatjete
 36179,PK,Saidpur
 36180,SD,Umm Badr
 36181,SO,Buqkoosaar
@@ -38630,7 +38629,7 @@ lid,c_code,city
 38628,IN,Bhangha
 38629,IT,Campagnano di Roma
 38630,LB,Sarafand
-38631,,Ongwediva
+38631,NA,Ongwediva
 38632,BR,Guiratinga
 38633,CN,Mêdog
 38634,UA,Zhydachiv
@@ -41444,7 +41443,7 @@ lid,c_code,city
 41442,MX,China
 41443,MY,Padang Besar
 41444,MZ,Závora
-41445,,Outjo
+41445,NA,Outjo
 41446,OM,Al Mazyūnah
 41447,PK,Surmon Chogga Grong
 41448,PK,Basla
@@ -46598,7 +46597,7 @@ lid,c_code,city
 46596,RU,Verkhnevilyuysk
 46597,PG,Lorengau
 46598,KZ,Derzhavīnsk
-46599,,Omaruru
+46599,NA,Omaruru
 46600,ZA,Vanrhynsdorp
 46601,LV,Alūksne
 46602,BT,Punakha
@@ -46633,7 +46632,7 @@ lid,c_code,city
 46631,SI,Zagorje
 46632,AR,Chepes
 46633,JM,Lucea
-46634,,Maltahöhe
+46634,NA,Maltahöhe
 46635,UG,Mitoma
 46636,CN,Gyangzê
 46637,LI,Schaan
@@ -46682,7 +46681,7 @@ lid,c_code,city
 46680,KZ,Fort-Shevchenko
 46681,KE,Mwatate
 46682,EE,Põlva
-46683,,Eenhana
+46683,NA,Eenhana
 46684,AU,Byron Bay
 46685,XK,Mamushë
 46686,LT,Kazlų Rūda
@@ -46721,7 +46720,7 @@ lid,c_code,city
 46719,KZ,Torghay
 46720,LI,Triesen
 46721,SR,Albina
-46722,,Otavi
+46722,NA,Otavi
 46723,CV,Tarrafal
 46724,MV,Thinadhoo
 46725,EE,Jõgeva
@@ -46733,7 +46732,7 @@ lid,c_code,city
 46731,ME,Danilovgrad
 46732,TL,Liquiçá
 46733,RU,Chernyshevskiy
-46734,,Karibib
+46734,NA,Karibib
 46735,PY,Villa del Rosario
 46736,LV,Smiltene
 46737,SI,Rogaška Slatina
@@ -46794,7 +46793,7 @@ lid,c_code,city
 46792,RU,Khatanga
 46793,SI,Prevalje
 46794,AR,Perito Moreno
-46795,,Outapi
+46795,NA,Outapi
 46796,LV,Valka
 46797,RS,Opovo
 46798,KZ,Otar
@@ -46816,7 +46815,7 @@ lid,c_code,city
 46814,RU,Susuman
 46815,LI,Mauren
 46816,MT,Marsa
-46817,,Karasburg
+46817,NA,Karasburg
 46818,BO,Samaipata
 46819,BO,Magdalena
 46820,KZ,Saryshaghan
@@ -46864,8 +46863,8 @@ lid,c_code,city
 46862,SD,Karmah an Nuzul
 46863,SI,Trebnje
 46864,SI,Trzin
-46865,,Oranjemund
-46866,,Bethanie
+46865,NA,Oranjemund
+46866,NA,Bethanie
 46867,MR,Bîr Mogreïn
 46868,LT,Lazdijai
 46869,UG,Butalangu
@@ -46878,7 +46877,7 @@ lid,c_code,city
 46876,UY,Vergara
 46877,SI,Miklavž na Dravskem Polju
 46878,XK,Deçan
-46879,,Omuthiya
+46879,NA,Omuthiya
 46880,SI,Piran
 46881,AZ,Ağdam
 46882,ER,Teseney
@@ -47402,7 +47401,7 @@ lid,c_code,city
 47400,BN,Bangar
 47401,SI,Grad
 47402,RU,Uelen
-47403,,Nkurenkuru
+47403,NA,Nkurenkuru
 47404,SB,Tigoa
 47405,CL,Villa O’Higgins
 47406,AU,Kimba
@@ -47681,7 +47680,7 @@ lid,c_code,city
 47679,MW,Balaka
 47680,MW,Neno
 47681,MW,Chikwawa
-47682,,Usakos
+47682,NA,Usakos
 47683,NC,Wé
 47684,NG,Abakaliki
 47685,NG,Yenagoa
@@ -47867,3 +47866,4 @@ lid,c_code,city
 47865,KR,Muan
 47866,KR,Hongseong
 47867,VI,Charlotte Amalie
+47868,JP,Tokyo

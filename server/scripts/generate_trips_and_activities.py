@@ -100,11 +100,10 @@ activities = [
     'Harvesting {noun}'
 ]
 
-def generate_trip_name_bio():
+def generate_trip_bio():
     random_adjective = random.choice(adjectives)
     random_noun = random.choice(nouns)
-    random_activity = random.choice(activities).format(noun=random_noun)
-    return (f"{random_adjective} {random_noun} Trip", f"{random_activity}")
+    return f"{random_adjective} {random_noun} Trip"
 
 def random_dates():
     min_date = datetime.strptime('2024-01-01', '%Y-%m-%d')
@@ -118,16 +117,16 @@ def random_dates():
 def generate_data():
     trip_data = []
     activity_data = []
-    locations = [lid for lid in range(1,1000)] # only using the first 1000 locations
+    locations = [lid for lid in range(1,100)] # only using the first 100 locations
     
     for tid in range(1,NUM_TRIPS+1):
         lid = random.choice(locations)
-        trip_name, trip_bio = generate_trip_name_bio()
+        bio = generate_trip_bio()
         start_date, end_date = random_dates()
-        trip_data.append((tid, lid, trip_name, trip_bio, start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d')))
+        trip_data.append((tid, lid, bio, start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d')))
 
         # generate activities
-        for a_no in range(1, random.randint(1,MAX_ACTIVITES+1)+1):
+        for a_no in range(1,random.randint(1,MAX_ACTIVITES)):
             random_noun = random.choice(nouns)
             a_description = random.choice(activities).format(noun=random_noun)
 
@@ -149,5 +148,5 @@ trip_data, activity_data = generate_data()
 
 csv_filename = '../data/prod/trips.csv'
 
-write_to_csv('../data/prod/trips.csv', ['tid', 'lid', 'trip_name', 'trip_bio', 'start_date', 'end_date'], trip_data)
+write_to_csv('../data/prod/trips.csv', ['tid', 'lid', 'bio', 'start_date', 'end_date'], trip_data)
 write_to_csv('../data/prod/activities.csv', ['tid', 'a_no', 'a_description', 'dte'], activity_data)
