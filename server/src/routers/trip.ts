@@ -6,14 +6,36 @@ import auth from '../middleware/authMiddleware';
 const router = express.Router();
 
 router.post('/trip', auth, (req, res) => {
-    const { uid, lid, bio } = req.body;
-    const query = 'CALL create_trip (?, ?, ?)';
-    connection.query(query, [uid, lid, bio], (err: Error, results: any[]) => {
+    const { lid, bio, startDate, endDate, invitees } = req.body;
+    const query = 'CALL create_trip (?, ?, ?, ?, ?)';
+
+    connection.query(query, [req.body.user.uid, lid, bio, startDate, endDate], (err: Error, results: any[]) => {
         if (err) {
             console.error(err);
             return res.status(500).send('An error occurred while creating trip');
         }
-        res.status(200).json(results);
+        console.log(results);
+        const tid = results[0][0].tid;
+
+        for (let i = 0; i < invitees.length; i++) {
+            const uidQuery = 'CALL search_user_email (?)';
+            connection.query(uidQuery, [invitees[i]], (err: Error, results: any[]) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).send('An error occurred while searching for user');
+                }
+                const uid = results[0][0].uid;
+                const query = 'CALL add_trip_member (?, ?)';
+                connection.query(query, [tid, uid], (err: Error, results: any[]) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send('An error occurred while adding members');
+                    }
+                });
+            });
+        }
+
+        res.status(200).send(results);
     });
 });
 
