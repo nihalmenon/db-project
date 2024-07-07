@@ -6,6 +6,8 @@ const endpoints = {
     login: "login",
     me: "me",
     myTrips: "trips",
+    locations: "locations",
+    suggestedInvitees: "suggestedInvitees"
 }
 
 export { baseApiUrl, endpoints };

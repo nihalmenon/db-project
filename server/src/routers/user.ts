@@ -38,7 +38,7 @@ router.post('/login', (req, res) => {
             return res.status(500).send('An error occurred.');
         }
 
-        if (results.length === 0) {
+        if (results[0].length === 0) {
             return res.status(401).send('Invalid email or password.');
         }
         
@@ -53,6 +53,19 @@ router.post('/login', (req, res) => {
 
         const token = jwt.sign({ uid: user.uid }, process.env.JWT_SECRET ? process.env.JWT_SECRET : "", { expiresIn: '12h' });
         res.status(200).json({ token });
+    });
+});
+
+// get friends of friends
+router.get("/suggestedInvitees", auth, (req, res) => {
+    const query = 'CALL suggested_members(?)';
+    connection.query(query, [req.body.user.uid], (err: Error, results: any[]) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('An error occurred.');
+        }
+
+        res.status(200).send(results[0]);
     });
 });
 

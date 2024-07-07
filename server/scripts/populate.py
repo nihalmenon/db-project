@@ -23,7 +23,10 @@ config = {
 PROD_DATA_DIR = "prod"
 SAMPLE_DATA_DIR = "sample"
 
-dirpath = f"../data/{PROD_DATA_DIR if os.getenv("DB_ENV") == "prod" else SAMPLE_DATA_DIR}"
+db_env = PROD_DATA_DIR if os.getenv("DB_ENV") == "prod" else SAMPLE_DATA_DIR
+
+dirpath = "../data/" + db_env
+
 csv_files = {
     'users': f"{dirpath}/users.csv",
     'countries': f"{dirpath}/countries.csv",
