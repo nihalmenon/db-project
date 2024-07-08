@@ -22,12 +22,12 @@ export interface Trip {
     start_date: string,
     end_date: string,
     bio: string,
+    itinerary: Activity[],
 }
 
 export interface ConnectData {
     trip: Trip,
     pastTrips: Trip[],
     users: User[],
-    itinerary: Activity[],
 }
 
