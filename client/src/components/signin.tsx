@@ -20,6 +20,7 @@ import { loginUser } from "../actions/user";
 
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -50,7 +51,7 @@ export const SignIn = () => {
         localStorage.setItem("authToken", authToken);
         navigate("/dashboard");
       }else {
-        setError("Invalid email or password.");
+        toast.error("Invalid email or password.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -119,7 +120,6 @@ export const SignIn = () => {
                 <FormHelperText textAlign="right">
                   {/* <Link>forgot password?</Link> */}
                 </FormHelperText>
-                {error && <FormErrorMessage>{error}</FormErrorMessage>}
               </FormControl>
               <Button
                 borderRadius={0}

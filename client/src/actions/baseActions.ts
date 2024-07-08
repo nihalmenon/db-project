@@ -13,8 +13,8 @@ const get = (endpoint: string, config?: AxiosRequestConfig) => {
   return axios.get(fullEndpoint(endpoint), config);
 }
 
-const post = (endpoint: string, data?: AxiosRequestConfig) => {
-  return axios.post(fullEndpoint(endpoint), data);
+const post = (endpoint: string, data: any, config?: AxiosRequestConfig) => {
+  return axios.post(fullEndpoint(endpoint), data, config);
 }
 
 export { get, post };

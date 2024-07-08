@@ -1,0 +1,73 @@
+tid,start_date,a_description,dte,end_date,lid,city,c_name,uid,first_name,last_name,socials,query
+,,,,,,,,,,,,call search_match_trips(4)
+398,2024-02-18,Exploring ancient Trail,2024-02-29,2024-03-01,69,Riyadh,Saudi Arabia,400,Ryan,Patterson,@ryan.patterson76
+398,2024-02-18,Trekking through the Trail,2024-02-18,2024-03-01,69,Riyadh,Saudi Arabia,400,Ryan,Patterson,@ryan.patterson76
+398,2024-02-18,Exploring ancient Environment,2024-02-20,2024-03-01,69,Riyadh,Saudi Arabia,400,Ryan,Patterson,@ryan.patterson76
+398,2024-02-18,Rock climbing in the Market,2024-02-27,2024-03-01,69,Riyadh,Saudi Arabia,400,Ryan,Patterson,@ryan.patterson76
+398,2024-02-18,Stargazing in the Harbor,2024-02-28,2024-03-01,69,Riyadh,Saudi Arabia,400,Ryan,Patterson,@ryan.patterson76
+398,2024-02-18,Sailing in the Mountain,2024-02-29,2024-03-01,69,Riyadh,Saudi Arabia,400,Ryan,Patterson,@ryan.patterson76
+398,2024-02-18,Birdwatching in the Garden,2024-02-20,2024-03-01,69,Riyadh,Saudi Arabia,400,Ryan,Patterson,@ryan.patterson76
+398,2024-02-18,Trekking through the Creek,2024-02-26,2024-03-01,69,Riyadh,Saudi Arabia,400,Ryan,Patterson,@ryan.patterson76
+601,2024-03-13,Shopping in Cove,2024-03-14,2024-03-31,69,Riyadh,Saudi Arabia,392,Kathleen,Ross,@kathleen.ross12
+601,2024-03-13,Visiting sacred Inlet,2024-03-29,2024-03-31,69,Riyadh,Saudi Arabia,392,Kathleen,Ross,@kathleen.ross12
+601,2024-03-13,Cruising along the Safari,2024-03-31,2024-03-31,69,Riyadh,Saudi Arabia,392,Kathleen,Ross,@kathleen.ross12
+601,2024-03-13,Zip-lining through the Sound,2024-03-20,2024-03-31,69,Riyadh,Saudi Arabia,392,Kathleen,Ross,@kathleen.ross12
+601,2024-03-13,Rafting in the Countryside,2024-03-16,2024-03-31,69,Riyadh,Saudi Arabia,392,Kathleen,Ross,@kathleen.ross12
+601,2024-03-13,Rock climbing in the Coast,2024-03-27,2024-03-31,69,Riyadh,Saudi Arabia,392,Kathleen,Ross,@kathleen.ross12
+601,2024-03-13,Visiting Glacier attractions,2024-03-24,2024-03-31,69,Riyadh,Saudi Arabia,392,Kathleen,Ross,@kathleen.ross12
+601,2024-03-13,Shopping in Cove,2024-03-14,2024-03-31,69,Riyadh,Saudi Arabia,438,Sarah,Erickson,@sarah.erickson86
+601,2024-03-13,Visiting sacred Inlet,2024-03-29,2024-03-31,69,Riyadh,Saudi Arabia,438,Sarah,Erickson,@sarah.erickson86
+601,2024-03-13,Cruising along the Safari,2024-03-31,2024-03-31,69,Riyadh,Saudi Arabia,438,Sarah,Erickson,@sarah.erickson86
+601,2024-03-13,Zip-lining through the Sound,2024-03-20,2024-03-31,69,Riyadh,Saudi Arabia,438,Sarah,Erickson,@sarah.erickson86
+601,2024-03-13,Rafting in the Countryside,2024-03-16,2024-03-31,69,Riyadh,Saudi Arabia,438,Sarah,Erickson,@sarah.erickson86
+601,2024-03-13,Rock climbing in the Coast,2024-03-27,2024-03-31,69,Riyadh,Saudi Arabia,438,Sarah,Erickson,@sarah.erickson86
+601,2024-03-13,Visiting Glacier attractions,2024-03-24,2024-03-31,69,Riyadh,Saudi Arabia,438,Sarah,Erickson,@sarah.erickson86
+601,2024-03-13,Shopping in Cove,2024-03-14,2024-03-31,69,Riyadh,Saudi Arabia,469,Brent,Romero,@brent.romero81
+601,2024-03-13,Visiting sacred Inlet,2024-03-29,2024-03-31,69,Riyadh,Saudi Arabia,469,Brent,Romero,@brent.romero81
+601,2024-03-13,Cruising along the Safari,2024-03-31,2024-03-31,69,Riyadh,Saudi Arabia,469,Brent,Romero,@brent.romero81
+601,2024-03-13,Zip-lining through the Sound,2024-03-20,2024-03-31,69,Riyadh,Saudi Arabia,469,Brent,Romero,@brent.romero81
+601,2024-03-13,Rafting in the Countryside,2024-03-16,2024-03-31,69,Riyadh,Saudi Arabia,469,Brent,Romero,@brent.romero81
+601,2024-03-13,Rock climbing in the Coast,2024-03-27,2024-03-31,69,Riyadh,Saudi Arabia,469,Brent,Romero,@brent.romero81
+601,2024-03-13,Visiting Glacier attractions,2024-03-24,2024-03-31,69,Riyadh,Saudi Arabia,469,Brent,Romero,@brent.romero81
+612,2024-02-25,Exploring local Oasis markets,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,118,Joe,Woodard,@joe.woodard87
+612,2024-02-25,Participating in Ranch workshops,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,118,Joe,Woodard,@joe.woodard87
+612,2024-02-25,Skiing in the Bazaar,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,118,Joe,Woodard,@joe.woodard87
+612,2024-02-25,Skiing in the Temple,2024-03-09,2024-03-12,69,Riyadh,Saudi Arabia,118,Joe,Woodard,@joe.woodard87
+612,2024-02-25,Watching wildlife in the Steppe,2024-03-05,2024-03-12,69,Riyadh,Saudi Arabia,118,Joe,Woodard,@joe.woodard87
+612,2024-02-25,Sailing in the Meadow,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,118,Joe,Woodard,@joe.woodard87
+612,2024-02-25,Birdwatching in the Market,2024-03-02,2024-03-12,69,Riyadh,Saudi Arabia,118,Joe,Woodard,@joe.woodard87
+612,2024-02-25,Exploring local Oasis markets,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,247,Lori,Ortiz,@lori.ortiz44
+612,2024-02-25,Participating in Ranch workshops,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,247,Lori,Ortiz,@lori.ortiz44
+612,2024-02-25,Skiing in the Bazaar,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,247,Lori,Ortiz,@lori.ortiz44
+612,2024-02-25,Skiing in the Temple,2024-03-09,2024-03-12,69,Riyadh,Saudi Arabia,247,Lori,Ortiz,@lori.ortiz44
+612,2024-02-25,Watching wildlife in the Steppe,2024-03-05,2024-03-12,69,Riyadh,Saudi Arabia,247,Lori,Ortiz,@lori.ortiz44
+612,2024-02-25,Sailing in the Meadow,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,247,Lori,Ortiz,@lori.ortiz44
+612,2024-02-25,Birdwatching in the Market,2024-03-02,2024-03-12,69,Riyadh,Saudi Arabia,247,Lori,Ortiz,@lori.ortiz44
+612,2024-02-25,Exploring local Oasis markets,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,719,Nicholas,Robinson,@nicholas.robinson84
+612,2024-02-25,Participating in Ranch workshops,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,719,Nicholas,Robinson,@nicholas.robinson84
+612,2024-02-25,Skiing in the Bazaar,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,719,Nicholas,Robinson,@nicholas.robinson84
+612,2024-02-25,Skiing in the Temple,2024-03-09,2024-03-12,69,Riyadh,Saudi Arabia,719,Nicholas,Robinson,@nicholas.robinson84
+612,2024-02-25,Watching wildlife in the Steppe,2024-03-05,2024-03-12,69,Riyadh,Saudi Arabia,719,Nicholas,Robinson,@nicholas.robinson84
+612,2024-02-25,Sailing in the Meadow,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,719,Nicholas,Robinson,@nicholas.robinson84
+612,2024-02-25,Birdwatching in the Market,2024-03-02,2024-03-12,69,Riyadh,Saudi Arabia,719,Nicholas,Robinson,@nicholas.robinson84
+612,2024-02-25,Exploring local Oasis markets,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,815,Jordan,Fischer,@jordan.fischer46
+612,2024-02-25,Participating in Ranch workshops,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,815,Jordan,Fischer,@jordan.fischer46
+612,2024-02-25,Skiing in the Bazaar,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,815,Jordan,Fischer,@jordan.fischer46
+612,2024-02-25,Skiing in the Temple,2024-03-09,2024-03-12,69,Riyadh,Saudi Arabia,815,Jordan,Fischer,@jordan.fischer46
+612,2024-02-25,Watching wildlife in the Steppe,2024-03-05,2024-03-12,69,Riyadh,Saudi Arabia,815,Jordan,Fischer,@jordan.fischer46
+612,2024-02-25,Sailing in the Meadow,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,815,Jordan,Fischer,@jordan.fischer46
+612,2024-02-25,Birdwatching in the Market,2024-03-02,2024-03-12,69,Riyadh,Saudi Arabia,815,Jordan,Fischer,@jordan.fischer46
+612,2024-02-25,Exploring local Oasis markets,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,881,Jonathan,Smith,@jonathan.smith89
+612,2024-02-25,Participating in Ranch workshops,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,881,Jonathan,Smith,@jonathan.smith89
+612,2024-02-25,Skiing in the Bazaar,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,881,Jonathan,Smith,@jonathan.smith89
+612,2024-02-25,Skiing in the Temple,2024-03-09,2024-03-12,69,Riyadh,Saudi Arabia,881,Jonathan,Smith,@jonathan.smith89
+612,2024-02-25,Watching wildlife in the Steppe,2024-03-05,2024-03-12,69,Riyadh,Saudi Arabia,881,Jonathan,Smith,@jonathan.smith89
+612,2024-02-25,Sailing in the Meadow,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,881,Jonathan,Smith,@jonathan.smith89
+612,2024-02-25,Birdwatching in the Market,2024-03-02,2024-03-12,69,Riyadh,Saudi Arabia,881,Jonathan,Smith,@jonathan.smith89
+612,2024-02-25,Exploring local Oasis markets,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,971,Abigail,Cooper,@abigail.cooper78
+612,2024-02-25,Participating in Ranch workshops,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,971,Abigail,Cooper,@abigail.cooper78
+612,2024-02-25,Skiing in the Bazaar,2024-03-10,2024-03-12,69,Riyadh,Saudi Arabia,971,Abigail,Cooper,@abigail.cooper78
+612,2024-02-25,Skiing in the Temple,2024-03-09,2024-03-12,69,Riyadh,Saudi Arabia,971,Abigail,Cooper,@abigail.cooper78
+612,2024-02-25,Watching wildlife in the Steppe,2024-03-05,2024-03-12,69,Riyadh,Saudi Arabia,971,Abigail,Cooper,@abigail.cooper78
+612,2024-02-25,Sailing in the Meadow,2024-03-06,2024-03-12,69,Riyadh,Saudi Arabia,971,Abigail,Cooper,@abigail.cooper78
+612,2024-02-25,Birdwatching in the Market,2024-03-02,2024-03-12,69,Riyadh,Saudi Arabia,971,Abigail,Cooper,@abigail.cooper78

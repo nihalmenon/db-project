@@ -1,0 +1,5 @@
+lid,city,c_name,trip_count,query
+,,,,"call popular_destinations(30,45,m)"
+1,Paris,France,2
+3,Maldives,Maldives,2
+2,Denver,United States,1

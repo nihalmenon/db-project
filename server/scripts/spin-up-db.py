@@ -37,7 +37,7 @@ try:
                     cursor.execute(f.read(), multi=True)
                 cnx.commit()
         except mysql.connector.Error as err:
-            # print('{} {}'.format(os.path.basename(sql_file), err))
+            print('{} {}'.format(os.path.basename(sql_file), err))
             pass
 except mysql.connector.Error as err:
     print(err)

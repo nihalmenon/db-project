@@ -1,0 +1,5 @@
+trip_id,location_id,city_name,country_name,activity_description,activity_date,query
+,,,,,,call group_shared_past_trips(6)
+1,1,Paris,France,Cruise on the Seine River,2024-01-04
+1,1,Paris,France,Tour the Louvre Museum,2024-01-03
+1,1,Paris,France,Visit the Eiffel Tower,2024-01-02

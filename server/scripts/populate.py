@@ -21,11 +21,11 @@ config = {
 
 # Paths to your CSV files
 PROD_DATA_DIR = "prod"
-SAMPLE_DATA_DIR = "test"
+SAMPLE_DATA_DIR = "sample"
 
-data_dir = PROD_DATA_DIR if os.getenv("DEV_ENV") == "prod" else SAMPLE_DATA_DIR
+db_env = PROD_DATA_DIR if os.getenv("DB_ENV") == "prod" else SAMPLE_DATA_DIR
 
-dirpath = "../data/" + data_dir
+dirpath = "../data/" + db_env
 
 csv_files = {
     'users': f"{dirpath}/users.csv",

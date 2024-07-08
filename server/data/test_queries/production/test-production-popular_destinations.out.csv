@@ -1,0 +1,12 @@
+lid,city,c_name,trip_count,query
+,,,,"call popular_destinations(30,45,m)"
+27,Kinshasa,Democratic Republic of the Congo,21
+56,Nanjing,China,17
+12,Dhaka,Bangladesh,13
+13,Beijing,China,13
+48,Luanda,Angola,13
+76,Bijie,China,13
+94,Dallas,United States of America,12
+98,Qujing,China,12
+91,Liaocheng,China,12
+58,Hanoi,Viet Nam,11

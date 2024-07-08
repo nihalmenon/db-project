@@ -1,0 +1,44 @@
+{
+    "search_match_trips": {
+        "sql": "call search_match_trips(%s)",
+        "params": {
+            "sample": [4],
+            "prod": [4]
+        }
+    },
+    "popular_destinations": {
+        "sql": "call popular_destinations(%s,%s,%s)",
+        "params": {
+            "sample": [30, 45, "m"],
+            "prod": [30, 45, "m"]
+        }
+    },
+    "suggested_members": {
+        "sql": "call suggested_members(%s)",
+        "params": {
+            "sample": [5],
+            "prod": [5]
+        }
+    },
+    "popular_activities": {
+        "sql": "call popular_activities(%s)",
+        "params": {
+            "sample": [5],
+            "prod": [5]
+        }
+    },
+    "group_shared_past_trips": {
+        "sql": "call group_shared_past_trips(%s)",
+        "params": {
+            "sample": [6],
+            "prod": [666]
+        }
+    },
+    "average_duration": {
+        "sql": "call average_duration(%s)",
+        "params": {
+            "sample": [2],
+            "prod": [2]
+        }
+    }
+}
