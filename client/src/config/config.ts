@@ -9,7 +9,7 @@ const endpoints = {
   locations: "locations",
   suggestedInvitees: "suggestedInvitees",
   match: "match",
-  createTrip: "trip",
+  createTrip: "trip"
 };
 
 export { baseApiUrl, endpoints };
