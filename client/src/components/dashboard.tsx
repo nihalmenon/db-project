@@ -6,7 +6,10 @@ import { Button, Box, Heading, Text, List, ListItem, Divider, Flex, Center, useC
 export const Dashboard = () => {
   const [user, setUser] = useState<any>({});
   const [trips, setTrips] = useState<any[]>([]);
+
+  const [selectedTripId, setSelectedTripId] = useState("");
   const navigate = useNavigate();
+
   const theme = useTheme(); // Access Chakra UI theme
   const bg = useColorModeValue("white", "#1A202C");
   const cardBg = useColorModeValue("#EDF2F7", "#2D3748");
@@ -48,6 +51,19 @@ export const Dashboard = () => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
     return date.toLocaleDateString(undefined, options);
   };
+  const upcomingTrips = trips.filter(trip => new Date(trip.start_date) > new Date());
+  const previousTrips = trips.filter(trip => new Date(trip.start_date) < new Date());
+
+  const handleTripClick = (tripId: string) => {
+    setSelectedTripId(tripId);
+    navigate("/tripview", { state: { tripId } });
+  }
+  const handleLogout = () => {
+    // Implement your logout logic here
+    console.log("Logging out...");
+    localStorage.removeItem('authToken');
+    navigate('/signin');
+  };
 
   useEffect(() => {
     fetchUserDetails();
@@ -56,15 +72,35 @@ export const Dashboard = () => {
 
   return (
     <Box p={5} bg={bg} minH="100vh">
-      <Heading mb={6} color={theme.colors.accent}>Dashboard</Heading>
-      
-      <Flex justify="space-between" align="center" mb={6}>
-        <Box flex="1">
-          {/* Placeholder to push buttons to the right */}
-        </Box>
-        <Flex>
-          <Button backgroundColor={theme.colors.dark} color={theme.colors.light} onClick={() => navigate('/update-user')} mr={2}>My Profile</Button>
-          <Button backgroundColor={theme.colors.dark} color={theme.colors.light} onClick={() => navigate('/addtrip')}>Add New Trip</Button>
+      <Flex justify="space-between" alignItems="center" mb={6}>
+        <Heading color={theme.colors.accent}>Dashboard</Heading>
+        <Flex flexDirection="column" alignItems="flex-end">
+        <Button
+            backgroundColor={theme.colors.dark}
+            color={theme.colors.light}
+            onClick={handleLogout}
+            size="md"
+            mb={2}
+          >
+            Logout
+          </Button>
+          <Button
+            backgroundColor={theme.colors.dark}
+            color={theme.colors.light}
+            onClick={() => navigate('/profile')}
+            size="md"
+            mb={2}
+          >
+            My Profile
+          </Button>
+          <Button
+            backgroundColor={theme.colors.dark}
+            color={theme.colors.light}
+            onClick={() => navigate('/addtrip')}
+            size="md"
+          >
+            Add New Trip
+          </Button>
         </Flex>
       </Flex>
 
@@ -75,7 +111,7 @@ export const Dashboard = () => {
           <Box>
             <Heading size="lg" mb={4} color={theme.colors.dark}>Upcoming Trips</Heading>
             <List spacing={4}>
-              {trips.map((trip, index) => (
+              {upcomingTrips.map((trip, index) => (
                 <ListItem key={index} bg={theme.colors.light} p={4} borderRadius="md" shadow="md">
                   <Flex align="center" justify="space-between" mb={2}>
                     <Heading size="md" color={theme.colors.highlight}>Trip {index + 1}</Heading>
@@ -100,8 +136,8 @@ export const Dashboard = () => {
           <Box>
             <Heading size="lg" mb={4} color={theme.colors.dark}>Previous Trips</Heading>
             <List spacing={4}>
-              {trips.map((trip, index) => (
-                <ListItem key={index} bg={theme.colors.light} p={4} borderRadius="md" shadow="md">
+              {previousTrips.map((trip, index) => (
+                <ListItem key={index} bg={theme.colors.light} p={4} borderRadius="md" shadow="md" onClick={() => handleTripClick(trip.tid)}>
                   <Flex align="center" justify="space-between" mb={2}>
                     <Heading size="md" color={theme.colors.highlight}>Trip {index + 1}</Heading>
                     <Text fontSize="sm" color="black">{formatDate(trip.start_date)} - {formatDate(trip.end_date)}</Text>

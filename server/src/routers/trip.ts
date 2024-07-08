@@ -68,7 +68,7 @@ router.get('/trip', auth, (req, res) => {
 router.get('/match', auth, (req, res) => {
     // given a trip id, return all matching trips
     const query = 'CALL search_match_trips (?)';
-    connection.query(query, [req.body.tid], (err: Error, results: any[]) => {
+    connection.query(query, [req.query.tid], (err: Error, results: any[]) => {
         if (err) {
             console.error(err);
             return res.status(500).send('An error occurred while fetching matches.');
