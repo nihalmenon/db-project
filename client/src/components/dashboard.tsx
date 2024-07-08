@@ -2,9 +2,10 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { getUserDetails, getUserTrips } from '../actions/user';
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, Heading, Text, List, ListItem, Divider, Flex, Center, useColorModeValue, useTheme } from "@chakra-ui/react";
+import { useUser } from '../hooks/useUser';
 
 export const Dashboard = () => {
-  const [user, setUser] = useState<any>({});
+  const user = useUser();
   const [trips, setTrips] = useState<any[]>([]);
 
   const [selectedTripId, setSelectedTripId] = useState("");
@@ -13,23 +14,6 @@ export const Dashboard = () => {
   const theme = useTheme(); // Access Chakra UI theme
   const bg = useColorModeValue("white", "#1A202C");
   const cardBg = useColorModeValue("#EDF2F7", "#2D3748");
-
-  const fetchUserDetails = useCallback(async () => {
-    const token = localStorage.getItem('authToken');
-    try {
-      const response = await getUserDetails(token ? token : "");
-      if (response.status === 200) {
-        setUser(response.data.user);
-        console.log("User details fetched successfully");
-        console.log(response.data);
-      } else {
-        navigate('/signin');
-      }
-    } catch (error) {
-      console.error("Error fetching user details", error);
-      navigate('/signin');
-    }
-  }, [navigate]);
 
   const fetchTrips = useCallback(async () => {
     const token = localStorage.getItem('authToken');
@@ -66,9 +50,8 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchUserDetails();
     fetchTrips();
-  }, [fetchUserDetails, fetchTrips]);
+  }, [fetchTrips]);
 
   return (
     <Box p={5} bg={bg} minH="100vh">

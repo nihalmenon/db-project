@@ -8,6 +8,7 @@ import {AddTrip} from "./components/addTrip";
 import { UpdateUser } from "./components/updateUser"
 import {Layout} from "./components/layout";
 import {TripView} from "./components/tripView";
+import Connect from "./components/connect";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "./App.css";
@@ -24,6 +25,7 @@ function App() {
             <Route path="addtrip" element={<AddTrip />} /> 
             <Route path="tripview" element={<TripView />} />
             <Route path="updateuser" element={<UpdateUser />} />  
+            <Route path="connect" element={<Connect />}/>
           </Route>      
         </Routes>
       </Router>
