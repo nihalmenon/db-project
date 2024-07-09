@@ -13,7 +13,8 @@ import {
   FormControl,
   FormHelperText,
   InputRightElement,
-  FormErrorMessage
+  useTheme,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 
 import { loginUser } from "../actions/user";
@@ -31,6 +32,7 @@ export const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -50,7 +52,7 @@ export const SignIn = () => {
         const authToken = response.data.token;
         localStorage.setItem("authToken", authToken);
         navigate("/dashboard");
-      }else {
+      } else {
         toast.error("Invalid email or password.");
       }
     } catch (error) {
@@ -64,7 +66,6 @@ export const SignIn = () => {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      backgroundColor="gray.200"
       justifyContent="center"
       alignItems="center"
     >
@@ -74,20 +75,20 @@ export const SignIn = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Heading color="teal.400">Sign In</Heading>
+        <Heading color={theme.colors.primary}>Sign In</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit}>
             <Stack
               spacing={4}
               p="1rem"
-              backgroundColor="whiteAlpha.900"
+              backgroundColor={theme.colors.accent2}
               boxShadow="md"
             >
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
+                    children={<CFaUserAlt color={theme.colors.primary} />}
                   />
                   <Input
                     type="email"
@@ -103,7 +104,7 @@ export const SignIn = () => {
                   <InputLeftElement
                     pointerEvents="none"
                     color="gray.300"
-                    children={<CFaLock color="gray.300" />}
+                    children={<CFaLock color={theme.colors.primary} />}
                   />
                   <Input
                     type={showPassword ? "text" : "password"}
@@ -112,7 +113,17 @@ export const SignIn = () => {
                     required
                   />
                   <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      onClick={handleShowClick}
+                      backgroundColor={theme.colors.primary}
+                      color={theme.colors.textlight}
+                      _hover={{
+                        backgroundColor: theme.colors.secondary,
+                        transition: "background-color 0.3s ease",
+                      }}
+                    >
                       {showPassword ? "Hide" : "Show"}
                     </Button>
                   </InputRightElement>
@@ -125,7 +136,12 @@ export const SignIn = () => {
                 borderRadius={0}
                 type="submit"
                 variant="solid"
-                colorScheme="teal"
+                backgroundColor={theme.colors.primary}
+                color={theme.colors.textlight}
+                _hover={{
+                  backgroundColor: theme.colors.secondary,
+                  transition: "background-color 0.3s ease",
+                }}
                 width="full"
               >
                 Login
@@ -136,7 +152,12 @@ export const SignIn = () => {
       </Stack>
       <Box>
         New to us?{" "}
-        <Link as={RouterLink} to="/signup" color="teal.500" href="#">
+        <Link
+          as={RouterLink}
+          to="/signup"
+          color={theme.colors.highlight}
+          href="#"
+        >
           Sign Up
         </Link>
       </Box>
