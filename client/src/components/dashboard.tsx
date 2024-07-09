@@ -144,6 +144,7 @@ export const Dashboard = () => {
                   </Text>
                 </Flex>
                 <Text color={theme.colors.primary}>{trip.bio}</Text>
+                <Button>test</Button>
               </ListItem>
             ))}
           </List>
