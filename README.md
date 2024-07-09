@@ -23,7 +23,7 @@ $ npm start
    
   - Production Data:
   
-    In the "server" directory, create a ".env" file and add
+    In the `server` directory, create a `.env` file and add
     ```
     DEV_ENV=prod
     ```
