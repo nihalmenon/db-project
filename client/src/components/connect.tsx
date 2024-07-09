@@ -1,7 +1,10 @@
 import { Box, Heading, useTheme, Text, Card, CardHeader, CardBody, CardFooter, Button, SimpleGrid, Stack, ButtonGroup, Divider, Image } from "@chakra-ui/react"
 import { useUser } from "../hooks/useUser";
-import { ConnectData, User } from "../interfaces/connectInterfaces";
+import { ConnectData, Trip, User } from "../interfaces/connectInterfaces";
 import { getAge } from "../utils/commonFunctions";
+import { ThemeButton } from "./themeButton";
+import { useState } from "react";
+import { TripDetailsModal } from "./tripDetailsModal";
 
 const TEST_DATA: ConnectData[] = [
   {
@@ -66,7 +69,9 @@ const TEST_DATA: ConnectData[] = [
 export const Connect = () => {
   const user = useUser();
   const theme = useTheme(); // Access Chakra UI theme
-  
+  const [isOpenDetailsModal, setIsOpenDetailsModal] = useState<boolean>(false);
+  const [isOpenPastTripsModal, setIsOpenPastTripsModal] = useState<boolean>(false);
+
   const connectData: ConnectData[] = TEST_DATA;
 
   return (
@@ -101,12 +106,8 @@ export const Connect = () => {
 
                 <CardFooter pt={0}>
                   <ButtonGroup spacing={4}>
-                    <Button variant='solid' colorScheme='blue'>
-                      Trip Details
-                    </Button>
-                    <Button variant='solid' colorScheme='blue'>
-                      Past Trips
-                    </Button>
+                    <ThemeButton onClick={() => setIsOpenDetailsModal(true)}>View Details</ThemeButton>
+                    <ThemeButton>Past Trips</ThemeButton>
                   </ButtonGroup>
 
                 </CardFooter>
@@ -115,6 +116,7 @@ export const Connect = () => {
           ))
         }
       </SimpleGrid>
+      <TripDetailsModal isOpen={isOpenDetailsModal} onClose={() => setIsOpenDetailsModal(false)} trip={{} as Trip} />
     </Box>
   );
 };

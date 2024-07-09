@@ -2,8 +2,8 @@ import { Button, useTheme } from "@chakra-ui/react"
 import { ReactNode } from "react"
 
 export interface ThemeButtonProps {
-    onClick: () => void, 
-    children: ReactNode,
+    onClick?: () => void, 
+    children?: ReactNode,
 }
 
 export const ThemeButton = ({ onClick, children }: ThemeButtonProps) => {

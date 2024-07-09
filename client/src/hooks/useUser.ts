@@ -13,7 +13,6 @@ export const useUser = () => {
           if (response.status === 200) {
             setUser(response.data.user);
             console.log("User details fetched successfully");
-            console.log(response.data);
           } else {
             navigate('/signin');
           }
