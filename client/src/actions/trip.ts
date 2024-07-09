@@ -5,4 +5,8 @@ const createTrip = (token: string, trip: any) => {
     return base.post(endpoints.createTrip, trip, { headers: { authorization: `Bearer ${token}`}});
 }
 
-export { createTrip };
+const getConnectData = (tid: number): any => {
+    return base.get(endpoints.connect, { params: tid });
+}
+
+export { createTrip, getConnectData };

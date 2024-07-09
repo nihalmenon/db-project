@@ -6,6 +6,7 @@ import { ThemeButton } from "./themeButton";
 import { useEffect, useState } from "react";
 import { TripDetailsModal } from "./tripDetailsModal";
 import { useLocation } from "react-router-dom";
+import { useConnectData } from "../hooks/useConnectData";
 
 const TEST_DATA: ConnectData[] = [
   {
@@ -75,6 +76,7 @@ export const Connect = () => {
   const [selectedTrip, setSelectedTrip] = useState<Trip>({} as Trip);
   const location = useLocation();
   const { trip } = location.state;
+  const connectData = useConnectData(trip.tid);
 
   const openDetailsModal = (trip: Trip) => {
     setSelectedTrip(trip);
@@ -86,7 +88,6 @@ export const Connect = () => {
     setIsOpenDetailsModal(false);
   }
 
-  const connectData: ConnectData[] = TEST_DATA;
 
   return (
     <Box p={5} minH="100vh">
@@ -95,7 +96,7 @@ export const Connect = () => {
 
       <SimpleGrid spacing={4} mt={10} templateColumns='repeat(auto-fill, 100%)'>
         {
-          connectData.map(connect => (
+          connectData?.map(connect => (
             <Card
               key={connect.trip.tid}
               direction={{ base: 'column', sm: 'row' }}

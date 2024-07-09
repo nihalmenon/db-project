@@ -68,8 +68,7 @@ router.get('/match', auth, (req, res) => {
 });
 
 
-router.get('/connect/:tid', auth, async (req, res) => {
-
+router.get('/connect', auth, async (req, res) => {
     if (!req.params.tid) return res.status(400).send('A trip id is required.');
 
     try {
@@ -118,7 +117,6 @@ router.get('/connect/:tid', auth, async (req, res) => {
                 prevTid = pastTrips[j].tid;
             }
         }
-        
         return res.status(200).send(trips);
     } catch (err) {
         console.error(err);
