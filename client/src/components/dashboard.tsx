@@ -20,27 +20,26 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton
+  ModalCloseButton, 
+  useTheme,
 } from "@chakra-ui/react";
 
 export const Dashboard = () => {
   const [user, setUser] = useState<any>({});
   const [trips, setTrips] = useState<any[]>([]);
-
   const [selectedTripId, setSelectedTripId] = useState("");
   const [selectedTrip, setSelectedTrip] = useState<any>(null);
   const [tripItinerary, setItinerary] = useState<any[]>([]);
 
   const navigate = useNavigate();
 
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const theme = useTheme(); // Access Chakra UI theme
-  const bg = useColorModeValue("white", "#1A202C");
-  const cardBg = useColorModeValue("#EDF2F7", "#2D3748");
 
   const fetchUserDetails = useCallback(async () => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
     try {
       const response = await getUserDetails(token ? token : "");
       if (response.status === 200) {
@@ -48,16 +47,16 @@ export const Dashboard = () => {
         console.log("User details fetched successfully");
         console.log(response.data);
       } else {
-        navigate('/signin');
+        navigate("/signin");
       }
     } catch (error) {
       console.error("Error fetching user details", error);
-      navigate('/signin');
+      navigate("/signin");
     }
   }, [navigate]);
 
   const fetchTrips = useCallback(async () => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
     try {
       const response = await getUserTrips(token ? token : "");
       if (response.status === 200) {
@@ -73,11 +72,29 @@ export const Dashboard = () => {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
     return date.toLocaleDateString(undefined, options);
   };
-  const upcomingTrips = trips.filter(trip => new Date(trip.start_date) > new Date());
-  const previousTrips = trips.filter(trip => new Date(trip.start_date) < new Date());
+
+  const upcomingTrips = trips.filter(
+    (trip) => new Date(trip.start_date) > new Date()
+  );
+  const previousTrips = trips.filter(
+    (trip) => new Date(trip.start_date) < new Date()
+  );
+
+  useEffect(() => {
+    fetchUserDetails();
+    fetchTrips();
+  }, [fetchUserDetails, fetchTrips]);
+
+  // Determine background color for upcoming trips based on previous trips
+  const upcomingBackgroundColor =
+    previousTrips.length > 0 ? theme.colors.secondary : theme.colors.accent;
 
   const handleTripClick = (tripId: string) => {
     setSelectedTripId(tripId);
@@ -102,42 +119,49 @@ export const Dashboard = () => {
 
   const handleLogout = () => {
     console.log("Logging out...");
-    localStorage.removeItem('authToken');
-    navigate('/signin');
+    localStorage.removeItem("authToken");
+    navigate("/signin");
   };
 
-  useEffect(() => {
-    fetchUserDetails();
-    fetchTrips();
-  }, [fetchUserDetails, fetchTrips]);
-
   return (
-    <Box p={5} bg={bg} minH="200vh">
+    <Box p={5} minH="100vh">
       <Flex justify="space-between" alignItems="center" mb={6}>
-        <Heading color={theme.colors.accent}>Dashboard</Heading>
+        <Heading color={theme.colors.primary}>Dashboard</Heading>
         <Flex flexDirection="column" alignItems="flex-end">
-        <Button
-            backgroundColor={theme.colors.dark}
-            color={theme.colors.light}
+          <Button
+            backgroundColor={theme.colors.primary}
+            color={theme.colors.textlight}
             onClick={handleLogout}
+            _hover={{
+              backgroundColor: theme.colors.secondary,
+              transition: "background-color 0.3s ease",
+            }}
             size="md"
             mb={2}
           >
             Logout
           </Button>
           <Button
-            backgroundColor={theme.colors.dark}
-            color={theme.colors.light}
-            onClick={() => navigate('/profile')}
+            backgroundColor={theme.colors.primary}
+            color={theme.colors.textlight}
+            onClick={() => navigate("/profile")}
             size="md"
+            _hover={{
+              backgroundColor: theme.colors.secondary,
+              transition: "background-color 0.3s ease",
+            }}
             mb={2}
           >
             My Profile
           </Button>
           <Button
-            backgroundColor={theme.colors.dark}
-            color={theme.colors.light}
-            onClick={() => navigate('/addtrip')}
+            backgroundColor={theme.colors.primary}
+            color={theme.colors.textlight}
+            onClick={() => navigate("/addtrip")}
+            _hover={{
+              backgroundColor: theme.colors.secondary,
+              transition: "background-color 0.3s ease",
+            }}
             size="md"
           >
             Add New Trip
@@ -146,7 +170,6 @@ export const Dashboard = () => {
       </Flex>
 
       <Divider mb={6} />
-
       {
         trips.length > 0 ? (
           <Box>
