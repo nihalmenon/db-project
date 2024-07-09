@@ -5,7 +5,7 @@ const tripRouter = require('./routers/trip');
 const memberRouter = require('./routers/member');
 const locationRouter = require('./routers/location');
 
-const connection = require('./connection');
+import {connection} from './connection';
 const app = express();
 
 app.get('/', (req: Request, res: Response) => {
