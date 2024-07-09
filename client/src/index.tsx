@@ -5,15 +5,32 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import App from "./App";
 // import customTheme from "./config/theme";
 
+// const theme = extendTheme({
+//   colors: {
+//     dark: "#1e2749", // Dark color for text
+//     background: "#fafaff",
+//     primary: "#273469",
+//     secondary: "#30343f",
+//     accent: "#1c7293 ",
+//     accent2: "#778da9  ",
+//     highlight: "#e4d9ff  ",
+//     textlight: "#E6F0FA",
+//   },
+// });
+
 const theme = extendTheme({
-  colors:{
-    dark: "#667BC6",
-    background: "#F7EEDD",
-    primary: "#008DDA",
-    secondary: "#41C9E2",
-    light: "#ACE2E1"
-  }
-})
+  colors: {
+    dark: "#01161e", // Dark color for text
+    background: "#f6fff8",
+    primary: "#124559",
+    secondary: "#598392",
+    accent: "#aec3b0 ",
+    accent2: "#eff6e0  ",
+    highlight: "#9290C3  ",
+    light: "#c4fff9",
+    textlight: "#c4fff9",
+  },
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

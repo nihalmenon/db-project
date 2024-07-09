@@ -14,17 +14,17 @@ import {
   Link,
   FormControl,
   InputRightElement,
+  useTheme,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock, FaCalendarAlt, FaEnvelope } from "react-icons/fa";
-import {Navigate, Link as RouterLink }from "react-router-dom";
+import { Navigate, Link as RouterLink } from "react-router-dom";
 import { registerUser } from "../actions/user";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 const CFaCalendarAlt = chakra(FaCalendarAlt);
 const CFaEnvelope = chakra(FaEnvelope);
-
 
 export const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -33,7 +33,7 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -55,13 +55,13 @@ export const SignUp = () => {
         console.log("User created successfully");
         const authToken = response.data.token;
         console.log(authToken);
-        localStorage.setItem('authToken', authToken);
+        localStorage.setItem("authToken", authToken);
         toast.success("User created successfully");
-        navigate('/dashboard');
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("An error occurred while creating the account.")
+      toast.error("An error occurred while creating the account.");
     }
   };
 
@@ -70,7 +70,6 @@ export const SignUp = () => {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      backgroundColor="gray.200"
       justifyContent="center"
       alignItems="center"
     >
@@ -80,67 +79,101 @@ export const SignUp = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Heading color="teal.400">Sign Up</Heading>
+        <Heading color={theme.colors.primary}>Sign Up</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit}>
             <Stack
               spacing={4}
               p="1rem"
-              backgroundColor="whiteAlpha.900"
+              backgroundColor={theme.colors.accent2}
               boxShadow="md"
             >
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
+                    children={<CFaUserAlt color={theme.colors.primary} />}
                   />
-                  <Input type="text" placeholder="First Name" value= {firstName} onChange={(e)=>setFirstName(e.target.value)} required />
+                  <Input
+                    type="text"
+                    placeholder="First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
+                    children={<CFaUserAlt color={theme.colors.primary} />}
                   />
-                  <Input type="text" placeholder="Last Name" value={lastName} onChange={(e)=>setLastName(e.target.value)} required />
+                  <Input
+                    type="text"
+                    placeholder="Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaCalendarAlt color="gray.300" />}
+                    children={<CFaCalendarAlt color={theme.colors.primary} />}
                   />
-                  <Input type="date" placeholder="Date of Birth" value = {dob} onChange={(e)=>setDob(e.target.value)} required />
+                  <Input
+                    type="date"
+                    placeholder="Date of Birth"
+                    value={dob}
+                    onChange={(e) => setDob(e.target.value)}
+                    required
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaEnvelope color="gray.300" />}
+                    children={<CFaEnvelope color={theme.colors.primary} />}
                   />
-                  <Input type="email" placeholder="Email address" value = {email} onChange={(e)=> setEmail(e.target.value)}required />
+                  <Input
+                    type="email"
+                    placeholder="Email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    color="gray.300"
-                    children={<CFaLock color="gray.300" />}
+                    color={theme.colors.primary}
+                    children={<CFaLock color={theme.colors.primary} />}
                   />
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
-                    value = {password}
-                    onChange={(e)=>setPassword(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                   <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      onClick={handleShowClick}
+                      backgroundColor={theme.colors.primary}
+                      color={theme.colors.textlight}
+                      _hover={{
+                        backgroundColor: theme.colors.secondary,
+                        transition: "background-color 0.3s ease",
+                      }}
+                    >
                       {showPassword ? "Hide" : "Show"}
                     </Button>
                   </InputRightElement>
@@ -150,7 +183,12 @@ export const SignUp = () => {
                 borderRadius={0}
                 type="submit"
                 variant="solid"
-                colorScheme="teal"
+                backgroundColor={theme.colors.primary}
+                color={theme.colors.textlight}
+                _hover={{
+                  backgroundColor: theme.colors.secondary,
+                  transition: "background-color 0.3s ease",
+                }}
                 width="full"
               >
                 Sign Up
@@ -161,7 +199,12 @@ export const SignUp = () => {
       </Stack>
       <Box>
         Already have an account?{" "}
-        <Link as={RouterLink} to="/signin" color="teal.500" href="#">
+        <Link
+          as={RouterLink}
+          to="/signin"
+          color={theme.colors.highlight}
+          href="#"
+        >
           Sign In
         </Link>
       </Box>
