@@ -77,4 +77,16 @@ router.get('/match', auth, (req, res) => {
     })
 });
 
+router.get('/itenerary', auth, (req, res) => {
+    const query = 'CALL get_itinerary (?)';
+    connection.query(query, [req.query.tid], (err: Error, results: any[]) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('An error occurred while fetching itinerary.');
+        }
+        res.status(200).send(results);
+    }
+    )
+});
+
 module.exports = router;
