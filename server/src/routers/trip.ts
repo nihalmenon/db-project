@@ -136,7 +136,7 @@ router.get('/connect/:tid', auth, async (req, res) => {
     }
 })
 
-router.get('/itenerary', auth, (req, res) => {
+router.get('/itinerary', auth, (req, res) => {
     const query = 'CALL get_itinerary (?)';
     connection.query(query, [req.query.tid], (err: Error, results: any[]) => {
         if (err) {
