@@ -8,7 +8,7 @@ export const Layout = () => {
   return (
     <div
       className="layout"
-      style={{ backgroundColor: theme.colors.background }}
+      style={{ backgroundColor: theme.colors.background, minHeight: "100vh" }}
     >
       <Outlet />
       <Toaster />
