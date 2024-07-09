@@ -11,7 +11,6 @@ import {
   Divider,
   Flex,
   Center,
-  useColorModeValue,
   useTheme,
   useDisclosure,
   Modal,
@@ -26,18 +25,13 @@ import {
 export const Dashboard = () => {
   const [user, setUser] = useState<any>({});
   const [trips, setTrips] = useState<any[]>([]);
-
   const [selectedTripId, setSelectedTripId] = useState("");
   const [selectedTrip, setSelectedTrip] = useState<any>(null);
   const [tripItinerary, setItinerary] = useState<any[]>([]);
 
   const navigate = useNavigate();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const theme = useTheme(); // Access Chakra UI theme
-  const bg = useColorModeValue("white", "#1A202C");
-  const cardBg = useColorModeValue("#EDF2F7", "#2D3748");
 
   const fetchUserDetails = useCallback(async () => {
     const token = localStorage.getItem("authToken");
@@ -80,12 +74,22 @@ export const Dashboard = () => {
     };
     return date.toLocaleDateString(undefined, options);
   };
+
   const upcomingTrips = trips.filter(
     (trip) => new Date(trip.start_date) > new Date()
   );
   const previousTrips = trips.filter(
     (trip) => new Date(trip.start_date) < new Date()
   );
+
+  useEffect(() => {
+    fetchUserDetails();
+    fetchTrips();
+  }, [fetchUserDetails, fetchTrips]);
+
+  // Determine background color for upcoming trips based on previous trips
+  const upcomingBackgroundColor =
+    previousTrips.length > 0 ? theme.colors.secondary : theme.colors.accent;
 
   const handleTripClick = (tripId: string) => {
     setSelectedTripId(tripId);
@@ -117,13 +121,8 @@ export const Dashboard = () => {
     navigate("/signin");
   };
 
-  useEffect(() => {
-    fetchUserDetails();
-    fetchTrips();
-  }, [fetchUserDetails, fetchTrips]);
-
   return (
-    <Box p={5} bg={bg} minH="200vh">
+    <Box p={5} minH="100vh">
       <Flex justify="space-between" alignItems="center" mb={6}>
         <Heading color={theme.colors.primary}>Dashboard</Heading>
         <Flex flexDirection="column" alignItems="flex-end">
@@ -144,11 +143,11 @@ export const Dashboard = () => {
             backgroundColor={theme.colors.primary}
             color={theme.colors.textlight}
             onClick={() => navigate("/profile")}
+            size="md"
             _hover={{
               backgroundColor: theme.colors.secondary,
               transition: "background-color 0.3s ease",
             }}
-            size="md"
             mb={2}
           >
             My Profile
@@ -169,7 +168,6 @@ export const Dashboard = () => {
       </Flex>
 
       <Divider mb={6} />
-
       {trips.length > 0 ? (
         <Box>
           <Heading size="lg" mb={4} color={theme.colors.secondary}>
@@ -179,7 +177,7 @@ export const Dashboard = () => {
             {upcomingTrips.map((trip, index) => (
               <ListItem
                 key={index}
-                bg={theme.colors.secondary}
+                bg={upcomingBackgroundColor}
                 _hover={{
                   backgroundColor: theme.colors.accent,
                   transition: "background-color 0.5s ease",
@@ -187,7 +185,7 @@ export const Dashboard = () => {
                 p={4}
                 borderRadius="md"
                 shadow="md"
-                onClick={() => onclickModal(trip)}
+                onClick={() => handleTripClick(trip.tid)}
               >
                 <Flex align="center" justify="space-between" mb={2}>
                   <Heading size="md" color={theme.colors.accent2}>
@@ -229,7 +227,7 @@ export const Dashboard = () => {
                 p={4}
                 borderRadius="md"
                 shadow="md"
-                onClick={() => onclickModal(trip)}
+                onClick={() => handleTripClick(trip.tid)}
               >
                 <Flex align="center" justify="space-between" mb={2}>
                   <Heading size="md" color={theme.colors.accent2}>
@@ -246,11 +244,12 @@ export const Dashboard = () => {
         </Box>
       ) : (
         <Center mt={8}>
-          <Text fontSize="lg" color={theme.colors.dark}>
+          <Text fontSize="lg" color="black">
             No trips to show
           </Text>
         </Center>
       )}
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -295,16 +294,7 @@ export const Dashboard = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button
-              onClick={onClose}
-              backgroundColor={theme.colors.primary}
-              color={theme.colors.textlight}
-              _hover={{
-                backgroundColor: theme.colors.secondary,
-                transition: "background-color 0.3s ease",
-              }}
-              mr={3}
-            >
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
           </ModalFooter>

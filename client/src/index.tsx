@@ -27,6 +27,7 @@ const theme = extendTheme({
     accent: "#aec3b0 ",
     accent2: "#eff6e0  ",
     highlight: "#9290C3  ",
+    light: "#c4fff9",
     textlight: "#c4fff9",
   },
 });
