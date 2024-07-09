@@ -71,12 +71,4 @@
 
 <img width="956" alt="image" src="https://github.com/nihalmenon/db-project/assets/74116955/5ab6dad0-47d5-4d14-a62e-70b28d7fcc3b">
 <img width="953" alt="image" src="https://github.com/nihalmenon/db-project/assets/74116955/5eb6142c-b36e-4145-a087-f8939995191a">
-
-- Production Data
- - // **KIERAN or DANIEL PLEASE TALK MORE** //
-
- - 
-
-
-
-
+<img src="https://github.com/nihalmenon/db-project/assets/31966964/d78aad4d-c240-4fc2-81a2-b07a4b18a443">
