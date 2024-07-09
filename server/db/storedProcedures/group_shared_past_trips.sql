@@ -4,12 +4,16 @@ CREATE PROCEDURE group_shared_past_trips(
 begin
     with GroupMembers as (select m.uid from Member m where m.tid = _tid)
     select 
-        t.tid as trip_id,
-        l.lid as location_id,
-        l.city as city_name,
-        c.c_name as country_name,
-        a.a_description as activity_description,
-        a.dte as activity_date
+        t.tid,
+        l.lid,
+        l.city,
+        c.c_name,
+        t.start_date,
+        t.end_date,
+        t.bio,
+        a.a_no,
+        a.a_description,
+        a.dte
     from
         Trip t
         inner join Location l on t.lid = l.lid
