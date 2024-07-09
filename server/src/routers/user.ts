@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import {connection} from '../connection';
+import {connection, query} from '../connection';
 import validateUser from '../middleware/validateUser';
 import hashPassword from '../middleware/hashPassword';
 import auth from '../middleware/authMiddleware';
@@ -9,22 +9,28 @@ import auth from '../middleware/authMiddleware';
 const router = express.Router();
 
 // User Registration Route
-router.post('/register', validateUser, hashPassword, (req, res) => {
-    const { first_name, last_name, dob, gender, email, phone, socials, pwd } = req.body;
-    
-    const query = `CALL add_user(?, ?, ?, ?, ?, ?, ?, ?)`
+router.post('/register', validateUser, hashPassword, async (req, res) => {
+    try {
+        const { first_name, last_name, dob, gender, email, phone, socials, pwd } = req.body;
 
-    connection.query(query, [first_name, last_name, dob, gender, email, phone, socials, pwd], (err: Error, results: any) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send('An error occurred while creating the account.');
-        }
+        let sql = `CALL search_user_email(?)`;
+        let results = await query(sql, [email]) as any[];
+        if (results[0].length > 0) return res.status(409).send('User already exists.');
+
+        sql = `CALL add_user(?, ?, ?, ?, ?, ?, ?, ?)`;
+        await query(sql, [first_name, last_name, dob, gender, email, phone, socials, pwd]);
+
+        sql = `CALL search_user_email(?)`;
+        results = await query(sql, [email]) as any[];
+
+        let user = results[0][0];
 
         // send back auth header token
-        const token = jwt.sign({ uid: results.insertId }, process.env.JWT_SECRET ? process.env.JWT_SECRET : "", { expiresIn: '12h' });
-        
-        res.status(201).json({ token });
-    });
+        const token = jwt.sign({ uid: user.uid }, process.env.JWT_SECRET ? process.env.JWT_SECRET : "", { expiresIn: '12h' });
+        res.status(201).send({token});
+    } catch (error : any) {
+        res.status(500).send('Something went wrong.');
+    }
 });
 
 // User Authentication Route

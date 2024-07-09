@@ -8,6 +8,7 @@ import {AddTrip} from "./components/addTrip";
 import { UpdateUser } from "./components/updateUser"
 import {Layout} from "./components/layout";
 import {TripView} from "./components/tripView";
+import { ErrorPage } from "./components/404";
 import Connect from "./components/connect";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -19,6 +20,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/*" element={<Layout />} >
+            <Route path="" element={<SignIn />} />
             <Route path="signin" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="dashboard" element={<Dashboard />} /> 
@@ -26,7 +28,8 @@ function App() {
             <Route path="tripview" element={<TripView />} />
             <Route path="updateuser" element={<UpdateUser />} />  
             <Route path="connect" element={<Connect />}/>
-          </Route>      
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
         </Routes>
       </Router>
     </div>
