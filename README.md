@@ -1,11 +1,6 @@
 # ✈️ Travel Project
-***Group 34:*** *Daniel Larkin, Dhyan Patel, Kieran Hulsman, Nihal Menon*
-
-## 🛠️ Tech Stack
-- **Frontend**: `React.js`
-- **Backend**: `Node.js` with `npm mysql`
-- **Data managment**: `Python` with `mysql.connector`
-- **DB**: `MySQL 8.0` using `MySQL workbench`
+- ***Group 34:*** *Daniel Larkin, Dhyan Patel, Kieran Hulsman, Nihal Menon*
+- 📷 ***Project Screenshots:*** [`Screenshots.md`](Screenshots.md) 
 
 <br>
 
