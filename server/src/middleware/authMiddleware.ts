@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import connection from '../connection';
+import {connection} from '../connection';
 
 
 const auth = (req: Request, res: Response, next: NextFunction) => {
@@ -13,7 +13,6 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
 
 		// search for user in database
 		const query = 'CALL search_user_uid(?)';
-
 		connection.query(query, [decoded.uid], (err: Error, results: any[]) => {
 			if (err) {
 				console.error(err);

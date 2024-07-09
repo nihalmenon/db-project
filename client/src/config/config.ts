@@ -10,7 +10,8 @@ const endpoints = {
   suggestedInvitees: "suggestedInvitees",
   match: "match",
   createTrip: "trip",
-  itinerary: "itenerary"
+  itinerary: "itinerary",
+  connect: "connect",
 };
 
 export { baseApiUrl, endpoints };

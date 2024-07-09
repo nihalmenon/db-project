@@ -14,4 +14,11 @@ connection.connect(function(err: Error | null) {
     console.log("Hello World");
 });
 
-export default connection;
+const query = (sql: any, binding: any) => new Promise((resolve, reject) => {
+    connection.query(sql, binding, (err: Error, result: any) => {
+        if (err) return reject(err);
+        resolve(result);
+    });
+});
+
+export { connection, query };

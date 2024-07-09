@@ -5,7 +5,7 @@ const tripRouter = require('./routers/trip');
 const memberRouter = require('./routers/member');
 const locationRouter = require('./routers/location');
 
-const connection = require('./connection');
+import {connection} from './connection';
 const app = express();
 
 app.get('/', (req: Request, res: Response) => {
@@ -25,7 +25,6 @@ app.get('/hello-world', (req: Request, res: Response) => {
             res.status(500).send("An error occurred.");
             return;
         }
-        console.log("Result: " + JSON.stringify(result));
         res.status(200).send(result);
     });
 });
