@@ -7,9 +7,8 @@ export const useUser = () => {
     const navigate = useNavigate();
 
     const fetchUser = async () => {
-        const token = localStorage.getItem('authToken');
         try {
-          const response = await getUserDetails(token ? token : "");
+          const response = await getUserDetails();
           if (response.status === 200) {
             setUser(response.data.user);
           } else {

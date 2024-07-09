@@ -42,7 +42,7 @@ export const AddTrip = () => {
 
   const fetchUserDetails = async () => {
     try {
-      const response = await getUserDetails(token ? token : "");
+      const response = await getUserDetails();
       if (response.status === 200) {
         setUser(response.data.user); // Assuming response.data contains 'user' object
       } else {
@@ -65,7 +65,7 @@ export const AddTrip = () => {
 
   const fetchSuggestedUsers = async () => {
     try {
-      const response = await getSuggestedInvitees(token ? token : "");
+      const response = await getSuggestedInvitees();
       if (response.status === 200) setSuggestedUsers(response.data);
     } catch {
       console.error("Error fetching suggested users");

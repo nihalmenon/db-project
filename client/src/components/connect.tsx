@@ -17,7 +17,7 @@ const TEST_DATA: ConnectData[] = [
       start_date: "start_date",
       end_date: "end_date",
       bio: "a couple of lads",
-      itinerary: [],
+      itinerary: [{ a_no: 1, a_description: "description", dte: "today"}],
     },
     pastTrips: [],
     users: [
@@ -72,16 +72,26 @@ export const Connect = () => {
   const theme = useTheme(); // Access Chakra UI theme
   const [isOpenDetailsModal, setIsOpenDetailsModal] = useState<boolean>(false);
   const [isOpenPastTripsModal, setIsOpenPastTripsModal] = useState<boolean>(false);
-  
+  const [selectedTrip, setSelectedTrip] = useState<Trip>({} as Trip);
   const location = useLocation();
   const { trip } = location.state;
+
+  const openDetailsModal = (trip: Trip) => {
+    setSelectedTrip(trip);
+    setIsOpenDetailsModal(true);
+  }
+
+  const closeDetailsModal = () => {
+    setSelectedTrip({} as Trip);
+    setIsOpenDetailsModal(false);
+  }
 
   const connectData: ConnectData[] = TEST_DATA;
 
   return (
     <Box p={5} minH="100vh">
       <Heading mb={1} color={theme.colors.primary}>Connect</Heading>
-      <Text fontWeight="bold" fontSize="xl" color={theme.colors.dark} >Connect with other groups that are going to LOCATION with you!</Text>
+      <Text fontWeight="bold" fontSize="xl" color={theme.colors.dark} >Connect with other groups going to {trip.city} with you!</Text>
 
       <SimpleGrid spacing={4} mt={10} templateColumns='repeat(auto-fill, 100%)'>
         {
@@ -111,7 +121,7 @@ export const Connect = () => {
 
                 <CardFooter pt={0}>
                   <ButtonGroup spacing={4}>
-                    <ThemeButton onClick={() => setIsOpenDetailsModal(true)}>View Details</ThemeButton>
+                    <ThemeButton onClick={() => openDetailsModal(trip)}>View Details</ThemeButton>
                     <ThemeButton>Past Trips</ThemeButton>
                   </ButtonGroup>
 
@@ -121,7 +131,7 @@ export const Connect = () => {
           ))
         }
       </SimpleGrid>
-      <TripDetailsModal isOpen={isOpenDetailsModal} onClose={() => setIsOpenDetailsModal(false)} trip={{} as Trip} />
+      <TripDetailsModal isOpen={isOpenDetailsModal} onClose={closeDetailsModal} trip={selectedTrip} />
     </Box>
   );
 };

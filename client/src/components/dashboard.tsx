@@ -32,7 +32,7 @@ export const Dashboard = () => {
   const user = useUser();
   const [trips, setTrips] = useState<Trip[]>([]);
 
-  const [selectedTripId, setSelectedTripId] = useState("");
+  const [selectedTripId, setSelectedTripId] = useState<number>(-1);
   const [selectedTrip, setSelectedTrip] = useState<Trip>({} as Trip);
   const [tripItinerary, setItinerary] = useState<any[]>([]);
 
@@ -43,9 +43,8 @@ export const Dashboard = () => {
   const theme = useTheme(); // Access Chakra UI theme
 
   const fetchTrips = useCallback(async () => {
-    const token = localStorage.getItem("authToken");
     try {
-      const response = await getUserTrips(token ? token : "");
+      const response = await getUserTrips();
       if (response.status === 200) {
         setTrips(response.data);
       } else {
@@ -63,7 +62,7 @@ export const Dashboard = () => {
     (trip) => new Date(trip.start_date) < new Date()
   );
 
-  const handleTripClick = (tripId: string) => {
+  const handleTripClick = (tripId: number) => {
     setSelectedTripId(tripId);
     navigate("/tripview", { state: { tripId } });
   };
@@ -71,10 +70,7 @@ export const Dashboard = () => {
   const onClickModal = async (trip: Trip) => {
     setSelectedTrip(trip);
     try {
-      const response = await getItinerary(
-        String(trip.tid),
-        localStorage.getItem("authToken") || ""
-      );
+      const response = await getItinerary(trip.tid);
       if (response.status === 200) {
         setSelectedTrip(trip => {
           return {
@@ -125,9 +121,9 @@ export const Dashboard = () => {
             Upcoming Trips
           </Heading>
           <List spacing={4}>
-            {upcomingTrips.map((trip, index) => (
+            {upcomingTrips.map(trip => (
               <ListItem
-                key={index}
+                key={trip.tid}
                 bg={theme.colors.secondary}
                 _hover={{
                   backgroundColor: theme.colors.accent,
@@ -140,7 +136,7 @@ export const Dashboard = () => {
               >
                 <Flex align="center" justify="space-between" mb={2}>
                   <Heading size="md" color={theme.colors.accent2}>
-                    Trip {index + 1}
+                    {trip.city}
                   </Heading>
                   <Text fontSize="sm" color={theme.colors.textlight}>
                     {formatDate(trip.start_date)} - {formatDate(trip.end_date)}
@@ -170,9 +166,9 @@ export const Dashboard = () => {
             Previous Trips
           </Heading>
           <List spacing={4}>
-            {previousTrips.map((trip, index) => (
+            {previousTrips.map(trip => (
               <ListItem
-                key={index}
+                key={trip.tid}
                 bg={theme.colors.secondary}
                 _hover={{
                   backgroundColor: theme.colors.accent,
@@ -185,7 +181,7 @@ export const Dashboard = () => {
               >
                 <Flex align="center" justify="space-between" mb={2}>
                   <Heading size="md" color={theme.colors.accent2}>
-                    Trip {index + 1}
+                    {trip.city}
                   </Heading>
                   <Text fontSize="sm" color={theme.colors.textlight}>
                     {formatDate(trip.start_date)} - {formatDate(trip.end_date)}

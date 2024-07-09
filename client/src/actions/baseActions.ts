@@ -10,7 +10,10 @@ const fullEndpoint = (endpoint: string): string => {
 }
 
 const get = (endpoint: string, config?: AxiosRequestConfig) => {
-  return axios.get(fullEndpoint(endpoint), config);
+  return axios.get(fullEndpoint(endpoint), {
+    ...config, 
+    headers: { authorization: `Bearer ${localStorage.getItem("authToken") || ""}` }
+  });
 }
 
 const post = (endpoint: string, data: any, config?: AxiosRequestConfig) => {
