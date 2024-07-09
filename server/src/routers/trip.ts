@@ -95,7 +95,6 @@ router.get('/connect/:tid', auth, async (req, res) => {
 
 
     // connection.query(query, [req.params.tid], (err: Error, results: any[]) => {
-    //     console.log(results);
     //     if (err) {
     //         console.error(err);
     //         return res.status(500).send('An error occurred while fetching matches.');
@@ -146,7 +145,7 @@ router.get('/connect/:tid', auth, async (req, res) => {
     //                     }
     //                     prevTid = pastTrips[j].tid;
     //                 }
-    //                 return res.status(200).send(trips);
+    //                 return trips; // res.status(200).send(trips);
     //             });
     //         });
     //     }
