@@ -52,7 +52,6 @@ export const SignUp = () => {
       const response = await registerUser(userData);
 
       if (response.status === 201) {
-        console.log("User created successfully");
         const authToken = response.data.token;
         console.log(authToken);
         localStorage.setItem("authToken", authToken);

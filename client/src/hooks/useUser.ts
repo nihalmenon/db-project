@@ -12,7 +12,6 @@ export const useUser = () => {
           const response = await getUserDetails(token ? token : "");
           if (response.status === 200) {
             setUser(response.data.user);
-            console.log("User details fetched successfully");
           } else {
             navigate('/signin');
           }

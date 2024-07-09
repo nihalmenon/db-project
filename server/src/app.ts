@@ -25,7 +25,6 @@ app.get('/hello-world', (req: Request, res: Response) => {
             res.status(500).send("An error occurred.");
             return;
         }
-        console.log("Result: " + JSON.stringify(result));
         res.status(200).send(result);
     });
 });

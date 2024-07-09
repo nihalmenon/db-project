@@ -48,7 +48,6 @@ export const Dashboard = () => {
       const response = await getUserTrips(token ? token : "");
       if (response.status === 200) {
         setTrips(response.data);
-        console.log("Trips fetched successfully", response.data);
       } else {
         console.error("Error fetching trips");
       }
@@ -69,7 +68,7 @@ export const Dashboard = () => {
     navigate("/tripview", { state: { tripId } });
   };
 
-  const onclickModal = async (trip: Trip) => {
+  const onClickModal = async (trip: Trip) => {
     setSelectedTrip(trip);
     try {
       const response = await getItinerary(
@@ -83,7 +82,6 @@ export const Dashboard = () => {
             itinerary: response.data[0],
           };
         });
-        console.log("Itinerary fetched successfully", response.data);
       } else {
         console.error("Error fetching itinerary");
       }
@@ -94,10 +92,15 @@ export const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    console.log("Logging out...");
     localStorage.removeItem("authToken");
     navigate("/signin");
   };
+
+  const openConnectPage = (trip: Trip) => {
+    navigate("/connect", { 
+      state: { trip }
+    });
+  }
 
   useEffect(() => {
     fetchTrips();
@@ -133,7 +136,7 @@ export const Dashboard = () => {
                 p={4}
                 borderRadius="md"
                 shadow="md"
-                onClick={() => onclickModal(trip)}
+                onClick={() => onClickModal(trip)}
               >
                 <Flex align="center" justify="space-between" mb={2}>
                   <Heading size="md" color={theme.colors.accent2}>
@@ -143,7 +146,10 @@ export const Dashboard = () => {
                     {formatDate(trip.start_date)} - {formatDate(trip.end_date)}
                   </Text>
                 </Flex>
-                <Text color={theme.colors.textlight}>{trip.bio}</Text>
+                <Flex style={{ justifyContent: "space-between" }}>
+                  <Text color={theme.colors.textlight}>{trip.bio}</Text>
+                  <Button onClick={() => openConnectPage(trip)} size="sm">Connect with others</Button>
+                </Flex>
               </ListItem>
             ))}
           </List>
@@ -175,7 +181,7 @@ export const Dashboard = () => {
                 p={4}
                 borderRadius="md"
                 shadow="md"
-                onClick={() => onclickModal(trip)}
+                onClick={() => onClickModal(trip)}
               >
                 <Flex align="center" justify="space-between" mb={2}>
                   <Heading size="md" color={theme.colors.accent2}>

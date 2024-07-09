@@ -1,7 +1,7 @@
-import { Button, useTheme } from "@chakra-ui/react"
+import { Button, ButtonProps, useTheme } from "@chakra-ui/react"
 import { ReactNode } from "react"
 
-export interface ThemeButtonProps {
+export interface ThemeButtonProps extends ButtonProps {
     onClick?: () => void, 
     children?: ReactNode,
 }
