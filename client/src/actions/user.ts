@@ -24,4 +24,9 @@ const getSuggestedInvitees = (token: string) => {
 const getTripDetails = (tripId: string, token: string) => {
   return base.get(endpoints.match, { headers: { authorization: `Bearer ${token}` }, params: { tid: tripId }});
 }
-export { registerUser, loginUser, getUserDetails, getUserTrips, getSuggestedInvitees, getTripDetails};
+
+const getItinerary = (tripId: string, token: string) => {
+  return base.get(endpoints.itinerary, { headers: { authorization: `Bearer ${token}` }, params: { tid: tripId }});
+}
+
+export { registerUser, loginUser, getUserDetails, getUserTrips, getSuggestedInvitees, getTripDetails, getItinerary};

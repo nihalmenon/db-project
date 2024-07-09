@@ -1,14 +1,39 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { getUserDetails, getUserTrips } from '../actions/user';
+import { getUserDetails, getUserTrips, getItinerary } from '../actions/user';
 import { useNavigate } from 'react-router-dom';
-import { Button, Box, Heading, Text, List, ListItem, Divider, Flex, Center, useColorModeValue, useTheme } from "@chakra-ui/react";
+import { 
+  Button, 
+  Box, 
+  Heading, 
+  Text, 
+  List, 
+  ListItem, 
+  Divider, 
+  Flex, 
+  Center, 
+  useColorModeValue, 
+  useTheme, 
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton
+} from "@chakra-ui/react";
 
 export const Dashboard = () => {
   const [user, setUser] = useState<any>({});
   const [trips, setTrips] = useState<any[]>([]);
 
   const [selectedTripId, setSelectedTripId] = useState("");
+  const [selectedTrip, setSelectedTrip] = useState<any>(null);
+  const [tripItinerary, setItinerary] = useState<any[]>([]);
+
   const navigate = useNavigate();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const theme = useTheme(); // Access Chakra UI theme
   const bg = useColorModeValue("white", "#1A202C");
@@ -58,8 +83,24 @@ export const Dashboard = () => {
     setSelectedTripId(tripId);
     navigate("/tripview", { state: { tripId } });
   }
+
+  const onclickModal = async (trip: any) => {
+    setSelectedTrip(trip);
+    try {
+      const response = await getItinerary(trip.tid, localStorage.getItem('authToken') || "");
+      if (response.status === 200) {
+        setItinerary(response.data[0]);
+        console.log("Itinerary fetched successfully", response.data);
+      } else {
+        console.error("Error fetching itinerary");
+      }
+    } catch (error) {
+      console.error("Error fetching itinerary", error);
+    }
+    onOpen();
+  }
+
   const handleLogout = () => {
-    // Implement your logout logic here
     console.log("Logging out...");
     localStorage.removeItem('authToken');
     navigate('/signin');
@@ -71,7 +112,7 @@ export const Dashboard = () => {
   }, [fetchUserDetails, fetchTrips]);
 
   return (
-    <Box p={5} bg={bg} minH="100vh">
+    <Box p={5} bg={bg} minH="200vh">
       <Flex justify="space-between" alignItems="center" mb={6}>
         <Heading color={theme.colors.accent}>Dashboard</Heading>
         <Flex flexDirection="column" alignItems="flex-end">
@@ -112,7 +153,7 @@ export const Dashboard = () => {
             <Heading size="lg" mb={4} color={theme.colors.dark}>Upcoming Trips</Heading>
             <List spacing={4}>
               {upcomingTrips.map((trip, index) => (
-                <ListItem key={index} bg={theme.colors.light} p={4} borderRadius="md" shadow="md">
+                <ListItem key={index} bg={theme.colors.light} p={4} borderRadius="md" shadow="md" onClick={() => onclickModal(trip)}>
                   <Flex align="center" justify="space-between" mb={2}>
                     <Heading size="md" color={theme.colors.highlight}>Trip {index + 1}</Heading>
                     <Text fontSize="sm" color="black">{formatDate(trip.start_date)} - {formatDate(trip.end_date)}</Text>
@@ -137,7 +178,7 @@ export const Dashboard = () => {
             <Heading size="lg" mb={4} color={theme.colors.dark}>Previous Trips</Heading>
             <List spacing={4}>
               {previousTrips.map((trip, index) => (
-                <ListItem key={index} bg={theme.colors.light} p={4} borderRadius="md" shadow="md" onClick={() => handleTripClick(trip.tid)}>
+                <ListItem key={index} bg={theme.colors.light} p={4} borderRadius="md" shadow="md" onClick={() => onclickModal(trip)}>
                   <Flex align="center" justify="space-between" mb={2}>
                     <Heading size="md" color={theme.colors.highlight}>Trip {index + 1}</Heading>
                     <Text fontSize="sm" color="black">{formatDate(trip.start_date)} - {formatDate(trip.end_date)}</Text>
@@ -153,6 +194,44 @@ export const Dashboard = () => {
           </Center>
         )
       }
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Trip Details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {selectedTrip ? (
+              <>
+                <Text><strong>Start Date:</strong> {formatDate(selectedTrip.start_date)}</Text>
+                <Text><strong>End Date:</strong> {formatDate(selectedTrip.end_date)}</Text>
+                <Text><strong>Bio:</strong> {selectedTrip.bio}</Text>
+                <Divider mt={4} mb={4} />
+                <Heading size="md">Itinerary</Heading>
+                {tripItinerary.length > 0 ? (
+                  <List spacing={3} mt={3}>
+                    {tripItinerary.map((activity, index) => (
+                      <ListItem key={index}>
+                        <Text><strong>Activity {activity.a_no}:</strong> {activity.a_description}</Text>
+                        <Text><strong>Date:</strong> {formatDate(activity.dte)}</Text>
+                      </ListItem>
+                    ))}
+                  </List>
+                ) : (
+                  <Text>No Plans Made Yet :(</Text>
+                )}
+              </>
+            ) : (
+              <Text>No trip selected.</Text>
+            )}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };
