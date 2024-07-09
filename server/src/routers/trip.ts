@@ -68,21 +68,20 @@ router.get('/match', auth, (req, res) => {
 });
 
 
-router.get('/connect/:tid', auth, async (req, res) => {
-
-    if (!req.params.tid) return res.status(400).send('A trip id is required.');
+router.get('/connect', auth, async (req, res) => {
+    if (!req?.query?.tid) return res.status(400).send('A trip id is required.');
 
     try {
         let trips = [];
         let sql = 'CALL search_match_trips (?)';
-        const userResults = await query(sql, [req.params.tid]) as any[];
+        const userResults = await query(sql, [req.query.tid]) as any[];
         let users = userResults[0];
 
         // group users by tid
         let prevTid = -1;
         for (let i = 0; i < users.length; i++) {
             if (prevTid !== users[i].tid) {
-                trips.push({"users": [] as any, "pastTrips": [] as any, "tid": users[i].tid, "lid": users[i].lid, "city": users[i].city, "c_name": users[i].c_name, "itinerary": [] as any, "bio": users[i].bio, "start_date": users[i].start_date, "end_date": users[i].end_date});
+                trips.push({"users": [] as any, "pastTrips": [] as any, "trip": {"tid": users[i].tid, "lid": users[i].lid, "city": users[i].city, "c_name": users[i].c_name, "itinerary": [] as any, "bio": users[i].bio, "start_date": users[i].start_date, "end_date": users[i].end_date}});
             }
             trips[trips.length - 1]["users"].push({"uid": users[i].uid, "first_name": users[i].first_name, "last_name": users[i].last_name, "dob": users[i].dob, "socials": users[i].socials, "email": users[i].email, "phone": users[i].phone});
             prevTid = users[i].tid;
@@ -90,7 +89,7 @@ router.get('/connect/:tid', auth, async (req, res) => {
 
         // get itinerary, past trips for each tid
         for(let i = 0; i < trips.length; i++) {
-            const tid = trips[i].tid;
+            const tid = trips[i].trip.tid;
 
             // itinerary
             sql = 'CALL get_itinerary (?)';
@@ -98,7 +97,7 @@ router.get('/connect/:tid', auth, async (req, res) => {
 
             let itinerary = itineraryResults[0];
             for(let j = 0; j < itinerary.length; j++) {
-                trips[i]["itinerary"].push({"a_no": itinerary[j].a_no, "a_description": itinerary[j].a_description, "dte": itinerary[j].dte});
+                trips[i].trip["itinerary"].push({"a_no": itinerary[j].a_no, "a_description": itinerary[j].a_description, "dte": itinerary[j].dte});
             }
             
 
@@ -118,7 +117,6 @@ router.get('/connect/:tid', auth, async (req, res) => {
                 prevTid = pastTrips[j].tid;
             }
         }
-        
         return res.status(200).send(trips);
     } catch (err) {
         console.error(err);

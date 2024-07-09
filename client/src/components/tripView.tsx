@@ -10,8 +10,7 @@ export const TripView = () => {
     
 
     const fetchTripDetails = useCallback(async () => {
-        const token = localStorage.getItem('authToken');
-        const response = await getTripDetails(tripId, token ? token : "");
+        const response = await getTripDetails(tripId);
         if (response.status === 200) {
             setTrip(response.data[0]);
         } else {
