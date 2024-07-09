@@ -8,7 +8,7 @@
 ## 🤖 Data Generation
   - [*Users* datagen] `server\scripts\generate_users.py`
   - [*Members* datagen] `server\scripts\generate_members.py`
-  - [*Trips* datagen] `server\scripts\generate_trips_activities.py`
+  - [*Trips* datagen] `server\scripts\generate_trips_and_activities.py`
 
 ## 📶 Data Transformation
   - `server\scripts\clean_kaggle_data.py`
