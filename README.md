@@ -49,5 +49,19 @@ $ python3 populate.py
 $ python3 spin-down-db.py
 ```
 
+## (SQL) Features Implemented
+1. Suggest new friends as potential additions to a trip, when creating a new trip.
+   Relevant Files:
+   - `server/src/routers/trip.ts` (post route for `/trip`)
+   - `client/src/components/addTrip.tsx` (interface for adding a trip)
+   - `server/db/storedProcedures/suggested_members.sql` (sql query)
+2. Getting other trips to the same location (during an overlapping time period).
+   - `server/src/routers/trip.ts` (get route for `/connect/:tid`)
+   - `client/src/components/connect.tsx` (interface for connecting with groups)
+   - `server/db/storedProcedures/search_match_trips.sql` (sql query)
+3. View past trips of a potential connection trip (in connect page).
+   - `server/src/routers/trip.ts` (get route for `/connect/:tid` - this logic is also done in the connect route)
+   - `client/src/components/connect.tsx` (via modal on connect page)
+   - `server/db/storedProcedures/group_shared_past_trips.sql` (sql query)
 
 
