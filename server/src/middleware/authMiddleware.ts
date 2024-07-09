@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import connection from '../connection';
+import {connection} from '../connection';
 
 
 const auth = (req: Request, res: Response, next: NextFunction) => {

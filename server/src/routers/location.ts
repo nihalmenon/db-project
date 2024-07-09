@@ -1,5 +1,5 @@
 import express from 'express';
-import connection from '../connection';
+import {connection} from '../connection';
 import auth from '../middleware/authMiddleware';
 
 
