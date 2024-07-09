@@ -14,9 +14,9 @@ router.post('/trip', auth, async (req, res) => {
         const tid = results[0][0].tid;
 
         for (let i = 0; i < invitees.length; i++) {
+            console.log(invitees[i]);
             const uidQuery = 'CALL search_user_email (?)';
             let results = await query(uidQuery, [invitees[i]]) as any[];
-            console.log(results);
             if (results[0].length === 0) throw new Error('User not found');
             const uid = results[0][0].uid;
             sql = 'CALL add_trip_member (?, ?)';
