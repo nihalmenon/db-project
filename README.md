@@ -10,6 +10,9 @@
   - [*Members* datagen](https://github.com/nihalmenon/db-project/blob/main/server/scripts/generate_members.py)
   - [*Trips* datagen](https://github.com/nihalmenon/db-project/blob/main/server/scripts/generate_trips_and_activities.py)
 
+## 📶 Data Transformation
+  - `server\scripts\clean_kaggle_data.py`
+
 ## 📊 Steps to Load Data
 1. **Download MySQL 8.0**: [MySQL download](https://dev.mysql.com/downloads/installer/), [MySQL workbench](https://dev.mysql.com/downloads/workbench/)
 2. **Spin-up server**:
