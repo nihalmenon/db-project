@@ -4,6 +4,11 @@
 ## 📖 Kaggle Datasets
   - [*Location* dataset](https://www.kaggle.com/datasets/viswanathanc/world-cities-datasets)
   - [*Country* dataset](https://www.kaggle.com/datasets/emolodov/country-codes-alpha2-alpha3)
+    
+## 🤖 Data Generation
+  - [*Users* datagen](https://github.com/nihalmenon/db-project/blob/main/server/scripts/generate_users.py)
+  - [*Members* datagen](https://github.com/nihalmenon/db-project/blob/main/server/scripts/generate_members.py)
+  - [*Trips* datagen](https://github.com/nihalmenon/db-project/blob/main/server/scripts/generate_trips_and_activies.py)
 
 ## 📊 Steps to Load Data
 1. **Download MySQL 8.0**: [MySQL download](https://dev.mysql.com/downloads/installer/), [MySQL workbench](https://dev.mysql.com/downloads/workbench/)
