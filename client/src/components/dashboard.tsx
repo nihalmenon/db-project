@@ -143,8 +143,7 @@ export const Dashboard = () => {
                     {formatDate(trip.start_date)} - {formatDate(trip.end_date)}
                   </Text>
                 </Flex>
-                <Text color={theme.colors.primary}>{trip.bio}</Text>
-                <Button>test</Button>
+                <Text color={theme.colors.textlight}>{trip.bio}</Text>
               </ListItem>
             ))}
           </List>
@@ -182,7 +181,7 @@ export const Dashboard = () => {
                   <Heading size="md" color={theme.colors.accent2}>
                     Trip {index + 1}
                   </Heading>
-                  <Text fontSize="sm" color={theme.colors.accent2}>
+                  <Text fontSize="sm" color={theme.colors.textlight}>
                     {formatDate(trip.start_date)} - {formatDate(trip.end_date)}
                   </Text>
                 </Flex>
