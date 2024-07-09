@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, Heading, Text, Button } from '@chakra-ui/react';
+import { Box, Heading, Text, Button, useTheme } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 export const ErrorPage = () => {
+	const theme = useTheme();
 	return (
 		<Box
 			display="flex"
@@ -22,7 +23,10 @@ export const ErrorPage = () => {
 			<Text mb={8}>
 				Sorry, the page you're looking for doesn't exist.
 			</Text>
-			<Button as={Link} to="/" colorScheme="teal" size="lg">
+			<Button as={Link} to="/" backgroundColor={theme.colors.primary}  color={theme.colors.textlight} size="lg" _hover={{
+                  backgroundColor: theme.colors.secondary,
+                  transition: "background-color 0.3s ease",
+                }}>
 				Go Home
 			</Button>
 		</Box>
