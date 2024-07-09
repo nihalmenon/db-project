@@ -48,7 +48,6 @@ export const SignIn = () => {
     try {
       const response = await loginUser(userData);
       if (response.status === 200) {
-        console.log("User Login successfull");
         const authToken = response.data.token;
         localStorage.setItem("authToken", authToken);
         navigate("/dashboard");

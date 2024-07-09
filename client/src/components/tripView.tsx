@@ -12,8 +12,6 @@ export const TripView = () => {
     const fetchTripDetails = useCallback(async () => {
         const token = localStorage.getItem('authToken');
         const response = await getTripDetails(tripId, token ? token : "");
-
-        console.log(response);
         if (response.status === 200) {
             setTrip(response.data[0]);
         } else {
@@ -22,8 +20,6 @@ export const TripView = () => {
     }, [tripId]);
 
     useEffect(() => {
-        console.log("Fetching trip details");
-        console.log(tripId);
        fetchTripDetails();
     }, [fetchTripDetails]);
 
@@ -32,9 +28,7 @@ export const TripView = () => {
   {
     (() => {
       const tripElements = [];
-      console.log("BROOOOOO", trips);
       for (let i = 0; i < trips.length; i++) {
-        console.log("HUUHUHHUH", trips.a_description);
         const trip = trips[i];
         tripElements.push(
           <div key={i}>

@@ -3,8 +3,9 @@ import { useUser } from "../hooks/useUser";
 import { ConnectData, Trip, User } from "../interfaces/connectInterfaces";
 import { getAge } from "../utils/commonFunctions";
 import { ThemeButton } from "./themeButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TripDetailsModal } from "./tripDetailsModal";
+import { useLocation } from "react-router-dom";
 
 const TEST_DATA: ConnectData[] = [
   {
@@ -28,7 +29,7 @@ const TEST_DATA: ConnectData[] = [
   },
   {
     trip: {
-      tid: 1,
+      tid: 2,
       lid: 1,
       city: "Toronto",
       c_name: "Canada",
@@ -47,7 +48,7 @@ const TEST_DATA: ConnectData[] = [
   },
   {
     trip: {
-      tid: 1,
+      tid: 3,
       lid: 1,
       city: "Toronto",
       c_name: "Canada",
@@ -71,6 +72,9 @@ export const Connect = () => {
   const theme = useTheme(); // Access Chakra UI theme
   const [isOpenDetailsModal, setIsOpenDetailsModal] = useState<boolean>(false);
   const [isOpenPastTripsModal, setIsOpenPastTripsModal] = useState<boolean>(false);
+  
+  const location = useLocation();
+  const { trip } = location.state;
 
   const connectData: ConnectData[] = TEST_DATA;
 
@@ -83,6 +87,7 @@ export const Connect = () => {
         {
           connectData.map(connect => (
             <Card
+              key={connect.trip.tid}
               direction={{ base: 'column', sm: 'row' }}
               overflow='hidden'
               variant='outline'

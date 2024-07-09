@@ -45,8 +45,6 @@ export const AddTrip = () => {
       const response = await getUserDetails(token ? token : "");
       if (response.status === 200) {
         setUser(response.data.user); // Assuming response.data contains 'user' object
-        console.log("User details fetched successfully");
-        console.log(response.data);
       } else {
         navigate("/signin");
       }
