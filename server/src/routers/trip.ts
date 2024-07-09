@@ -5,38 +5,28 @@ import auth from '../middleware/authMiddleware';
 
 const router = express.Router();
 
-router.post('/trip', auth, (req, res) => {
+router.post('/trip', auth, async (req, res) => {
     const { lid, bio, startDate, endDate, invitees } = req.body;
-    const query = 'CALL create_trip (?, ?, ?, ?, ?)';
+    let sql = 'CALL create_trip (?, ?, ?, ?, ?)';
 
-    connection.query(query, [req.body.user.uid, lid, bio, startDate, endDate], (err: Error, results: any[]) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send('An error occurred while creating trip');
-        }
-        console.log(results);
+    try {
+        let results = await query(sql, [req.body.user.uid, lid, bio, startDate, endDate]) as any[];
         const tid = results[0][0].tid;
 
         for (let i = 0; i < invitees.length; i++) {
             const uidQuery = 'CALL search_user_email (?)';
-            connection.query(uidQuery, [invitees[i]], (err: Error, results: any[]) => {
-                if (err) {
-                    console.error(err);
-                    return res.status(500).send('An error occurred while searching for user');
-                }
-                const uid = results[0][0].uid;
-                const query = 'CALL add_trip_member (?, ?)';
-                connection.query(query, [tid, uid], (err: Error, results: any[]) => {
-                    if (err) {
-                        console.error(err);
-                        return res.status(500).send('An error occurred while adding members');
-                    }
-                });
-            });
+            let results = await query(uidQuery, [invitees[i]]) as any[];
+            console.log(results);
+            if (results[0].length === 0) throw new Error('User not found');
+            const uid = results[0][0].uid;
+            sql = 'CALL add_trip_member (?, ?)';
+            await query(sql, [uid, tid]);
         }
-
-        res.status(200).send(results);
-    });
+        return res.status(200).send('Trip created successfully');
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('An error occurred while creating trip: ' + err);
+    }
 });
 
 // return all trips for a given user
