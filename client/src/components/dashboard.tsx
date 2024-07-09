@@ -23,6 +23,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { useUser } from '../hooks/useUser';
+import { ThemeButton } from "./themeButton";
 
 export const Dashboard = () => {
   const user = useUser();
@@ -110,44 +111,9 @@ export const Dashboard = () => {
       <Flex justify="space-between" alignItems="center" mb={6}>
         <Heading color={theme.colors.primary}>Dashboard</Heading>
         <Flex flexDirection="column" alignItems="flex-end">
-          <Button
-            backgroundColor={theme.colors.primary}
-            color={theme.colors.textlight}
-            onClick={handleLogout}
-            _hover={{
-              backgroundColor: theme.colors.secondary,
-              transition: "background-color 0.3s ease",
-            }}
-            size="md"
-            mb={2}
-          >
-            Logout
-          </Button>
-          <Button
-            backgroundColor={theme.colors.primary}
-            color={theme.colors.textlight}
-            onClick={() => navigate("/profile")}
-            _hover={{
-              backgroundColor: theme.colors.secondary,
-              transition: "background-color 0.3s ease",
-            }}
-            size="md"
-            mb={2}
-          >
-            My Profile
-          </Button>
-          <Button
-            backgroundColor={theme.colors.primary}
-            color={theme.colors.textlight}
-            onClick={() => navigate("/addtrip")}
-            _hover={{
-              backgroundColor: theme.colors.secondary,
-              transition: "background-color 0.3s ease",
-            }}
-            size="md"
-          >
-            Add New Trip
-          </Button>
+          <ThemeButton onClick={handleLogout}>Logout</ThemeButton>
+          <ThemeButton onClick={() => navigate("/profile")}>My Profile</ThemeButton>
+          <ThemeButton onClick={() => navigate("/addtrip")}>Add New Trip</ThemeButton>
         </Flex>
       </Flex>
 

@@ -71,10 +71,10 @@ export const Connect = () => {
 
   return (
     <Box p={5} minH="100vh">
-      <Heading color={theme.colors.accent}>Connect</Heading>
-      <Text mb={10}>Connect with other groups that are going to LOCATION with you!</Text>
+      <Heading mb={1} color={theme.colors.primary}>Connect</Heading>
+      <Text fontWeight="bold" fontSize="xl" color={theme.colors.dark} >Connect with other groups that are going to LOCATION with you!</Text>
 
-      <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, 100%)'>
+      <SimpleGrid spacing={4} mt={10} templateColumns='repeat(auto-fill, 100%)'>
         {
           connectData.map(connect => (
             <Card
