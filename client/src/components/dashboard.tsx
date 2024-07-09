@@ -36,8 +36,6 @@ export const Dashboard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const theme = useTheme(); // Access Chakra UI theme
-  const bg = useColorModeValue("white", "#1A202C");
-  const cardBg = useColorModeValue("#EDF2F7", "#2D3748");
 
   const fetchUserDetails = useCallback(async () => {
     const token = localStorage.getItem("authToken");
@@ -123,7 +121,7 @@ export const Dashboard = () => {
   }, [fetchUserDetails, fetchTrips]);
 
   return (
-    <Box p={5} bg={bg} minH="200vh">
+    <Box p={5}>
       <Flex justify="space-between" alignItems="center" mb={6}>
         <Heading color={theme.colors.primary}>Dashboard</Heading>
         <Flex flexDirection="column" alignItems="flex-end">
