@@ -6,7 +6,7 @@ const createTrip = (token: string, trip: any) => {
 }
 
 const getConnectData = (tid: number): any => {
-    return base.get(endpoints.connect, { params: tid });
+    return base.get(endpoints.connect, { params: { tid }});
 }
 
 export { createTrip, getConnectData };

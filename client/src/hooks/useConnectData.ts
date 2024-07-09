@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { ConnectData } from "../interfaces/connectInterfaces"
 import { getConnectData } from "../actions/trip";
-import axios from "axios";
 
 export const useConnectData = (tid: number) => {
   const [connectData, setConnectData] = useState<ConnectData[]>([]);
