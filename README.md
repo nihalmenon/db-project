@@ -6,9 +6,9 @@
   - [*Country* dataset](https://www.kaggle.com/datasets/emolodov/country-codes-alpha2-alpha3)
     
 ## 🤖 Data Generation
-  - [*Users* datagen](https://github.com/nihalmenon/db-project/blob/main/server/scripts/generate_users.py)
-  - [*Members* datagen](https://github.com/nihalmenon/db-project/blob/main/server/scripts/generate_members.py)
-  - [*Trips* datagen](https://github.com/nihalmenon/db-project/blob/main/server/scripts/generate_trips_and_activities.py)
+  - [*Users* datagen] `server\scripts\generate_users.py`
+  - [*Members* datagen] `server\scripts\generate_members.py`
+  - [*Trips* datagen] `server\scripts\generate_trips_activities.py`
 
 ## 📶 Data Transformation
   - `server\scripts\clean_kaggle_data.py`
