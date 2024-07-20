@@ -1,10 +1,33 @@
 import { Box, Divider, Flex, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, useTheme, Text } from "@chakra-ui/react";
 import { useUser } from "../hooks/useUser"
+import { PopDestQuery } from "../interfaces/statsInterfaces";
+import { useState } from "react";
 
 export const Stats = () => {
   const user = useUser();
   const theme = useTheme();
+  const [filterOptions, setFilterOptions] = useState<PopDestQuery>({
+    minAge: 20,
+    maxAge: 65,
+    gender: 'x',
+  } as PopDestQuery);
   
+  const onChangeMinAge = (value: string) => {
+    setFilterOptions(old => {
+      return { ...old, minAge: Number(value) };
+    });
+  };
+  const onChangeMaxAge = (value: string) => {
+    setFilterOptions(old => {
+      return { ...old, maxAge: Number(value) };
+    });
+  };
+  const onChangeGender = (e: any) => {
+    setFilterOptions(old => {
+      return { ...old, gender: e.target.value };
+    });
+  };
+
   return (
     <Box p={5}>
       <Heading color={theme.colors.primary}>Most Popular Destinations</Heading>
@@ -15,14 +38,15 @@ export const Stats = () => {
       <Flex>
 
       <Flex direction="column">
-        <Text ml="1" mb="1" fontSize="md" color={theme.colors.black}>min age</Text>
+        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary}>min age</Text>
         <NumberInput 
           bg={theme.colors.white} 
           step={5} 
           defaultValue={20} 
           min={20} 
-          max={65}
+          max={filterOptions.maxAge}
           mr={3}
+          onChange={onChangeMinAge}
         >
           <NumberInputField />
           <NumberInputStepper>
@@ -33,14 +57,15 @@ export const Stats = () => {
       </Flex>
 
       <Flex direction="column">
-        <Text ml="1" mb="1" fontSize="md" color={theme.colors.black}>max age</Text>
+        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary}>max age</Text>
         <NumberInput 
           bg={theme.colors.white} 
           step={5} 
           defaultValue={30} 
-          min={20} 
+          min={filterOptions.minAge}
           max={65}
           mr={3}
+          onChange={onChangeMaxAge}
         >
           <NumberInputField />
           <NumberInputStepper>
@@ -51,16 +76,17 @@ export const Stats = () => {
       </Flex>
 
       <Flex direction="column">
-        <Text ml="1" mb="1" fontSize="md" color={theme.colors.black}>gender</Text>
+        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary}>gender</Text>
         <Select 
           bg={theme.colors.white} 
           variant="outline" 
           w={['100%', '100%', '250px']} 
           placeholder='Select gender'
+          onChange={onChangeGender}
         >
-          <option value='option1'>Option 1</option>
-          <option value='option2'>Option 2</option>
-          <option value='option3'>Option 3</option>
+          <option value='m'>Male</option>
+          <option value='f'>Female</option>
+          <option value='x'>Other</option>
         </Select>
       </Flex>
 
