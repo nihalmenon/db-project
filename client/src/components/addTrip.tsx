@@ -103,7 +103,7 @@ export const AddTrip = () => {
     }
     // Add trip to database
     try {
-      const response = await createTrip(token ? token : "", {
+      const response = await createTrip({
         ...tripDetails,
         lid: selectedLocation.value,
         invitees,

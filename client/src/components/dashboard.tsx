@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { getUserDetails, getUserTrips, getItinerary } from "../actions/user";
+import { getUserTrips, getItinerary } from "../actions/user";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -22,23 +22,23 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { useUser } from '../hooks/useUser';
+import { useUser } from "../hooks/useUser";
 import { ThemeButton } from "./themeButton";
 import { TripDetailsModal } from "./tripDetailsModal";
+import { EditTripDetailsModal } from "./editTripDetailsModal";
 import { formatDate } from "../utils/commonFunctions";
 import { Trip } from "../interfaces/connectInterfaces";
 
 export const Dashboard = () => {
   const user = useUser();
   const [trips, setTrips] = useState<Trip[]>([]);
-
   const [selectedTripId, setSelectedTripId] = useState<number>(-1);
   const [selectedTrip, setSelectedTrip] = useState<Trip>({} as Trip);
   const [tripItinerary, setItinerary] = useState<any[]>([]);
 
   const navigate = useNavigate();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isEditModal, setIsEditModal] = useState(false); // State to determine which modal to open
 
   const theme = useTheme(); // Access Chakra UI theme
 
@@ -72,7 +72,7 @@ export const Dashboard = () => {
     try {
       const response = await getItinerary(trip.tid);
       if (response.status === 200) {
-        setSelectedTrip(trip => {
+        setSelectedTrip((trip) => {
           return {
             ...trip,
             itinerary: response.data[0],
@@ -84,6 +84,7 @@ export const Dashboard = () => {
     } catch (error) {
       console.error("Error fetching itinerary", error);
     }
+    setIsEditModal(new Date(trip.start_date) > new Date()); // Determine which modal to open
     onOpen();
   };
 
@@ -93,10 +94,10 @@ export const Dashboard = () => {
   };
 
   const openConnectPage = (trip: Trip) => {
-    navigate("/connect", { 
-      state: { trip }
+    navigate("/connect", {
+      state: { trip },
     });
-  }
+  };
 
   useEffect(() => {
     fetchTrips();
@@ -108,8 +109,12 @@ export const Dashboard = () => {
         <Heading color={theme.colors.primary}>Dashboard</Heading>
         <Flex flexDirection="column" alignItems="flex-end">
           <ThemeButton onClick={handleLogout}>Logout</ThemeButton>
-          <ThemeButton onClick={() => navigate("/profile")}>My Profile</ThemeButton>
-          <ThemeButton onClick={() => navigate("/addtrip")}>Add New Trip</ThemeButton>
+          <ThemeButton onClick={() => navigate("/profile")}>
+            My Profile
+          </ThemeButton>
+          <ThemeButton onClick={() => navigate("/addtrip")}>
+            Add New Trip
+          </ThemeButton>
         </Flex>
       </Flex>
 
@@ -121,7 +126,7 @@ export const Dashboard = () => {
             Upcoming Trips
           </Heading>
           <List spacing={4}>
-            {upcomingTrips.map(trip => (
+            {upcomingTrips.map((trip) => (
               <ListItem
                 key={trip.tid}
                 bg={theme.colors.secondary}
@@ -144,7 +149,9 @@ export const Dashboard = () => {
                 </Flex>
                 <Flex style={{ justifyContent: "space-between" }}>
                   <Text color={theme.colors.textlight}>{trip.bio}</Text>
-                  <Button onClick={() => openConnectPage(trip)} size="sm">Connect with others</Button>
+                  <Button onClick={() => openConnectPage(trip)} size="sm">
+                    Connect with others
+                  </Button>
                 </Flex>
               </ListItem>
             ))}
@@ -166,7 +173,7 @@ export const Dashboard = () => {
             Previous Trips
           </Heading>
           <List spacing={4}>
-            {previousTrips.map(trip => (
+            {previousTrips.map((trip) => (
               <ListItem
                 key={trip.tid}
                 bg={theme.colors.secondary}
@@ -199,7 +206,19 @@ export const Dashboard = () => {
           </Text>
         </Center>
       )}
-      <TripDetailsModal isOpen={isOpen} onClose={onClose} trip={selectedTrip} />
+      {isEditModal ? (
+        <EditTripDetailsModal
+          isOpen={isOpen}
+          onClose={onClose}
+          trip={selectedTrip}
+        />
+      ) : (
+        <TripDetailsModal
+          isOpen={isOpen}
+          onClose={onClose}
+          trip={selectedTrip}
+        />
+      )}
     </Box>
   );
 };

@@ -10,6 +10,7 @@ const endpoints = {
   suggestedInvitees: "suggestedInvitees",
   match: "match",
   createTrip: "trip",
+  updateTrip: "updateTrip",
   itinerary: "itinerary",
   connect: "connect",
 };
