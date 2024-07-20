@@ -11,7 +11,6 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err: Error | null) {
     if (err) throw err;
-    console.log("Hello World");
 });
 
 const query = (sql: any, binding: any) => new Promise((resolve, reject) => {
