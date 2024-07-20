@@ -7,17 +7,36 @@ const fullEndpoint = (endpoint: string): string => {
   } else {
     return `${baseApiUrl}/${endpoint}`;
   }
-}
+};
 
 const get = (endpoint: string, config?: AxiosRequestConfig) => {
   return axios.get(fullEndpoint(endpoint), {
-    ...config, 
-    headers: { ...config?.headers, authorization: `Bearer ${localStorage.getItem("authToken") || ""}` }
+    ...config,
+    headers: {
+      ...config?.headers,
+      authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+    },
   });
-}
+};
 
 const post = (endpoint: string, data: any, config?: AxiosRequestConfig) => {
-  return axios.post(fullEndpoint(endpoint), data, config);
-}
+  return axios.post(fullEndpoint(endpoint), data, {
+    ...config,
+    headers: {
+      ...config?.headers,
+      authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+    },
+  });
+};
 
-export { get, post };
+const put = (endpoint: string, data: any, config?: AxiosRequestConfig) => {
+  return axios.put(fullEndpoint(endpoint), data, {
+    ...config,
+    headers: {
+      ...config?.headers,
+      authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+    },
+  });
+};
+
+export { get, post, put};
