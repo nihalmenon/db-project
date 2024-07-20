@@ -13,4 +13,8 @@ const getPopularDestinations = (minAge: number, maxAge: number, gender: string) 
     return base.get(endpoints.popularDestinations, { params: { minAge, maxAge, gender }});
 }
 
-export { createTrip, getConnectData, getPopularDestinations };
+const getAverageDuration = (lid: number) => {
+    return base.get(endpoints.averageDuration, { params: { lid }});
+}
+
+export { createTrip, getConnectData, getPopularDestinations, getAverageDuration };
