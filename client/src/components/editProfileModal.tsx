@@ -1,6 +1,6 @@
 import { FormControl, FormHelperText, FormLabel, HStack, Input, InputGroup, InputLeftElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, useTheme } from "@chakra-ui/react";
 import { ThemeButton } from "./themeButton";
-import { PhoneIcon } from "@chakra-ui/icons";
+import { EmailIcon, PhoneIcon } from "@chakra-ui/icons";
 
 export interface EditProfileModalProps {
   isOpen: boolean;
@@ -45,9 +45,12 @@ export const EditProfileModal = ({ isOpen, onClose, onSave, user }: EditProfileM
 
         <FormControl mb={2}>
           <FormLabel mb={0}>Email</FormLabel>
-          <Input type="email" 
-            placeholder={user.email} 
-          />
+          <InputGroup>
+            <InputLeftElement pointerEvents='none'>
+              <EmailIcon color='gray.300' />
+            </InputLeftElement>
+            <Input placeholder={user.email} />
+          </InputGroup>
         </FormControl>
 
         <FormControl mb={2}>
@@ -56,7 +59,7 @@ export const EditProfileModal = ({ isOpen, onClose, onSave, user }: EditProfileM
             <InputLeftElement pointerEvents='none'>
               <PhoneIcon color='gray.300' />
             </InputLeftElement>
-            <Input type='tel' placeholder='Phone number' />
+            <Input placeholder={user.phone} />
           </InputGroup>
         </FormControl>
 
