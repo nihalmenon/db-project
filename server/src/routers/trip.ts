@@ -174,6 +174,32 @@ router.get("/averageDuration", auth, (req, res) => {
     });
 });
 
+router.put('/updateTrip', auth, async (req, res) => {
+    const { tid, start_date, end_date, bio, itinerary} = req?.body;
+    if (!req || !tid || !start_date || !end_date || !bio || !itinerary) res.status(400).send('Invalid input to update Trip')
+    
+    try{
+        await query("START TRANSACTION", []);
+        let sql = 'CALL update_trip (?, ?, ?, ?)'; 
+        await query(sql, [tid,start_date, end_date,bio]); 
+        sql = 'CALL delete_trip_activities (?, ?, ?, ?)';
+        await query(sql, [tid]); 
+        sql = 'CALL add_activity(?, ?, ?, ?)'
+        for (let activity of itinerary){
+            const {a_no, a_description, dte} = activity; 
+            await query(sql, [tid, a_no, a_description, dte]); 
+        } 
+        await query("COMMIT", []);
+        return res.send(200).send('Trip updated successfully');
+    } catch(err){
+        console.log(err); 
+        await query('ROLLBACK', []);
+        return res.status(500).send('An error occured while fetching trip during updateTrip');
+    }
+});
+
+
+
 router.get("/popularActivities", auth, (req, res) => {
         const lid = req.query.lid;
         const start_date = req.query.start_date == '' ? null : req.query.start_date;
