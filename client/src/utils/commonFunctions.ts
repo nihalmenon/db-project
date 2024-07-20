@@ -1,7 +1,7 @@
 export const getAge = (dob: Date): number => {
   const ageDelta = new Date(Date.now() - dob.getTime());
   return Math.abs(ageDelta.getUTCFullYear() - 1970);
-}
+};
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -11,4 +11,10 @@ export const formatDate = (dateString: string) => {
     day: "numeric",
   };
   return date.toLocaleDateString(undefined, options);
+};
+
+export const toISODate = (dateString: string | undefined): string => {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  return date.toISOString();
 };

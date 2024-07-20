@@ -1,16 +1,9 @@
 import {
-  Button,
-  Box,
   Heading,
   Text,
   List,
   ListItem,
   Divider,
-  Flex,
-  Center,
-  useColorModeValue,
-  useTheme,
-  useDisclosure,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -35,7 +28,7 @@ export const TripDetailsModal = ({
   trip,
 }: TripDetailsModalProps) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Trip Details</ModalHeader>
@@ -44,8 +37,7 @@ export const TripDetailsModal = ({
           {trip.tid ? (
             <>
               <Text>
-                <strong>Start Date:</strong>{" "}
-                {formatDate(trip.start_date)}
+                <strong>Start Date:</strong> {formatDate(trip.start_date)}
               </Text>
               <Text>
                 <strong>End Date:</strong> {formatDate(trip.end_date)}
@@ -77,11 +69,11 @@ export const TripDetailsModal = ({
             <Text>No trip selected.</Text>
           )}
         </ModalBody>
-    
+
         <ModalFooter>
           <ThemeButton onClick={onClose}>Close</ThemeButton>
         </ModalFooter>
       </ModalContent>
     </Modal>
   );
-}
+};

@@ -156,7 +156,7 @@ router.get("/popularDestinations", auth, (req, res) => {
             console.error(err);
             return res.status(500).send('An error occurred while fetching popular destinations.');
         }
-        res.status(200).send(results);
+        res.status(200).send(results[0]);
     });
 });
 
