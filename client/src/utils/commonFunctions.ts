@@ -18,3 +18,11 @@ export const toISODate = (dateString: string | undefined): string => {
   const date = new Date(dateString);
   return date.toISOString();
 };
+
+export const dateToYMD = (date: Date): string => {
+  const mArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const d = date.getDate();
+  const m = mArray[date.getMonth()];
+  const y = date.getFullYear();
+  return '' + (d <= 9 ? '0' + d : d) + ' ' + m + ' ' + y;
+}
