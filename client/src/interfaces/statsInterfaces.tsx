@@ -1,7 +1,7 @@
 export interface PopDestQuery {
     minAge: number,
     maxAge: number,
-    gender: 'm' | 'f' | 'x',
+    gender?: 'm' | 'f' | 'x',
 }
 
 export interface PopDest {

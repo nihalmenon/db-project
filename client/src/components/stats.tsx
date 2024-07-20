@@ -1,25 +1,25 @@
-import { Box, Divider, Flex, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, useTheme, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Select, useTheme, Text, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { useUser } from "../hooks/useUser"
 import { PopDestQuery } from "../interfaces/statsInterfaces";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePopularDestinations } from "../hooks/usePopularDestinations";
+
+const DEFAULT_MIN_AGE = 20;
+const DEFAULT_MAX_AGE = 35;
 
 export const Stats = () => {
   const user = useUser();
   const theme = useTheme();
+  const { data: popularDestinations, refresh: refreshPopularDestinations } = usePopularDestinations();
+  
   const [filterOptions, setFilterOptions] = useState<PopDestQuery>({
-    minAge: 20,
-    maxAge: 65,
-    gender: 'x',
+    minAge: DEFAULT_MIN_AGE,
+    maxAge: DEFAULT_MAX_AGE,
   } as PopDestQuery);
   
-  const onChangeMinAge = (value: string) => {
+  const onChangeAge = (range: [number, number]) => {
     setFilterOptions(old => {
-      return { ...old, minAge: Number(value) };
-    });
-  };
-  const onChangeMaxAge = (value: string) => {
-    setFilterOptions(old => {
-      return { ...old, maxAge: Number(value) };
+      return { ...old, minAge: range[0], maxAge: range[1] };
     });
   };
   const onChangeGender = (e: any) => {
@@ -28,59 +28,46 @@ export const Stats = () => {
     });
   };
 
+  useEffect(() => {
+    refreshPopularDestinations(filterOptions);
+  }, [filterOptions.gender]);
+
   return (
     <Box p={5}>
       <Heading color={theme.colors.primary}>Most Popular Destinations</Heading>
-
-      <Divider m={6} />
-
-      <Heading size="lg" mb={4} color={theme.colors.secondary}>Filters</Heading>
+      <Divider m={8} />
       <Flex>
 
-      <Flex direction="column">
-        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary}>min age</Text>
-        <NumberInput 
-          bg={theme.colors.white} 
-          step={5} 
-          defaultValue={20} 
-          min={20} 
-          max={filterOptions.maxAge}
-          mr={3}
-          onChange={onChangeMinAge}
-        >
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </Flex>
-
-      <Flex direction="column">
-        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary}>max age</Text>
-        <NumberInput 
-          bg={theme.colors.white} 
-          step={5} 
-          defaultValue={30} 
-          min={filterOptions.minAge}
+      <Flex direction="column" w={['50%', '50%', '400px']} mr={10}>
+        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary}>age range</Text>
+        <RangeSlider 
+          min={18}
           max={65}
-          mr={3}
-          onChange={onChangeMaxAge}
+          step={1} 
+          aria-label={['min', 'max']} 
+          defaultValue={[DEFAULT_MIN_AGE, DEFAULT_MAX_AGE]}
+          ml={5}
+          onChange={onChangeAge}
+          onChangeEnd={() => refreshPopularDestinations(filterOptions)}
         >
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
+          <RangeSliderTrack bg={theme.colors.secondary}>
+            <RangeSliderFilledTrack bg={theme.colors.primary} />
+          </RangeSliderTrack>
+          <RangeSliderThumb fontSize="md" fontWeight="bold" color={theme.colors.primary} boxSize={8} index={0}>
+            <Text>{filterOptions.minAge}</Text>
+          </RangeSliderThumb>
+          <RangeSliderThumb fontSize="md" fontWeight="bold" color={theme.colors.primary} boxSize={8} index={1}>
+            <Text>{filterOptions.maxAge}</Text>
+          </RangeSliderThumb>
+        </RangeSlider>
       </Flex>
 
-      <Flex direction="column">
+           
+      <Flex direction="column" w={['50%', '50%', '250px']}>
         <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary}>gender</Text>
         <Select 
           bg={theme.colors.white} 
           variant="outline" 
-          w={['100%', '100%', '250px']} 
           placeholder='Select gender'
           onChange={onChangeGender}
         >
@@ -91,6 +78,38 @@ export const Stats = () => {
       </Flex>
 
       </Flex>
+
+
+      <TableContainer 
+        mt={5}
+        bg={theme.colors.white}
+        border={"2px solid"}
+        borderColor={"gray.200"}
+        rounded="lg"
+      >
+        <Table 
+          variant="simple"
+          size="lg"
+          >
+          <Thead>
+            <Tr>
+              <Th>Location</Th>
+              <Th isNumeric>Number of Trips</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {popularDestinations.map(dest => {
+              return (
+                <Tr>
+                  <Td>{dest.city}, {dest.c_name}</Td>
+                  <Td isNumeric>{dest.trip_count}</Td>
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </TableContainer>
+
 
     </Box>
   );
