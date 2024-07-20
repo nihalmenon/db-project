@@ -17,4 +17,8 @@ const getAverageDuration = (lid: number) => {
     return base.get(endpoints.averageDuration, { params: { lid }});
 }
 
-export { createTrip, getConnectData, getPopularDestinations, getAverageDuration };
+const getPopularActivities = (lid: number, start_date: string, end_date: string) => {
+    return base.get(endpoints.popularActivities, { params: { lid, start_date, end_date }});
+};
+
+export { createTrip, getConnectData, getPopularDestinations, getAverageDuration, getPopularActivities };
