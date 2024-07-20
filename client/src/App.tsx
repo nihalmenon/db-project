@@ -8,11 +8,13 @@ import {AddTrip} from "./components/addTrip";
 import { UpdateUser } from "./components/updateUser"
 import {Layout} from "./components/layout";
 import {TripView} from "./components/tripView";
+import {Profile} from "./components/profile";
 import { ErrorPage } from "./components/404";
 import Connect from "./components/connect";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "./App.css";
+import { Stats } from "./components/stats";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
             <Route path="tripview" element={<TripView />} />
             <Route path="updateuser" element={<UpdateUser />} />  
             <Route path="connect" element={<Connect />}/>
+            <Route path="stats" element={<Stats />}/>
+            <Route path="profile" element={<Profile />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>

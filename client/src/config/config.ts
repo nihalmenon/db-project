@@ -13,6 +13,8 @@ const endpoints = {
   updateTrip: "updateTrip",
   itinerary: "itinerary",
   connect: "connect",
+  popularDestinations: "popularDestinations",
+  averageDuration: "averageDuration"
 };
 
 export { baseApiUrl, endpoints };
