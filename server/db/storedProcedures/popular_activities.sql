@@ -1,14 +1,10 @@
-create procedure popular_activities(in _tid int)
+create procedure popular_activities(in _lid int, in _start_date date, in _end_date date)
 begin
     select a.a_description, a.dte
     from Activity a
-    join Trip t on a.tid = t.tid
-    join (
-	select lid, start_date, end_date 
-	from Trip 
-	where tid = _tid
-    ) trip_details on t.lid = trip_details.lid
-    where a.dte >= trip_details.start_date
-    and a.dte <= trip_details.end_date
+    inner join Trip t on a.tid = t.tid
+    where (_start_date is null or a.dte >= _start_date)
+    and (_end_date is null or a.dte <= _end_date)
+    and t.lid = _lid
     limit 20;
 end
