@@ -6,15 +6,15 @@ import auth from '../middleware/authMiddleware';
 const router = express.Router();
 
 router.post('/trip', auth, async (req, res) => {
-    const { lid, bio, startDate, endDate, invitees } = req.body;
+    const { lid, bio, startDate, endDate, invitees, itinerary } = req.body;
     let sql = 'CALL create_trip (?, ?, ?, ?, ?)';
 
     try {
+        await query("START TRANSACTION", []);
         let results = await query(sql, [req.body.user.uid, lid, bio, startDate, endDate]) as any[];
         const tid = results[0][0].tid;
 
         for (let i = 0; i < invitees.length; i++) {
-            console.log(invitees[i]);
             const uidQuery = 'CALL search_user_email (?)';
             let results = await query(uidQuery, [invitees[i]]) as any[];
             if (results[0].length === 0) throw new Error('User not found');
@@ -22,9 +22,15 @@ router.post('/trip', auth, async (req, res) => {
             sql = 'CALL add_trip_member (?, ?)';
             await query(sql, [uid, tid]);
         }
+
+        for (let i = 0; i < req.body.itinerary.length; i++) {
+            sql = 'CALL add_activity (?, ?, ?, ?)';
+            await query(sql, [tid, i+1, req.body.itinerary[i].a_description, req.body.itinerary[i].dte]);
+        }
+        await query("COMMIT", []);
         return res.status(200).send('Trip created successfully');
     } catch (err) {
-        console.error(err);
+        await query('ROLLBACK', []);
         return res.status(500).send('An error occurred while creating trip: ' + err);
     }
 });
@@ -134,6 +140,22 @@ router.get('/itinerary', auth, (req, res) => {
         res.status(200).send(results);
     }
     )
+});
+
+router.get("/popularDestinations", auth, (req, res) => {
+
+    const minAge = req?.query?.minAge ? req?.query?.minAge : null;
+    const maxAge = req?.query?.maxAge ? req?.query?.maxAge : null;
+    const gender = req?.query?.gender || null;
+    const query = 'CALL popular_destinations (?, ?, ?)';
+
+    connection.query(query, [minAge, maxAge ,gender], (err: Error, results: any[]) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('An error occurred while fetching popular destinations.');
+        }
+        res.status(200).send(results);
+    });
 });
 
 

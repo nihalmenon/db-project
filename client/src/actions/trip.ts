@@ -9,4 +9,8 @@ const getConnectData = (tid: number): any => {
     return base.get(endpoints.connect, { params: { tid }});
 }
 
-export { createTrip, getConnectData };
+const getPopularDestinations = (minAge: number, maxAge: number, gender: string) => {
+    return base.get(endpoints.popularDestinations, { params: { minAge, maxAge, gender }});
+}
+
+export { createTrip, getConnectData, getPopularDestinations };
