@@ -158,5 +158,19 @@ router.get("/popularDestinations", auth, (req, res) => {
     });
 });
 
+router.get("/averageDuration", auth, (req, res) => {
+
+    const lid = req?.query?.lid;
+    const query = 'CALL average_duration (?)';
+
+    connection.query(query, [lid], (err: Error, results: any[]) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('An error occurred while fetching average duration.');
+        }
+        res.status(200).send(results);
+    });
+});
+
 
 module.exports = router;
