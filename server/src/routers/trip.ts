@@ -136,5 +136,21 @@ router.get('/itinerary', auth, (req, res) => {
     )
 });
 
+router.get("/popularDestinations", auth, (req, res) => {
+
+    const minAge = req?.query?.minAge ? req?.query?.minAge : null;
+    const maxAge = req?.query?.maxAge ? req?.query?.maxAge : null;
+    const gender = req?.query?.gender || null;
+    const query = 'CALL popular_destinations (?, ?, ?)';
+
+    connection.query(query, [minAge, maxAge ,gender], (err: Error, results: any[]) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('An error occurred while fetching popular destinations.');
+        }
+        res.status(200).send(results);
+    });
+});
+
 
 module.exports = router;

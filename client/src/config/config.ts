@@ -12,6 +12,7 @@ const endpoints = {
   createTrip: "trip",
   itinerary: "itinerary",
   connect: "connect",
+  popularDestinations: "popularDestinations"
 };
 
 export { baseApiUrl, endpoints };
