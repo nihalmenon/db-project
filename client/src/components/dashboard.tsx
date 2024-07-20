@@ -104,11 +104,12 @@ export const Dashboard = () => {
 
   return (
     <Box p={5}>
-      <Flex justify="space-between" alignItems="center" mb={6}>
+      <Flex justify="space-between" alignItems="top" mb={6}>
         <Heading color={theme.colors.primary}>Dashboard</Heading>
         <Flex flexDirection="column" alignItems="flex-end">
           <ThemeButton onClick={handleLogout}>Logout</ThemeButton>
           <ThemeButton onClick={() => navigate("/profile")}>My Profile</ThemeButton>
+          <ThemeButton onClick={() => navigate("/stats")}>Popular Destinations</ThemeButton>
           <ThemeButton onClick={() => navigate("/addtrip")}>Add New Trip</ThemeButton>
         </Flex>
       </Flex>
