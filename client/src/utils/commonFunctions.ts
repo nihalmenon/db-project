@@ -26,3 +26,11 @@ export const dateToYMD = (date: Date): string => {
   const y = date.getFullYear();
   return '' + (d <= 9 ? '0' + d : d) + ' ' + m + ' ' + y;
 }
+
+export const formatGender = (gender: 'm' | 'f' | 'x'): 'Male' | 'Female' | 'Other' => {
+  switch(gender) {
+    case 'm': return 'Male';
+    case 'f': return 'Female';
+    case 'x': return 'Other';
+  };
+}
