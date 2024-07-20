@@ -1,6 +1,7 @@
 import React, { useState, useEffect, HtmlHTMLAttributes } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserDetails, getSuggestedInvitees } from "../actions/user";
+import { getAverageDuration } from "../actions/trip";
 import Select from "react-select";
 import {
   Box,
@@ -17,7 +18,8 @@ import {
   Collapse,
   useTheme,
   Flex,
-  IconButton
+  IconButton,
+  Text
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { getLocations } from "../actions/location";
@@ -38,6 +40,7 @@ export const AddTrip = () => {
   const [suggestedUsers, setSuggestedUsers] = useState([] as any[]);
   const [showSuggested, setShowSuggested] = useState(false);
   const [itinerary, setItinerary] = useState<{ a_description: string; dte: string }[]>([{ a_description: '', dte: '' }]);
+  const [averageDuration, setAverageDuration] = useState<number | null>(null);
 
   const theme = useTheme();
 
@@ -47,6 +50,7 @@ export const AddTrip = () => {
   const fetchUserDetails = async () => {
     try {
       const response = await getUserDetails();
+      console.log("The user details", response);
       if (response.status === 200) {
         setUser(response.data.user);
       } else {
@@ -89,8 +93,19 @@ export const AddTrip = () => {
     });
   };
 
-  const handleLocationChange = (selectedOption: any) => {
+  const handleLocationChange = async (selectedOption: any) => {
     setSelectedLocation(selectedOption);
+    try {
+      const response = await getAverageDuration(selectedOption.value);
+      if (response.status === 200 && response.data[0].length > 0) {
+        setAverageDuration(response.data[0][0].avg_duration);
+      } else {
+        setAverageDuration(null);
+      }
+    } catch {
+      console.error("Error fetching average duration");
+      setAverageDuration(null);
+    }
   };
 
   const handleSubmit = async (e: any) => {
@@ -178,7 +193,12 @@ export const AddTrip = () => {
             }))}
             placeholder="Select a location"
             isSearchable
-          />
+          />          
+          {averageDuration !== null && (
+            <Text mt={2} color="gray.500">
+              Planning Tip: Trips to this location have an average duration of {averageDuration.toFixed(1)} days.
+            </Text>
+          )}
         </FormControl>
         <FormControl mb={4}>
           <FormLabel>Start Date</FormLabel>

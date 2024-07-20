@@ -12,7 +12,8 @@ const endpoints = {
   createTrip: "trip",
   itinerary: "itinerary",
   connect: "connect",
-  popularDestinations: "popularDestinations"
+  popularDestinations: "popularDestinations",
+  averageDuration: "averageDuration"
 };
 
 export { baseApiUrl, endpoints };
