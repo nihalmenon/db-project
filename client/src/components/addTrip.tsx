@@ -2,6 +2,8 @@ import React, { useState, useEffect, HtmlHTMLAttributes } from "react";
 import { Form, useNavigate } from "react-router-dom";
 import { getUserDetails, getSuggestedInvitees } from "../actions/user";
 import { getAverageDuration, getPopularActivities } from "../actions/trip";
+import { useUser } from "../hooks/useUser";
+import { LocationDropdown } from "./locationDropdown";
 import Select from "react-select";
 import {
   Box,
@@ -21,20 +23,19 @@ import {
   IconButton,
   Text
 } from "@chakra-ui/react";
-import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
-import { getLocations } from "../actions/location";
+import { DeleteIcon, AddIcon, SearchIcon } from "@chakra-ui/icons";
+import { getLocations, searchLocations } from "../actions/location";
 import { createTrip } from "../actions/trip";
 import toast from "react-hot-toast";
+import {debounce} from 'lodash';
 
 export const AddTrip = () => {
-  const [user, setUser] = useState<any>({});
   const [tripDetails, setTripDetails] = useState({
     startDate: "",
     endDate: "",
     bio: "",
   });
   const [selectedLocation, setSelectedLocation] = useState<any>(null);
-  const [locations, setLocations] = useState([] as any[]);
   const [invitees, setInvitees] = useState([] as any[]);
   const [currentInvitee, setCurrentInvitee] = useState("");
   const [suggestedUsers, setSuggestedUsers] = useState([] as any[]);
@@ -46,32 +47,9 @@ export const AddTrip = () => {
 
   const theme = useTheme();
 
-  const token = localStorage.getItem("authToken");
   const navigate = useNavigate();
 
-  const fetchUserDetails = async () => {
-    try {
-      const response = await getUserDetails();
-      console.log("The user details", response);
-      if (response.status === 200) {
-        setUser(response.data.user);
-      } else {
-        navigate("/signin");
-      }
-    } catch (error) {
-      console.error("Error fetching user details", error);
-      navigate("/signin");
-    }
-  };
-
-  const fetchLocations = async () => {
-    try {
-      const response = await getLocations();
-      if (response.status === 200) setLocations(response.data);
-    } catch {
-      console.error("Error fetching locations");
-    }
-  };
+  const user = useUser();
 
   const fetchSuggestedUsers = async () => {
     try {
@@ -83,8 +61,6 @@ export const AddTrip = () => {
   };
 
   useEffect(() => {
-    fetchUserDetails();
-    fetchLocations();
     fetchSuggestedUsers();
   }, []);
 
@@ -95,26 +71,40 @@ export const AddTrip = () => {
     });
   };
 
-  const handleLocationChange = async (selectedOption: any) => {
-    setSelectedLocation(selectedOption);
+  useEffect(() => {
+    console.log(selectedLocation);
+    if (selectedLocation) {
+      fetchAverageDuration();
+      fetchSuggestedItinerary();
+    }
+  }, [selectedLocation])
+
+  const fetchAverageDuration = async () => {
     try {
-      const response = await getAverageDuration(selectedOption.value);
+      const response = await getAverageDuration(selectedLocation.value);
       if (response.status === 200 && response.data[0].length > 0) {
         setAverageDuration(response.data[0][0].avg_duration);
       } else {
         setAverageDuration(null);
-      }
-
-      const suggestedActivitiesResponse = await getPopularActivities(selectedOption.value, tripDetails.startDate, tripDetails.endDate);
-      if (suggestedActivitiesResponse.status === 200) {
-        setSuggestedItinerary(suggestedActivitiesResponse.data);
       }
     } catch {
       console.error("Error fetching average duration");
       setAverageDuration(null);
       setSuggestedItinerary([]);
     }
-  };
+  }
+
+  const fetchSuggestedItinerary = async () => {
+    try {
+      const suggestedActivitiesResponse = await getPopularActivities(selectedLocation.value, tripDetails.startDate, tripDetails.endDate);
+      if (suggestedActivitiesResponse.status === 200) {
+        setSuggestedItinerary(suggestedActivitiesResponse.data);
+      }
+    } catch {
+      console.error("Error fetching suggested activities");
+      setSuggestedItinerary([]);
+    }
+  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -128,7 +118,7 @@ export const AddTrip = () => {
       toast.error("Please fill all fields!");
       return;
     }
-    // Add trip to database
+    
     try {
       const response = await createTrip({
         ...tripDetails,
@@ -194,18 +184,8 @@ export const AddTrip = () => {
     <Box p={5} maxWidth="600px" mx="auto">
       <Heading>Add Trip</Heading>
       <form onSubmit={handleSubmit}>
-        <FormControl mb={4}>
-          <FormLabel>Location</FormLabel>
-          <Select
-            value={selectedLocation}
-            onChange={handleLocationChange}
-            options={locations.map((loc) => ({
-              value: loc.lid,
-              label: loc.city + ", " + loc.c_code,
-            }))}
-            placeholder="Select a location"
-            isSearchable
-          />          
+        <FormControl mt={2} mb={4}>
+          <LocationDropdown setSelectedLocation={setSelectedLocation}/>
           {averageDuration !== null && (
             <Text mt={2} color="gray.500">
               Planning Tip: Trips to this location have an average duration of {averageDuration.toFixed(1)} days.
@@ -286,6 +266,7 @@ export const AddTrip = () => {
               backgroundColor: theme.colors.secondary,
               transition: "background-color 0.3s ease",
             }}
+            mb={2}
           >
             {showSuggested ? "Hide Suggested Users" : "Show Suggested Users"}
           </Button>
@@ -340,7 +321,7 @@ export const AddTrip = () => {
             </FormControl>
 					</Flex>
 				))}
-        <FormControl>
+        <FormControl mb={4}>
           <Button 
             onClick={addItineraryItem}
             mb={2}
