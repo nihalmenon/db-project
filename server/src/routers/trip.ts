@@ -30,10 +30,12 @@ router.post('/trip', auth, async (req, res) => {
         await query("COMMIT", []);
         return res.status(200).send('Trip created successfully');
     } catch (err) {
-        await query('ROLLBACK', []);
+        await query("ROLLBACK", []);
         return res.status(500).send('An error occurred while creating trip: ' + err);
     }
 });
+
+
 
 // return all trips for a given user
 router.get('/trips', auth, (req, res) => {
@@ -170,6 +172,48 @@ router.get("/averageDuration", auth, (req, res) => {
         }
         res.status(200).send(results);
     });
+});
+
+router.put('/updateTrip', auth, async (req, res) => {
+    const { tid, start_date, end_date, bio, itinerary} = req?.body;
+    if (!req || !tid || !start_date || !end_date || !bio || !itinerary) res.status(400).send('Invalid input to update Trip')
+    
+    try{
+        await query("START TRANSACTION", []);
+        let sql = 'CALL update_trip (?, ?, ?, ?)'; 
+        await query(sql, [tid,start_date, end_date,bio]); 
+        sql = 'CALL delete_trip_activities (?, ?, ?, ?)';
+        await query(sql, [tid]); 
+        sql = 'CALL add_activity(?, ?, ?, ?)'
+        for (let activity of itinerary){
+            const {a_no, a_description, dte} = activity; 
+            await query(sql, [tid, a_no, a_description, dte]); 
+        } 
+        await query("COMMIT", []);
+        return res.send(200).send('Trip updated successfully');
+    } catch(err){
+        console.log(err); 
+        await query('ROLLBACK', []);
+        return res.status(500).send('An error occured while fetching trip during updateTrip');
+    }
+});
+
+
+
+router.get("/popularActivities", auth, (req, res) => {
+        const lid = req.query.lid;
+        const start_date = req.query.start_date == '' ? null : req.query.start_date;
+        const end_date = req.query.end_date == '' ? null : req.query.end_date;
+
+        const query = 'CALL popular_activities (?, ?, ?)';
+    
+        connection.query(query, [lid, start_date, end_date], (err: Error, results: any[]) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send('An error occurred while fetching popular activities.');
+            }
+            res.status(200).send(results[0]);
+        });
 });
 
 

@@ -1,8 +1,6 @@
 import {
   Heading,
   Text,
-  List,
-  ListItem,
   Divider,
   Modal,
   ModalOverlay,
@@ -12,14 +10,19 @@ import {
   ModalBody,
   ModalCloseButton,
   Input,
+  useTheme,
   Button,
-  typography,
+  Flex,
+  FormControl,
+  FormLabel,
+  Box,
+  IconButton,
 } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
 import { Activity, Trip } from "../interfaces/connectInterfaces";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ThemeButton } from "./themeButton";
 import { toISODate } from "../utils/commonFunctions";
-import { TypePredicateKind } from "typescript";
 import { updateTrip } from "../actions/trip";
 
 export interface EditTripDetailsModalProps {
@@ -27,6 +30,7 @@ export interface EditTripDetailsModalProps {
   onClose: () => void;
   trip: Trip;
 }
+
 const formatDate = (dateString: any) => {
   const date = new Date(dateString);
   const year = date.getFullYear();
@@ -49,21 +53,14 @@ export const EditTripDetailsModal = ({
   const [bio, setBio] = useState(trip.bio || "");
   const [itinerary, setItinerary] = useState(trip.itinerary || []);
 
-  useEffect(() => {
-    if (isOpen) {
-      setStartDate(formatDate(trip.start_date || new Date().toISOString()));
-      setEndDate(formatDate(trip.end_date || new Date().toISOString()));
-      setBio(trip.bio);
-      setItinerary(trip.itinerary || []);
-    }
-  }, [isOpen, trip]);
-
   const handleAddActivity = () => {
     setItinerary([
       ...itinerary,
-      { a_no: itinerary.length + 1, a_description: "", dte: "" },
+      { a_no: itinerary.length + 1, a_description: "", dte: startDate },
     ]);
   };
+
+  const theme = useTheme(); // Access Chakra UI theme
 
   const handleDeleteActivity = (index: number) => {
     const newItinerary = itinerary.filter((_, i) => i !== index);
@@ -83,93 +80,98 @@ export const EditTripDetailsModal = ({
     try {
       await updateTrip(updatedTrip);
       console.log("updated trip");
-    } catch(error) {
+    } catch (error) {
       console.log("Error updating trip: ", error);
     }
     onClose();
+  };
+
+  const handleItineraryChange = (
+    index: number,
+    field: string,
+    value: string
+  ) => {
+    const newItinerary = [...itinerary];
+    newItinerary[index] = { ...newItinerary[index], [field]: value };
+    setItinerary(newItinerary);
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Trip Details</ModalHeader>
+        <ModalHeader color={theme.colors.primary}>Trip Details</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {trip.tid ? (
             <>
-              <Text>
-                <strong>Start Date:</strong>
-              </Text>
-              <Input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                mt={2}
-              />
-              <Text>
-                <strong>End Date:</strong>
-              </Text>
-              <Input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                mt={2}
-              />
-              <Text>
-                <strong>Bio:</strong>
-              </Text>
-              <Input value={bio} onChange={(e) => setBio(e.target.value)} />
+              <FormControl mb={4}>
+                <FormLabel>Start Date</FormLabel>
+                <Input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+              </FormControl>
+              <FormControl mb={4}>
+                <FormLabel>End Date</FormLabel>
+                <Input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </FormControl>
+              <FormControl mb={4}>
+                <FormLabel>Bio</FormLabel>
+                <Input value={bio} onChange={(e) => setBio(e.target.value)} />
+              </FormControl>
 
               <Divider mt={4} mb={4} />
               <Heading size="md">Itinerary</Heading>
-              <List spacing={3} mt={3}>
+              <FormLabel>Itinerary Items</FormLabel>
+              <Box>
                 {itinerary.map((activity, index) => (
-                  <ListItem key={index}>
-                    <Text>
-                      <strong>Activity {activity.a_no}:</strong>{" "}
-                    </Text>
-                    <Input
-                      type="text"
-                      value={activity.a_description}
-                      onChange={(e) => {
-                        const newItinerary = [...itinerary];
-                        newItinerary[index].a_description = e.target.value;
-                        setItinerary(newItinerary);
-                      }}
-                    />
-                    <Text>
-                      <strong>Date:</strong>
+                  <Flex key={index} alignItems="center" mb={2}>
+                    <FormControl flex="2" mr={2}>
+                      <Input
+                        type="text"
+                        value={activity.a_description}
+                        onChange={(e) =>
+                          handleItineraryChange(
+                            index,
+                            "a_description",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </FormControl>
+                    <FormControl flex="1" mr={2}>
                       <Input
                         type="date"
                         value={formatDate(
                           toISODate(activity.dte) || new Date().toISOString()
                         )}
-                        onChange={(e) => {
-                          const newItinerary = [...itinerary];
-                          newItinerary[index].dte = toISODate(e.target.value);
-                          setItinerary(newItinerary);
-                        }}
+                        onChange={(e) =>
+                          handleItineraryChange(
+                            index,
+                            "dte",
+                            toISODate(e.target.value)
+                          )
+                        }
                       />
-                    </Text>
-                    <Button
-                      size="sm"
-                      mt={2}
+                    </FormControl>
+                    <IconButton
+                      aria-label="Delete item"
+                      icon={<DeleteIcon />}
                       onClick={() => handleDeleteActivity(index)}
-                      style={{
-                        backgroundColor: "var(--chakra-colors-red-500)",
-                        color: "white",
-                      }}
-                    >
-                      Delete Activity
-                    </Button>
-                    <Divider mt={2} mb={2} />
-                  </ListItem>
+                      variant="outline"
+                    />
+                  </Flex>
                 ))}
-              </List>
-              <Button mt={4} onClick={handleAddActivity}>
-                Add Activity
-              </Button>
+                <Button mt={2} onClick={handleAddActivity}>
+                  Add Activity
+                </Button>
+              </Box>
             </>
           ) : (
             <Text>No trip selected.</Text>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, HtmlHTMLAttributes } from "react";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { getUserDetails, getSuggestedInvitees } from "../actions/user";
-import { getAverageDuration } from "../actions/trip";
+import { getAverageDuration, getPopularActivities } from "../actions/trip";
 import Select from "react-select";
 import {
   Box,
@@ -21,7 +21,7 @@ import {
   IconButton,
   Text
 } from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
 import { getLocations } from "../actions/location";
 import { createTrip } from "../actions/trip";
 import toast from "react-hot-toast";
@@ -41,6 +41,8 @@ export const AddTrip = () => {
   const [showSuggested, setShowSuggested] = useState(false);
   const [itinerary, setItinerary] = useState<{ a_description: string; dte: string }[]>([{ a_description: '', dte: '' }]);
   const [averageDuration, setAverageDuration] = useState<number | null>(null);
+  const [suggestedItinerary, setSuggestedItinerary] = useState<{ a_description: string }[]>([]);
+	const [showSuggestedItinerary, setShowSuggestedItinerary] = useState(false);
 
   const theme = useTheme();
 
@@ -102,9 +104,15 @@ export const AddTrip = () => {
       } else {
         setAverageDuration(null);
       }
+
+      const suggestedActivitiesResponse = await getPopularActivities(selectedOption.value, tripDetails.startDate, tripDetails.endDate);
+      if (suggestedActivitiesResponse.status === 200) {
+        setSuggestedItinerary(suggestedActivitiesResponse.data);
+      }
     } catch {
       console.error("Error fetching average duration");
       setAverageDuration(null);
+      setSuggestedItinerary([]);
     }
   };
 
@@ -177,6 +185,10 @@ export const AddTrip = () => {
 	const removeItineraryItem = (index: number) => {
 		setItinerary(itinerary.filter((_, i) => i !== index));
 	};
+
+  const addSuggestedActivity = (activity: {a_description: string, dte: string }) => {
+    setItinerary([...itinerary, activity]);
+  }
 
   return (
     <Box p={5} maxWidth="600px" mx="auto">
@@ -268,7 +280,6 @@ export const AddTrip = () => {
           <FormLabel>Suggested Users</FormLabel>
           <Button
             onClick={toggleSuggestedUsers}
-            mb={2}
             backgroundColor={theme.colors.light}
             color={theme.colors.dark}
             _hover={{
@@ -300,22 +311,19 @@ export const AddTrip = () => {
         </FormControl>
         <FormLabel>Itinerary</FormLabel>
         <Flex>
-          <FormLabel flex="2">Activity</FormLabel>
-          <FormLabel flex="1">Date</FormLabel>
+          <FormLabel flex="10" color="gray" mr={2}>Activity</FormLabel>
+          <FormLabel flex="6" color="gray">Date</FormLabel>
         </Flex>
-
 				{itinerary.map((item, index) => (
 					<Flex key={index} alignItems="center" mb={2}>
-						<FormControl flex="2" mr={2}>
-							{/* <FormLabel>Activity</FormLabel> */}
+						<FormControl flex="10" mr={2}>
 							<Input
 								name="a_description"
 								value={item.a_description}
 								onChange={(e) => handleItineraryChange(index, e)}
 							/>
 						</FormControl>
-						<FormControl flex="1" mr={2}>
-							{/* <FormLabel>Date</FormLabel> */}
+						<FormControl flex="3" mr={2}>
 							<Input
 								type="date"
 								name="dte"
@@ -323,11 +331,13 @@ export const AddTrip = () => {
 								onChange={(e) => handleItineraryChange(index, e)}
 							/>
 						</FormControl>
-						<IconButton
+            <FormControl flex="1">
+            <IconButton
 							aria-label="Delete item"
 							icon={<DeleteIcon />}
 							onClick={() => removeItineraryItem(index)}
 						/>
+            </FormControl>
 					</Flex>
 				))}
         <FormControl>
@@ -341,7 +351,43 @@ export const AddTrip = () => {
               transition: "background-color 0.3s ease",
             }}>Add Itinerary Item</Button>
         </FormControl>
-
+        <FormControl mb={4}>
+          <FormLabel>Suggested Activities</FormLabel>
+          <Button
+            onClick={() => setShowSuggestedItinerary(!showSuggestedItinerary)}
+            mb={2}
+            backgroundColor={theme.colors.light}
+            color={theme.colors.dark}
+            _hover={{
+              backgroundColor: theme.colors.secondary,
+              transition: "background-color 0.3s ease",
+            }}
+          >
+            {showSuggestedItinerary ? "Hide Suggested Activities" : "Show Suggested Activities"}
+          </Button>
+          <Collapse in={showSuggestedItinerary} animateOpacity>
+            <Box shadow="md" >
+              {suggestedItinerary.map((item, index) => (
+                <Flex key={index} alignItems="flex-end" mb={1}>
+                  <FormControl flex="9" mr={2}>
+                    <Input
+                      name="activity"
+                      value={item.a_description}
+                      readOnly
+                    />
+                  </FormControl>
+                  <FormControl flex="1">
+                    <IconButton
+                      aria-label="Add item"
+                      icon={<AddIcon />}
+                      onClick={() => addSuggestedActivity({'a_description': item.a_description, 'dte': ''})}
+                    />
+                  </FormControl>
+                </Flex>
+              ))}
+            </Box>
+          </Collapse>
+        </FormControl>
         <Button
           type="submit"
           backgroundColor={theme.colors.primary}
