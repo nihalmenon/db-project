@@ -1,6 +1,8 @@
 import express from 'express';
 import {connection, query} from '../connection';
 import auth from '../middleware/authMiddleware';
+import formatDateForMySql from '../helpers/date';
+import formatDateForMySQL from '../helpers/date';
 
 
 const router = express.Router();
@@ -175,22 +177,22 @@ router.get("/averageDuration", auth, (req, res) => {
 });
 
 router.put('/updateTrip', auth, async (req, res) => {
-    const { tid, start_date, end_date, bio, itinerary} = req?.body;
+    let { tid, start_date, end_date, bio, itinerary} = req?.body;
     if (!req || !tid || !start_date || !end_date || !bio || !itinerary) res.status(400).send('Invalid input to update Trip')
     
     try{
         await query("START TRANSACTION", []);
         let sql = 'CALL update_trip (?, ?, ?, ?)'; 
         await query(sql, [tid,start_date, end_date,bio]); 
-        sql = 'CALL delete_trip_activities (?, ?, ?, ?)';
+        sql = 'CALL delete_trip_activities (?)';
         await query(sql, [tid]); 
         sql = 'CALL add_activity(?, ?, ?, ?)'
         for (let activity of itinerary){
             const {a_no, a_description, dte} = activity; 
-            await query(sql, [tid, a_no, a_description, dte]); 
+            await query(sql, [tid, a_no, a_description, formatDateForMySQL(dte)]); 
         } 
         await query("COMMIT", []);
-        return res.send(200).send('Trip updated successfully');
+        return res.status(200).send('Trip updated successfully');
     } catch(err){
         console.log(err); 
         await query('ROLLBACK', []);
