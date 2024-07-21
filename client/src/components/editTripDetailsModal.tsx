@@ -53,9 +53,10 @@ export const EditTripDetailsModal = ({
   const [itinerary, setItinerary] = useState(trip.itinerary || []);
 
   const handleAddActivity = () => {
+    console.log(trip.start_date)
     setItinerary([
       ...itinerary,
-      { a_no: itinerary.length + 1, a_description: "", dte: startDate },
+      { a_no: itinerary.length + 1, a_description: "", dte: formatDate(trip.start_date) },
     ]);
   };
 
@@ -147,7 +148,7 @@ export const EditTripDetailsModal = ({
                       <Input
                         type="date"
                         value={formatDate(
-                          activity.dte || new Date()
+                          activity.dte || trip.start_date
                         )}
                         onChange={(e) =>
                           handleItineraryChange(
