@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Heading, Select, useTheme, Text, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Select, useTheme, Text, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useColorMode } from "@chakra-ui/react";
 import { useUser } from "../hooks/useUser"
 import { PopDestQuery } from "../interfaces/statsInterfaces";
 import { useEffect, useState } from "react";
@@ -28,18 +28,19 @@ export const Stats = () => {
     });
   };
 
+  const {colorMode} = useColorMode();
   useEffect(() => {
     refreshPopularDestinations(filterOptions);
   }, [filterOptions.gender]);
 
   return (
     <Box p={5}>
-      <Heading color={theme.colors.primary}>Most Popular Destinations</Heading>
+      <Heading color={theme.colors.primary[colorMode]}>Most Popular Destinations</Heading>
       <Divider m={8} />
       <Flex>
 
       <Flex direction="column" w={['50%', '50%', '400px']} mr={10}>
-        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary}>age range</Text>
+        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary[colorMode]}>age range</Text>
         <RangeSlider 
           min={18}
           max={65}
@@ -50,13 +51,13 @@ export const Stats = () => {
           onChange={onChangeAge}
           onChangeEnd={() => refreshPopularDestinations(filterOptions)}
         >
-          <RangeSliderTrack bg={theme.colors.secondary}>
-            <RangeSliderFilledTrack bg={theme.colors.primary} />
+          <RangeSliderTrack bg={theme.colors.secondary[colorMode]}>
+            <RangeSliderFilledTrack bg={theme.colors.primary[colorMode]} />
           </RangeSliderTrack>
-          <RangeSliderThumb fontSize="md" fontWeight="bold" color={theme.colors.primary} boxSize={8} index={0}>
+          <RangeSliderThumb fontSize="md" fontWeight="bold" color={theme.colors.primary[colorMode]} boxSize={8} index={0}>
             <Text>{filterOptions.minAge}</Text>
           </RangeSliderThumb>
-          <RangeSliderThumb fontSize="md" fontWeight="bold" color={theme.colors.primary} boxSize={8} index={1}>
+          <RangeSliderThumb fontSize="md" fontWeight="bold" color={theme.colors.primary[colorMode]} boxSize={8} index={1}>
             <Text>{filterOptions.maxAge}</Text>
           </RangeSliderThumb>
         </RangeSlider>
@@ -64,9 +65,9 @@ export const Stats = () => {
 
            
       <Flex direction="column" w={['50%', '50%', '250px']}>
-        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary}>gender</Text>
+        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary[colorMode]}>gender</Text>
         <Select 
-          bg={theme.colors.white} 
+          bg={theme.colors.light[colorMode]} 
           variant="outline" 
           placeholder='Select gender'
           onChange={onChangeGender}
@@ -82,7 +83,7 @@ export const Stats = () => {
 
       <TableContainer 
         mt={5}
-        bg={theme.colors.white}
+        bg={theme.colors.light[colorMode]}
         border={"2px solid"}
         borderColor={"gray.200"}
         rounded="lg"
@@ -101,8 +102,8 @@ export const Stats = () => {
             {popularDestinations.map(dest => {
               return (
                 <Tr>
-                  <Td>{dest.city}, {dest.c_name}</Td>
-                  <Td isNumeric>{dest.trip_count}</Td>
+                  <Td color={theme.colors.textlight[colorMode]}>{dest.city}, {dest.c_name}</Td>
+                  <Td isNumeric color={theme.colors.textlight[colorMode]}>{dest.trip_count}</Td>
                 </Tr>
               );
             })}

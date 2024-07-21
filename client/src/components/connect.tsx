@@ -1,4 +1,4 @@
-import { Box, Heading, useTheme, Text, Card, CardHeader, CardBody, CardFooter, Button, SimpleGrid, Stack, ButtonGroup, Divider, Image } from "@chakra-ui/react"
+import { Box, Heading, useTheme, Text, Card, CardHeader, CardBody, CardFooter, Button, SimpleGrid, Stack, ButtonGroup, Divider, Image, useColorMode } from "@chakra-ui/react"
 import { useUser } from "../hooks/useUser";
 import { ConnectData, Trip, User } from "../interfaces/connectInterfaces";
 import { getAge } from "../utils/commonFunctions";
@@ -19,6 +19,8 @@ export const Connect = () => {
   const location = useLocation();
   const { trip } = location.state;
   const connectData = useConnectData(trip.tid);
+
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const openDetailsModal = (trip: Trip) => {
     setSelectedTrip(trip);
@@ -42,8 +44,8 @@ export const Connect = () => {
 
   return (
     <Box p={5} minH="100vh">
-      <Heading mb={1} color={theme.colors.primary}>Connect</Heading>
-      <Text fontWeight="bold" fontSize="xl" color={theme.colors.dark} >Connect with other groups going to {trip.city} with you!</Text>
+      <Heading mb={1} color={theme.colors.primary[colorMode]}>Connect</Heading>
+      <Text fontWeight="bold" fontSize="xl" color={theme.colors.dark[colorMode]} >Connect with other groups going to {trip.city} with you!</Text>
 
       <SimpleGrid spacing={4} mt={10} templateColumns='repeat(auto-fill, 100%)'>
         {

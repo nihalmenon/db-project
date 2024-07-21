@@ -17,6 +17,7 @@ import {
   FormLabel,
   Box,
   IconButton,
+  useColorMode
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Activity, Trip } from "../interfaces/connectInterfaces";
@@ -93,12 +94,12 @@ export const EditTripDetailsModal = ({
     newItinerary[index] = { ...newItinerary[index], [field]: value };
     setItinerary(newItinerary);
   };
-
+  const {colorMode, toggleColorMode} = useColorMode();
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader color={theme.colors.primary}>Trip Details</ModalHeader>
+        <ModalHeader color={theme.colors.primary[colorMode]}>Trip Details</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {trip.tid ? (

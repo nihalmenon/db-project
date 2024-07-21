@@ -21,6 +21,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  useColorMode
 } from "@chakra-ui/react";
 import { useUser } from "../hooks/useUser";
 import { ThemeButton } from "./themeButton";
@@ -36,6 +37,7 @@ export const Dashboard = () => {
   const [selectedTrip, setSelectedTrip] = useState<Trip>({} as Trip);
   const [tripItinerary, setItinerary] = useState<any[]>([]);
 
+  const { colorMode, toggleColorMode } = useColorMode();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isEditModal, setIsEditModal] = useState(false); // State to determine which modal to open
@@ -106,7 +108,7 @@ export const Dashboard = () => {
   return (
     <Box p={5}>
       <Flex justify="space-between" alignItems="top" mb={6}>
-        <Heading color={theme.colors.primary}>Dashboard</Heading>
+        <Heading color={theme.colors.primary[colorMode]}>Dashboard</Heading>
         <Flex flexDirection="column" alignItems="flex-end">
           <ThemeButton onClick={handleLogout}>Logout</ThemeButton>
 
@@ -120,16 +122,16 @@ export const Dashboard = () => {
 
       {trips.length > 0 ? (
         <Box>
-          <Heading size="lg" mb={4} color={theme.colors.secondary}>
+          <Heading size="lg" mb={4} color={theme.colors.secondary[colorMode]}>
             Upcoming Trips
           </Heading>
           <List spacing={4}>
             {upcomingTrips.map((trip) => (
               <ListItem
                 key={trip.tid}
-                bg={theme.colors.secondary}
+                bg={theme.colors.secondary[colorMode]}
                 _hover={{
-                  backgroundColor: theme.colors.accent,
+                  backgroundColor: theme.colors.accent[colorMode],
                   transition: "background-color 0.5s ease",
                 }}
                 p={4}
@@ -138,15 +140,15 @@ export const Dashboard = () => {
                 onClick={() => onClickModal(trip)}
               >
                 <Flex align="center" justify="space-between" mb={2}>
-                  <Heading size="md" color={theme.colors.accent2}>
+                  <Heading size="md" color={theme.colors.accent2[colorMode]}>
                     {trip.city}
                   </Heading>
-                  <Text fontSize="sm" color={theme.colors.textlight}>
+                  <Text fontSize="sm" color={theme.colors.text[colorMode]}>
                     {formatDate(trip.start_date)} - {formatDate(trip.end_date)}
                   </Text>
                 </Flex>
                 <Flex style={{ justifyContent: "space-between" }}>
-                  <Text color={theme.colors.textlight}>{trip.bio}</Text>
+                  <Text color={theme.colors.text[colorMode]}>{trip.bio}</Text>
                   <Button onClick={() => openConnectPage(trip)} size="sm">
                     Connect with others
                   </Button>
@@ -167,16 +169,16 @@ export const Dashboard = () => {
 
       {trips.length > 0 ? (
         <Box>
-          <Heading size="lg" mb={4} color={theme.colors.secondary}>
+          <Heading size="lg" mb={4} color={theme.colors.secondary[colorMode]}>
             Previous Trips
           </Heading>
           <List spacing={4}>
             {previousTrips.map((trip) => (
               <ListItem
                 key={trip.tid}
-                bg={theme.colors.secondary}
+                bg={theme.colors.secondary[colorMode]}
                 _hover={{
-                  backgroundColor: theme.colors.accent,
+                  backgroundColor: theme.colors.accent[colorMode],
                   transition: "background-color 0.5s ease",
                 }}
                 p={4}
@@ -185,21 +187,21 @@ export const Dashboard = () => {
                 onClick={() => onClickModal(trip)}
               >
                 <Flex align="center" justify="space-between" mb={2}>
-                  <Heading size="md" color={theme.colors.accent2}>
+                  <Heading size="md" color={theme.colors.accent2[colorMode]}>
                     {trip.city}
                   </Heading>
-                  <Text fontSize="sm" color={theme.colors.textlight}>
+                  <Text fontSize="sm" color={theme.colors.text[colorMode]}>
                     {formatDate(trip.start_date)} - {formatDate(trip.end_date)}
                   </Text>
                 </Flex>
-                <Text color={theme.colors.textlight}>{trip.bio}</Text>
+                <Text color={theme.colors.text[colorMode]}>{trip.bio}</Text>
               </ListItem>
             ))}
           </List>
         </Box>
       ) : (
         <Center mt={8}>
-          <Text fontSize="lg" color={theme.colors.dark}>
+          <Text fontSize="lg" color={theme.colors.dark[colorMode]}>
             No trips to show
           </Text>
         </Center>

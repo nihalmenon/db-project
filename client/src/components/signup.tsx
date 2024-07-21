@@ -15,6 +15,7 @@ import {
   FormControl,
   InputRightElement,
   useTheme,
+  useColorMode,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock, FaCalendarAlt, FaEnvelope } from "react-icons/fa";
 import { Navigate, Link as RouterLink } from "react-router-dom";
@@ -36,6 +37,7 @@ export const SignUp = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
+  const {colorMode} = useColorMode();
   const handleShowClick = () => setShowPassword(!showPassword);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -78,20 +80,20 @@ export const SignUp = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Heading color={theme.colors.primary}>Sign Up</Heading>
+        <Heading color={theme.colors.primary[colorMode]}>Sign Up</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit}>
             <Stack
               spacing={4}
               p="1rem"
-              backgroundColor={theme.colors.accent2}
+              backgroundColor={theme.colors.accent2[colorMode]}
               boxShadow="md"
             >
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaUserAlt color={theme.colors.primary} />}
+                    children={<CFaUserAlt color={theme.colors.primary[colorMode]} />}
                   />
                   <Input
                     type="text"
@@ -106,7 +108,7 @@ export const SignUp = () => {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaUserAlt color={theme.colors.primary} />}
+                    children={<CFaUserAlt color={theme.colors.primary[colorMode]} />}
                   />
                   <Input
                     type="text"
@@ -121,7 +123,7 @@ export const SignUp = () => {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaCalendarAlt color={theme.colors.primary} />}
+                    children={<CFaCalendarAlt color={theme.colors.primary[colorMode]} />}
                   />
                   <Input
                     type="date"
@@ -136,7 +138,7 @@ export const SignUp = () => {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaEnvelope color={theme.colors.primary} />}
+                    children={<CFaEnvelope color={theme.colors.primary[colorMode]} />}
                   />
                   <Input
                     type="email"
@@ -151,8 +153,8 @@ export const SignUp = () => {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    color={theme.colors.primary}
-                    children={<CFaLock color={theme.colors.primary} />}
+                    color={theme.colors.primary[colorMode]}
+                    children={<CFaLock color={theme.colors.primary[colorMode]} />}
                   />
                   <Input
                     type={showPassword ? "text" : "password"}
@@ -166,10 +168,10 @@ export const SignUp = () => {
                       h="1.75rem"
                       size="sm"
                       onClick={handleShowClick}
-                      backgroundColor={theme.colors.primary}
-                      color={theme.colors.textlight}
+                      backgroundColor={theme.colors.primary[colorMode]}
+                      color={theme.colors.textlight[colorMode]}
                       _hover={{
-                        backgroundColor: theme.colors.secondary,
+                        backgroundColor: theme.colors.secondary[colorMode],
                         transition: "background-color 0.3s ease",
                       }}
                     >
@@ -182,10 +184,10 @@ export const SignUp = () => {
                 borderRadius={0}
                 type="submit"
                 variant="solid"
-                backgroundColor={theme.colors.primary}
-                color={theme.colors.textlight}
+                backgroundColor={theme.colors.primary[colorMode]}
+                color={theme.colors.textlight[colorMode]}
                 _hover={{
-                  backgroundColor: theme.colors.secondary,
+                  backgroundColor: theme.colors.secondary[colorMode],
                   transition: "background-color 0.3s ease",
                 }}
                 width="full"
@@ -201,7 +203,7 @@ export const SignUp = () => {
         <Link
           as={RouterLink}
           to="/signin"
-          color={theme.colors.highlight}
+          color={theme.colors.highlight[colorMode]}
           href="#"
         >
           Sign In

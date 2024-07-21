@@ -1,4 +1,4 @@
-import { Button, ButtonProps, useTheme } from "@chakra-ui/react"
+import { Button, ButtonProps, useTheme, useColorMode } from "@chakra-ui/react"
 import { ReactNode } from "react"
 
 export interface ThemeButtonProps extends ButtonProps {
@@ -8,13 +8,14 @@ export interface ThemeButtonProps extends ButtonProps {
 
 export const ThemeButton = ({ onClick, children }: ThemeButtonProps) => {
     const theme = useTheme();
+    const { colorMode} = useColorMode();
     return (
         <Button
-            backgroundColor={theme.colors.primary}
-            color={theme.colors.textlight}
+            backgroundColor={theme.colors.primary[colorMode]}
+            color={theme.colors.textlight[colorMode]}
             onClick={onClick}
             _hover={{
-            backgroundColor: theme.colors.secondary,
+            backgroundColor: theme.colors.secondary[colorMode],
             transition: "background-color 0.3s ease",
             }}
             size="md"

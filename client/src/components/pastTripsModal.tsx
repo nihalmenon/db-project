@@ -18,6 +18,7 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
+    useColorMode
   } from "@chakra-ui/react";
   import { Trip } from "../interfaces/connectInterfaces";
   import { formatDate } from "../utils/commonFunctions";
