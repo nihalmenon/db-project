@@ -40,7 +40,7 @@ export const Stats = () => {
       <Flex>
 
       <Flex direction="column" w={['50%', '50%', '400px']} mr={10}>
-        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary[colorMode]}>age range</Text>
+        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary[colorMode]}>Age range</Text>
         <RangeSlider 
           min={18}
           max={65}
@@ -65,9 +65,9 @@ export const Stats = () => {
 
            
       <Flex direction="column" w={['50%', '50%', '250px']}>
-        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary[colorMode]}>gender</Text>
+        <Text ml="1" mb="1" fontSize="md" fontWeight="medium" color={theme.colors.primary[colorMode]}>Gender</Text>
         <Select 
-          bg={theme.colors.light[colorMode]} 
+          bg={theme.colors.dark[colorMode]} 
           variant="outline" 
           placeholder='Select gender'
           onChange={onChangeGender}
