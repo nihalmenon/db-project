@@ -22,7 +22,6 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { Activity, Trip } from "../interfaces/connectInterfaces";
 import { useState } from "react";
 import { ThemeButton } from "./themeButton";
-import { toISODate } from "../utils/commonFunctions";
 import { updateTrip } from "../actions/trip";
 
 export interface EditTripDetailsModalProps {
@@ -68,15 +67,14 @@ export const EditTripDetailsModal = ({
   };
 
   const handleSave = async () => {
-    const formatedStartDate = toISODate(startDate);
-    const formatedEndDate = toISODate(endDate);
     const updatedTrip: Trip = {
       ...trip,
-      start_date: formatedStartDate,
-      end_date: formatedEndDate,
+      start_date: startDate,
+      end_date: endDate,
       bio,
       itinerary,
     };
+    
     try {
       await updateTrip(updatedTrip);
       console.log("updated trip");
@@ -149,13 +147,13 @@ export const EditTripDetailsModal = ({
                       <Input
                         type="date"
                         value={formatDate(
-                          toISODate(activity.dte) || new Date().toISOString()
+                          activity.dte || new Date()
                         )}
                         onChange={(e) =>
                           handleItineraryChange(
                             index,
                             "dte",
-                            toISODate(e.target.value)
+                            e.target.value
                           )
                         }
                       />
