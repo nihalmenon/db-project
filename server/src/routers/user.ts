@@ -8,6 +8,18 @@ import auth from '../middleware/authMiddleware';
 
 const router = express.Router();
 
+// update user profile 
+router.put('/user', auth, async (req, res) => {
+    const { uid, first_name, last_name, dob, gender, email, phone, socials, pwd } = req.body;
+    try {
+        const sql = `CALL update_user(?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        await query(sql, [uid, first_name, last_name, dob, gender, email, phone, socials, pwd]);
+        res.status(200).send('Profile updated successfully.');
+    } catch {
+        res.status(500).send('Something went wrong.');
+    }
+});
+
 // User Registration Route
 router.post('/register', validateUser, hashPassword, async (req, res) => {
     try {
