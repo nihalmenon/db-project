@@ -5,9 +5,10 @@ import { User, useUser } from '../hooks/useUser';
 import { EditProfileModal } from './editProfileModal';
 import { useState } from 'react';
 import { updateUser } from '../actions/user';
+import toast from "react-hot-toast";
 
 export const Profile = () => {
-  const user = useUser();
+  const { user, fetchUser } = useUser();
   const [isOpenModal, setIsOpenEditModal] = useState(false);
 
   const openModal = () => {
@@ -18,9 +19,16 @@ export const Profile = () => {
     setIsOpenEditModal(false);
   };
 
-  const onSaveModal = (newUser: User) => {
-    updateUser(newUser);
-    onCloseModal();
+  const onSaveModal = async (newUser: User) => {
+    try {
+      await updateUser(newUser);
+      toast.success("Profile updated successfully.")
+    } catch (e: any) {
+      toast.error(e.response.data);
+    } finally {
+      fetchUser();
+      onCloseModal();
+    }
   };
 
   return (
@@ -70,7 +78,7 @@ export const Profile = () => {
           </Flex>
       </Flex>
     </Container>
-    <EditProfileModal onSave={onSaveModal} onClose={onCloseModal} isOpen={isOpenModal} />
+    <EditProfileModal onSave={onSaveModal} onClose={onCloseModal} isOpen={isOpenModal} user={user} />
     </>
   );
 }

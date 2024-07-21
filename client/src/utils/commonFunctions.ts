@@ -24,7 +24,7 @@ export const dateToYMD = (date: Date): string => {
   const d = date.getDate();
   const m = mArray[date.getMonth()];
   const y = date.getFullYear();
-  return '' + (d <= 9 ? '0' + d : d) + ' ' + m + ' ' + y;
+  return '' + d + ' ' + m + ' ' + y;
 }
 
 export const formatGender = (gender: 'm' | 'f' | 'x'): 'Male' | 'Female' | 'Other' => {

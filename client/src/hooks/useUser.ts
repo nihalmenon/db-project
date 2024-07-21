@@ -21,7 +21,7 @@ export const useUser = () => {
     const fetchUser = async () => {
         try {
           const response = await getUserDetails();
-          if (response.status === 200) {
+          if (response?.status === 200) {
             setUser(response.data.user);
           } else {
             navigate('/signin');
@@ -35,5 +35,5 @@ export const useUser = () => {
         fetchUser();
     }, [navigate]);
 
-    return user;
+    return { user, fetchUser };
 }

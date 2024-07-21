@@ -30,7 +30,10 @@ const getItinerary = (tripId: number) => {
   return base.get(endpoints.itinerary, { params: { tid: tripId }});
 }
 
-const updateUser = (user: User) => {
-  return base.put(endpoints.user, user);
+const updateUser = async (user: User) => {
+  const res = await base.put(endpoints.user, user);
+  await getUserDetails();
+  return res;
 }
+
 export { registerUser, loginUser, getUserDetails, getUserTrips, getSuggestedInvitees, getTripDetails, getItinerary, updateUser};

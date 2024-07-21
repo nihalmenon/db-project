@@ -8,10 +8,10 @@ export interface EditProfileModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (newUser: User) => void;
+  user: User;
 }
 
-export const EditProfileModal = ({ isOpen, onClose, onSave }: EditProfileModalProps) => {
-  const user = useUser();
+export const EditProfileModal = ({ isOpen, onClose, onSave, user }: EditProfileModalProps) => {
   const [newUser, setNewUser] = useState<User>({} as User);
 
   const updateUser = <T extends keyof User>(key: T, value: User[T]) => {
@@ -21,7 +21,7 @@ export const EditProfileModal = ({ isOpen, onClose, onSave }: EditProfileModalPr
       return next;
     });
   };
-
+  
   useEffect(() => {
     user && setNewUser({...user});
   }, [user]);
