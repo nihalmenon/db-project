@@ -1,17 +1,9 @@
+import { User } from "../hooks/useUser";
+
 export interface Activity {
     a_no: number,
     a_description: string,
     dte: string,
-}
-
-export interface User {
-    uid: number,
-    first_name: string,
-    last_name: string,
-    dob: string,
-    socials: string,
-    email: string,
-    phone: string,
 }
 
 export interface Trip {

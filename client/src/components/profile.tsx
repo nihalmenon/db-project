@@ -1,9 +1,10 @@
 import { Box, Avatar, Heading, Text, VStack, HStack, Link, IconButton, Flex, Container } from '@chakra-ui/react';
 import { EditIcon } from '@chakra-ui/icons'
 import { dateToYMD, formatGender } from '../utils/commonFunctions';
-import { useUser } from '../hooks/useUser';
+import { User, useUser } from '../hooks/useUser';
 import { EditProfileModal } from './editProfileModal';
 import { useState } from 'react';
+import { updateUser } from '../actions/user';
 
 export const Profile = () => {
   const user = useUser();
@@ -17,7 +18,8 @@ export const Profile = () => {
     setIsOpenEditModal(false);
   };
 
-  const onSaveModal = () => {
+  const onSaveModal = (newUser: User) => {
+    updateUser(newUser);
     onCloseModal();
   };
 
@@ -68,7 +70,7 @@ export const Profile = () => {
           </Flex>
       </Flex>
     </Container>
-    <EditProfileModal onSave={onSaveModal} onClose={onCloseModal} isOpen={isOpenModal} user={user} />
+    <EditProfileModal onSave={onSaveModal} onClose={onCloseModal} isOpen={isOpenModal} />
     </>
   );
 }

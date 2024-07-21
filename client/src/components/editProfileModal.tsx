@@ -1,15 +1,31 @@
-import { FormControl, FormHelperText, FormLabel, HStack, Input, InputGroup, InputLeftElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, useTheme } from "@chakra-ui/react";
+import { FormControl, FormLabel, HStack, Input, InputGroup, InputLeftElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, useTheme } from "@chakra-ui/react";
 import { ThemeButton } from "./themeButton";
 import { EmailIcon, PhoneIcon } from "@chakra-ui/icons";
+import { User, useUser } from "../hooks/useUser";
+import { useEffect, useState } from "react";
 
 export interface EditProfileModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: () => void;
-  user: any;
+  onSave: (newUser: User) => void;
 }
 
-export const EditProfileModal = ({ isOpen, onClose, onSave, user }: EditProfileModalProps) => {
+export const EditProfileModal = ({ isOpen, onClose, onSave }: EditProfileModalProps) => {
+  const user = useUser();
+  const [newUser, setNewUser] = useState<User>({} as User);
+
+  const updateUser = <T extends keyof User>(key: T, value: User[T]) => {
+    setNewUser(prev => {
+      let next = {...prev};
+      next[key] = value ? value : user[key];
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    user && setNewUser({...user});
+  }, [user]);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
     <ModalOverlay />
@@ -22,6 +38,7 @@ export const EditProfileModal = ({ isOpen, onClose, onSave, user }: EditProfileM
           <FormLabel mb={0}>First name</FormLabel>
           <Input 
             placeholder={user.first_name} 
+            onChange={e => updateUser("first_name", e.target.value)}
           />
         </FormControl>
 
@@ -29,12 +46,16 @@ export const EditProfileModal = ({ isOpen, onClose, onSave, user }: EditProfileM
           <FormLabel mb={0}>Last name</FormLabel>
           <Input 
             placeholder={user.last_name} 
+            onChange={e => updateUser("last_name", e.target.value)}
           />
         </FormControl>
 
         <FormControl mb={2}>
           <FormLabel mb={0}>Gender</FormLabel>
-          <RadioGroup defaultValue={user.gender}>
+          <RadioGroup 
+            defaultValue={user.gender} 
+            onChange={val => updateUser("gender", val as any)}
+          >
             <HStack spacing='24px'>
               <Radio value='m'>Male</Radio>
               <Radio value='f'>Female</Radio>
@@ -49,7 +70,10 @@ export const EditProfileModal = ({ isOpen, onClose, onSave, user }: EditProfileM
             <InputLeftElement pointerEvents='none'>
               <EmailIcon color='gray.300' />
             </InputLeftElement>
-            <Input placeholder={user.email} />
+            <Input 
+              placeholder={user.email} 
+              onChange={e => updateUser("email", e.target.value)}
+            />
           </InputGroup>
         </FormControl>
 
@@ -59,13 +83,32 @@ export const EditProfileModal = ({ isOpen, onClose, onSave, user }: EditProfileM
             <InputLeftElement pointerEvents='none'>
               <PhoneIcon color='gray.300' />
             </InputLeftElement>
-            <Input placeholder={user.phone} />
+            <Input 
+              placeholder={user.phone} 
+              onChange={e => updateUser("phone", e.target.value)}
+            />
           </InputGroup>
+        </FormControl>
+
+        <FormControl mb={2}>
+          <FormLabel mb={0}>Socials</FormLabel>
+          <Input 
+            placeholder={user.socials} 
+            onChange={e => updateUser("socials", e.target.value)}
+          />
+        </FormControl>
+
+        <FormControl mb={2}>
+          <FormLabel mb={0}>Birthday</FormLabel>
+          <Input 
+            type="date"
+            onChange={e => updateUser("dob", e.target.value)}
+          />
         </FormControl>
 
       </ModalBody>
       <ModalFooter justifyContent={"center"}>
-        <ThemeButton onClick={onSave}>Save Changes</ThemeButton>
+        <ThemeButton onClick={() => onSave(newUser)}>Save Changes</ThemeButton>
       </ModalFooter>
     </ModalContent>
   </Modal>
