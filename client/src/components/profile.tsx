@@ -1,63 +1,85 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Avatar, Heading, Text, VStack, HStack, Link } from '@chakra-ui/react';
-import { getUserDetails } from '../actions/user';
+import { Box, Avatar, Heading, Text, VStack, HStack, Link, IconButton, Flex, Container } from '@chakra-ui/react';
+import { EditIcon } from '@chakra-ui/icons'
+import { dateToYMD, formatGender } from '../utils/commonFunctions';
+import { User, useUser } from '../hooks/useUser';
+import { EditProfileModal } from './editProfileModal';
+import { useState } from 'react';
+import { updateUser } from '../actions/user';
+import toast from "react-hot-toast";
 
 export const Profile = () => {
-    const [userData, setUserData] = useState<any>({});
+  const { user, fetchUser } = useUser();
+  const [isOpenModal, setIsOpenEditModal] = useState(false);
 
-  useEffect(() => {
-    getUserDetails().then(response => {
-      setUserData(response.data.user);
-      console.log(response.data.user);
-    });
-  }, []);
-
-  if (!userData) {
-    return <div>Loading...</div>;
+  const openModal = () => {
+    setIsOpenEditModal(true);
   }
 
+  const onCloseModal = () => {
+    setIsOpenEditModal(false);
+  };
+
+  const onSaveModal = async (newUser: User) => {
+    try {
+      await updateUser(newUser);
+      toast.success("Profile updated successfully.")
+    } catch (e: any) {
+      toast.error(e.response.data);
+    } finally {
+      fetchUser();
+      onCloseModal();
+    }
+  };
+
   return (
-    <Box
-      maxW="md"
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      p={5}
-      m="auto"
-      mt={10}
-      textAlign="center"
-    >
-      <Avatar
-        size="2xl"
-        name={`${userData.first_name} ${userData.last_name}`}
-        src="path-to-profile-picture.jpg"
-        mb={4}
-      />
-      <Heading as="h2" size="lg" mb={2}>
-        {userData.first_name} {userData.last_name}
-      </Heading>
-      <Text fontSize="md" mb={4}>{userData.email}</Text>
-      <VStack spacing={2} align="stretch">
-        <HStack justify="space-between">
-          <Text fontWeight="bold">Date of Birth:</Text>
-          <Text>{new Date(userData.dob).toLocaleDateString()}</Text>
-        </HStack>
-        <HStack justify="space-between">
-          <Text fontWeight="bold">Phone:</Text>
-          <Text>{userData.phone}</Text>
-        </HStack>
-        <HStack justify="space-between">
-          <Text fontWeight="bold">Gender:</Text>
-          <Text>{userData.gender === 'm' ? 'Male' : 'Female'}</Text>
-        </HStack>
-        <HStack justify="space-between">
-          <Text fontWeight="bold">Socials:</Text>
-          <Link href={userData.socials} isExternal>
-            {userData.socials}
-          </Link>
-        </HStack>
-      </VStack>
-    </Box>
+    <>
+    <Container p={10} centerContent>
+      <Flex direction="column" w={"md"}>
+        <Box
+          p={5}
+          borderWidth="2px"
+          borderRadius="lg"
+          overflow="hidden"
+          textAlign="center"
+        >
+          <Avatar
+            size="2xl"
+            name={`${user.first_name} ${user.last_name}`}
+            src="path-to-profile-picture.jpg"
+            mb={4}
+          />
+          <Heading as="h2" size="lg" mb={2}>
+            {user.first_name} {user.last_name}
+          </Heading>
+          <Text fontSize="md" mb={4}>{user.email}</Text>
+          <VStack spacing={2} align="stretch">
+            <HStack justify="space-between">
+              <Text fontWeight="bold">Date of Birth:</Text>
+              <Text>{dateToYMD(new Date(user.dob))}</Text>
+            </HStack>
+            <HStack justify="space-between">
+              <Text fontWeight="bold">Phone:</Text>
+              <Text>{user.phone}</Text>
+            </HStack>
+            <HStack justify="space-between">
+              <Text fontWeight="bold">Gender:</Text>
+              <Text>{formatGender(user.gender)}</Text>
+            </HStack>
+            <HStack justify="space-between">
+              <Text fontWeight="bold">Socials:</Text>
+              <Link href={"https://instagram.com/" + String(user.socials).replace('@', '')} isExternal>
+                {user.socials}
+              </Link>
+            </HStack>
+          </VStack>
+        </Box>
+          <Flex mt={2} justifyContent="flex-end">
+            <IconButton width="fit-content" aria-label='Edit' icon={<EditIcon />} onClick={openModal}/>
+          </Flex>
+      </Flex>
+    </Container>
+    <EditProfileModal onSave={onSaveModal} onClose={onCloseModal} isOpen={isOpenModal} user={user} />
+    </>
   );
 }
 

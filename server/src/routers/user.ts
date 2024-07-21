@@ -13,9 +13,9 @@ router.put('/user', auth, async (req, res) => {
     const { uid, first_name, last_name, dob, gender, email, phone, socials, pwd } = req.body;
     try {
         const sql = `CALL update_user(?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        await query(sql, [uid, first_name, last_name, dob, gender, email, phone, socials, pwd]);
+        await query(sql, [uid, first_name, last_name, dob.split('T')[0], gender, email, phone, socials, pwd]);
         res.status(200).send('Profile updated successfully.');
-    } catch {
+    } catch (e) {
         res.status(500).send('Something went wrong.');
     }
 });

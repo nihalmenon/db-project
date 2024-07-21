@@ -17,6 +17,7 @@ import {
   FormLabel,
   Box,
   IconButton,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Activity, Trip } from "../interfaces/connectInterfaces";
@@ -43,19 +44,24 @@ export const EditTripDetailsModal = ({
   onClose,
   trip,
 }: EditTripDetailsModalProps) => {
-  const [startDate, setStartDate] = useState(
-    formatDate(trip.start_date || new Date().toISOString())
-  );
-  const [endDate, setEndDate] = useState(
-    formatDate(trip.end_date || new Date().toISOString())
-  );
+  const formattedItinerary = (trip.itinerary || []).map((activity) => ({
+    ...activity,
+    dte: formatDate(activity.dte),
+  }));
+
+  const [startDate, setStartDate] = useState( formatDate(trip.start_date || new Date().toISOString()) );
+  const [endDate, setEndDate] = useState(formatDate(trip.end_date || new Date().toISOString()));
   const [bio, setBio] = useState(trip.bio || "");
-  const [itinerary, setItinerary] = useState(trip.itinerary || []);
+  const [itinerary, setItinerary] = useState(formattedItinerary || []);
 
   const handleAddActivity = () => {
     setItinerary([
       ...itinerary,
-      { a_no: itinerary.length + 1, a_description: "", dte: formatDate(trip.start_date) },
+      {
+        a_no: itinerary.length + 1,
+        a_description: "",
+        dte: startDate,
+      },
     ]);
   };
 
@@ -74,7 +80,7 @@ export const EditTripDetailsModal = ({
       bio,
       itinerary,
     };
-    
+
     try {
       await updateTrip(updatedTrip);
       console.log("updated trip");
@@ -146,15 +152,9 @@ export const EditTripDetailsModal = ({
                     <FormControl flex="1" mr={2}>
                       <Input
                         type="date"
-                        value={formatDate(
-                          activity.dte || trip.start_date
-                        )}
+                        value={activity.dte || startDate}
                         onChange={(e) =>
-                          handleItineraryChange(
-                            index,
-                            "dte",
-                            e.target.value
-                          )
+                          handleItineraryChange(index, "dte", e.target.value)
                         }
                       />
                     </FormControl>

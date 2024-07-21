@@ -1,5 +1,6 @@
 import * as base from "./baseActions";
 import { endpoints } from "../config/config";
+import { User } from "../hooks/useUser";
 
 const registerUser = (user: any) => {
   return base.post(endpoints.register, user);
@@ -29,4 +30,10 @@ const getItinerary = (tripId: number) => {
   return base.get(endpoints.itinerary, { params: { tid: tripId }});
 }
 
-export { registerUser, loginUser, getUserDetails, getUserTrips, getSuggestedInvitees, getTripDetails, getItinerary};
+const updateUser = async (user: User) => {
+  const res = await base.put(endpoints.user, user);
+  await getUserDetails();
+  return res;
+}
+
+export { registerUser, loginUser, getUserDetails, getUserTrips, getSuggestedInvitees, getTripDetails, getItinerary, updateUser};
