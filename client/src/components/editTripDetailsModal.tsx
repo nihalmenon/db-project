@@ -17,7 +17,7 @@ import {
   FormLabel,
   Box,
   IconButton,
-  FormErrorMessage,
+  useColorMode
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Activity, Trip } from "../interfaces/connectInterfaces";
@@ -83,9 +83,8 @@ export const EditTripDetailsModal = ({
 
     try {
       await updateTrip(updatedTrip);
-      console.log("updated trip");
     } catch (error) {
-      console.log("Error updating trip: ", error);
+      console.error("Error updating trip: ", error);
     }
     onClose();
   };
@@ -99,12 +98,12 @@ export const EditTripDetailsModal = ({
     newItinerary[index] = { ...newItinerary[index], [field]: value };
     setItinerary(newItinerary);
   };
-
+  const {colorMode, toggleColorMode} = useColorMode();
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader color={theme.colors.primary}>Trip Details</ModalHeader>
+        <ModalHeader color={theme.colors.primary[colorMode]}>Trip Details</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {trip.tid ? (

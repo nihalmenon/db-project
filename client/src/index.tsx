@@ -1,34 +1,66 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme, ColorModeScript, ThemeConfig } from "@chakra-ui/react";
 import App from "./App";
-// import customTheme from "./config/theme";
 
-// const theme = extendTheme({
-//   colors: {
-//     dark: "#1e2749", // Dark color for text
-//     background: "#fafaff",
-//     primary: "#273469",
-//     secondary: "#30343f",
-//     accent: "#1c7293 ",
-//     accent2: "#778da9  ",
-//     highlight: "#e4d9ff  ",
-//     textlight: "#E6F0FA",
-//   },
-// });
+const config: ThemeConfig = {
+  initialColorMode: "light",
+  useSystemColorMode: true,
+};
 
 const theme = extendTheme({
+  config,
+  styles: {
+    global: (props: any) => ({
+      body: {
+        bg: props.colorMode === "dark" ? "#01161e" : "#f6fff8",
+        color: props.colorMode === "dark" ? "#f6fff8" : "#01161e",
+      },
+    }),
+  },
   colors: {
-    dark: "#01161e", // Dark color for text
-    background: "#f6fff8",
-    primary: "#124559",
-    secondary: "#598392",
-    accent: "#aec3b0 ",
-    accent2: "#eff6e0  ",
-    highlight: "#9290C3  ",
-    light: "#c4fff9",
-    textlight: "#c4fff9",
+    dark: "#01161e",
+    background: {
+      light: "#f6fff8",
+      dark: "#01161e",
+    },
+    primary: {
+      light: "#124559",
+      dark: "#aec3b0",
+    },
+    secondary: {
+      light: "#598392",
+      dark: "#124559",
+    },
+    accent: {
+      light: "#aec3b0",
+      dark: "#01161e"
+    },
+    accent2: {
+      light: "#eff6e0",
+      dark: "#598392",
+    },
+    highlight: {
+      light: "#9290C3",
+      dark: "#9290C3",
+    },
+    light: {
+      light: "#c4fff9",
+      dark: "#f6fff8",
+    },
+    textlight: {
+      light: "#c4fff9",
+      dark: "#01161e",
+    },
+    text: {
+      light: "#c4fff9",
+      dark: "#c4fff9",
+    },
+    tabletext: {
+      light: "#01161e",
+      dark: "#c4fff9",
+    },
   },
 });
 
@@ -37,12 +69,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <ColorModeScript initialColorMode={config.initialColorMode} />
     <ChakraProvider theme={theme}>
       <App />
     </ChakraProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

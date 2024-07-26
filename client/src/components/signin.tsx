@@ -14,14 +14,13 @@ import {
   FormHelperText,
   InputRightElement,
   useTheme,
-  FormErrorMessage,
+  useColorMode,
 } from "@chakra-ui/react";
-
 import { loginUser } from "../actions/user";
-
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { DarkmodeButton } from "./darkmodeButton";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -33,6 +32,7 @@ export const SignIn = () => {
   const [error, setError] = useState("");
 
   const theme = useTheme();
+  const { colorMode } = useColorMode();
   const navigate = useNavigate();
 
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -74,20 +74,20 @@ export const SignIn = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Heading color={theme.colors.primary}>Sign In</Heading>
+        <Heading color={theme.colors.primary[colorMode]}>Sign In</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit}>
             <Stack
               spacing={4}
               p="1rem"
-              backgroundColor={theme.colors.accent2}
+              backgroundColor={theme.colors.accent2[colorMode]}
               boxShadow="md"
             >
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaUserAlt color={theme.colors.primary} />}
+                    children={<CFaUserAlt color={theme.colors.primary[colorMode]} />}
                   />
                   <Input
                     type="email"
@@ -103,7 +103,7 @@ export const SignIn = () => {
                   <InputLeftElement
                     pointerEvents="none"
                     color="gray.300"
-                    children={<CFaLock color={theme.colors.primary} />}
+                    children={<CFaLock color={theme.colors.primary[colorMode]} />}
                   />
                   <Input
                     type={showPassword ? "text" : "password"}
@@ -116,10 +116,10 @@ export const SignIn = () => {
                       h="1.75rem"
                       size="sm"
                       onClick={handleShowClick}
-                      backgroundColor={theme.colors.primary}
-                      color={theme.colors.textlight}
+                      backgroundColor={theme.colors.primary[colorMode]}
+                      color={theme.colors.textlight[colorMode]}
                       _hover={{
-                        backgroundColor: theme.colors.secondary,
+                        backgroundColor: theme.colors.secondary[colorMode],
                         transition: "background-color 0.3s ease",
                       }}
                     >
@@ -135,10 +135,10 @@ export const SignIn = () => {
                 borderRadius={0}
                 type="submit"
                 variant="solid"
-                backgroundColor={theme.colors.primary}
-                color={theme.colors.textlight}
+                backgroundColor={theme.colors.primary[colorMode]}
+                color={theme.colors.textlight[colorMode]}
                 _hover={{
-                  backgroundColor: theme.colors.secondary,
+                  backgroundColor: theme.colors.secondary[colorMode],
                   transition: "background-color 0.3s ease",
                 }}
                 width="full"
@@ -154,7 +154,7 @@ export const SignIn = () => {
         <Link
           as={RouterLink}
           to="/signup"
-          color={theme.colors.highlight}
+          color={theme.colors.highlight[colorMode]}
           href="#"
         >
           Sign Up

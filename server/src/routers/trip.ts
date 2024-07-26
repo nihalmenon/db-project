@@ -194,7 +194,7 @@ router.put('/updateTrip', auth, async (req, res) => {
         await query("COMMIT", []);
         return res.status(200).send('Trip updated successfully');
     } catch(err){
-        console.log(err); 
+        console.error(err); 
         await query('ROLLBACK', []);
         return res.status(500).send('An error occured while fetching trip during updateTrip');
     }
