@@ -5,4 +5,8 @@ const getLocations = () => {
     return base.get(endpoints.locations);
 }
 
-export { getLocations };
+const searchLocations = (input: string) => {
+    return base.get(endpoints.searchLocations, { params: { input } });
+}
+
+export { getLocations, searchLocations };

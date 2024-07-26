@@ -15,7 +15,9 @@ const endpoints = {
   connect: "connect",
   popularDestinations: "popularDestinations",
   averageDuration: "averageDuration",
-  popularActivities: "popularActivities"
+  popularActivities: "popularActivities",
+  searchLocations: "searchLocations",
+  user: "user"
 };
 
 export { baseApiUrl, endpoints };

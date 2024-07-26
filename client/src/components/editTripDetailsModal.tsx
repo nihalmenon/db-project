@@ -44,19 +44,24 @@ export const EditTripDetailsModal = ({
   onClose,
   trip,
 }: EditTripDetailsModalProps) => {
-  const [startDate, setStartDate] = useState(
-    formatDate(trip.start_date || new Date().toISOString())
-  );
-  const [endDate, setEndDate] = useState(
-    formatDate(trip.end_date || new Date().toISOString())
-  );
+  const formattedItinerary = (trip.itinerary || []).map((activity) => ({
+    ...activity,
+    dte: formatDate(activity.dte),
+  }));
+
+  const [startDate, setStartDate] = useState( formatDate(trip.start_date || new Date().toISOString()) );
+  const [endDate, setEndDate] = useState(formatDate(trip.end_date || new Date().toISOString()));
   const [bio, setBio] = useState(trip.bio || "");
-  const [itinerary, setItinerary] = useState(trip.itinerary || []);
+  const [itinerary, setItinerary] = useState(formattedItinerary || []);
 
   const handleAddActivity = () => {
     setItinerary([
       ...itinerary,
-      { a_no: itinerary.length + 1, a_description: "", dte: startDate },
+      {
+        a_no: itinerary.length + 1,
+        a_description: "",
+        dte: startDate,
+      },
     ]);
   };
 
@@ -75,7 +80,7 @@ export const EditTripDetailsModal = ({
       bio,
       itinerary,
     };
-    
+
     try {
       await updateTrip(updatedTrip);
     } catch (error) {
@@ -146,15 +151,9 @@ export const EditTripDetailsModal = ({
                     <FormControl flex="1" mr={2}>
                       <Input
                         type="date"
-                        value={formatDate(
-                          activity.dte || new Date()
-                        )}
+                        value={activity.dte || startDate}
                         onChange={(e) =>
-                          handleItineraryChange(
-                            index,
-                            "dte",
-                            e.target.value
-                          )
+                          handleItineraryChange(index, "dte", e.target.value)
                         }
                       />
                     </FormControl>

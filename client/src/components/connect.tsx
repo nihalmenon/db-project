@@ -1,9 +1,9 @@
-import { Box, Heading, useTheme, Text, Card, CardHeader, CardBody, CardFooter, Button, SimpleGrid, Stack, ButtonGroup, Divider, Image, useColorMode } from "@chakra-ui/react"
+import { Box, Heading, useTheme, Text, Card, CardBody, CardFooter, SimpleGrid, Stack, ButtonGroup, Image, useColorMode } from "@chakra-ui/react"
 import { useUser } from "../hooks/useUser";
-import { ConnectData, Trip, User } from "../interfaces/connectInterfaces";
+import { Trip } from "../interfaces/connectInterfaces";
 import { getAge } from "../utils/commonFunctions";
 import { ThemeButton } from "./themeButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TripDetailsModal } from "./tripDetailsModal";
 import { useLocation } from "react-router-dom";
 import { useConnectData } from "../hooks/useConnectData";

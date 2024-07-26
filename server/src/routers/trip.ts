@@ -189,7 +189,7 @@ router.put('/updateTrip', auth, async (req, res) => {
         sql = 'CALL add_activity(?, ?, ?, ?)'
         for (let activity of itinerary){
             const {a_no, a_description, dte} = activity; 
-            await query(sql, [tid, a_no, a_description, formatDateForMySQL(dte)]); 
+            await query(sql, [tid, a_no, a_description, dte]); 
         } 
         await query("COMMIT", []);
         return res.status(200).send('Trip updated successfully');
