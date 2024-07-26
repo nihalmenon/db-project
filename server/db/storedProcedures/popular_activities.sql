@@ -6,5 +6,5 @@ begin
     where (_start_date is null or a.dte >= _start_date)
     and (_end_date is null or a.dte <= _end_date)
     and t.lid = _lid
-    limit 20;
+    limit 10;
 end

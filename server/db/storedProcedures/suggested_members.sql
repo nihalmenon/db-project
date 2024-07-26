@@ -22,5 +22,6 @@ begin
     )
     select u.uid, u.first_name, u.last_name, u.socials, u.email
     from User u
-    where u.uid in (select uid from FriendsOfFriends) or u.uid in (select uid from Friends);
+    where u.uid in (select uid from FriendsOfFriends) or u.uid in (select uid from Friends)
+    limit 10;
 end

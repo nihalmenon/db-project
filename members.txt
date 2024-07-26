@@ -1,0 +1,42 @@
+R17. Members
+
+Daniel (ddlarkin): 
+- Frontend login and account webpage
+- Created User account creation and authentication support on the backend
+- Wrote SQL queries for features 
+- Populated database with production data for locations and countries
+- UI for web page 
+- Finalized codebase
+- Demo
+
+Nihal (nmenon):
+- Worked on authentication system
+- E/R diagram
+- Backend/sql for trip/user requests
+- Wrote feature 5 and 6 SQL queries + sample outputs
+- Implemented “add trip” page/functionality
+- Worked on connect feature implementation
+- Finalized codebase
+- Demo
+
+Dhyan (djpatel):
+- Worked on python script to populate database // Setup Mock data 
+- Wrote SQL queries for features
+- Implemented user authentication in Python script
+- DDL Statements/Database Schema Design
+- Upgraded dashboard and introduced tripview
+- Worked on UI for web page
+- Developed backend endpoints for frontend features
+- Finalized codebase
+- Demo
+
+Kieran (kghulsma):
+- Worked on backend routes and SQL stored procedures for trip requests
+- DDL statements/Database Schema Design
+- Triggers & constraints
+- E/R diagram
+- Python scripting for database management
+- Data generation for production data of users, members, trips and activities
+- Developed frontend for connect page
+- Finalized codebase
+- Demo
