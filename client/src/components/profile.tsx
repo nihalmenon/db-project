@@ -8,7 +8,6 @@ export const Profile = () => {
   useEffect(() => {
     getUserDetails().then(response => {
       setUserData(response.data.user);
-      console.log(response.data.user);
     });
   }, []);
 

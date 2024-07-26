@@ -15,6 +15,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "./App.css";
 import { Stats } from "./components/stats";
+import { DarkmodeButton } from "./components/darkmodeButton";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
+        <DarkmodeButton />
       </Router>
     </div>
   );

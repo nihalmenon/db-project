@@ -20,6 +20,7 @@ import { loginUser } from "../actions/user";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { DarkmodeButton } from "./darkmodeButton";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -31,7 +32,7 @@ export const SignIn = () => {
   const [error, setError] = useState("");
 
   const theme = useTheme();
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
   const navigate = useNavigate();
 
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -159,9 +160,6 @@ export const SignIn = () => {
           Sign Up
         </Link>
       </Box>
-      <Button onClick={toggleColorMode} mt={4}>
-        {colorMode === "light" ? "Dark" : "Light"} Mode
-      </Button>
     </Flex>
   );
 };

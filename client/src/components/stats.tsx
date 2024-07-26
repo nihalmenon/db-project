@@ -83,7 +83,7 @@ export const Stats = () => {
 
       <TableContainer 
         mt={5}
-        bg={theme.colors.light[colorMode]}
+        bg={theme.colors.background[colorMode]}
         border={"2px solid"}
         borderColor={"gray.200"}
         rounded="lg"
@@ -102,8 +102,8 @@ export const Stats = () => {
             {popularDestinations.map(dest => {
               return (
                 <Tr>
-                  <Td color={theme.colors.textlight[colorMode]}>{dest.city}, {dest.c_name}</Td>
-                  <Td isNumeric color={theme.colors.textlight[colorMode]}>{dest.trip_count}</Td>
+                  <Td color={theme.colors.tabletext[colorMode]}>{dest.city}, {dest.c_name}</Td>
+                  <Td isNumeric color={theme.colors.tabletext[colorMode]}>{dest.trip_count}</Td>
                 </Tr>
               );
             })}

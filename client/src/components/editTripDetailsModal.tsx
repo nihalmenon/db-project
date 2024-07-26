@@ -78,9 +78,8 @@ export const EditTripDetailsModal = ({
     
     try {
       await updateTrip(updatedTrip);
-      console.log("updated trip");
     } catch (error) {
-      console.log("Error updating trip: ", error);
+      console.error("Error updating trip: ", error);
     }
     onClose();
   };

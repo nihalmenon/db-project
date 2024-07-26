@@ -57,6 +57,10 @@ const theme = extendTheme({
       light: "#c4fff9",
       dark: "#c4fff9",
     },
+    tabletext: {
+      light: "#01161e",
+      dark: "#c4fff9",
+    },
   },
 });
 

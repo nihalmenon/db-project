@@ -52,7 +52,6 @@ export const AddTrip = () => {
   const fetchUserDetails = async () => {
     try {
       const response = await getUserDetails();
-      console.log("The user details", response);
       if (response.status === 200) {
         setUser(response.data.user);
       } else {

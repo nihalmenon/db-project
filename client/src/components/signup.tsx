@@ -55,7 +55,6 @@ export const SignUp = () => {
 
       if (response.status === 201) {
         const authToken = response.data.token;
-        console.log(authToken);
         localStorage.setItem("authToken", authToken);
         toast.success("User created successfully");
         navigate("/dashboard");
